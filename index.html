@@ -3,106 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản Quyền - Phần mềm Hỗ trợ Kiểm tra tại trụ sở cơ quan Thuế 2026</title>
+    <title>Bản Quyền - Phần mềm Hỗ trợ Kiểm tra tại trụ sở cơ quan Thuế</title>
     <style>
-        :root {
-            --primary: #1a56db;
-            --secondary: #2563eb;
-            --bg: #f3f4f6;
-            --text: #1f2937;
-            --danger: #dc2626;
-            --danger-bg: #fee2e2;
-        }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text);
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; padding: 20px;
-        }
-        .container { 
-            background: #ffffff; padding: 40px; border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 500px; width: 100%; 
-        }
+        :root { --primary: #1a56db; --secondary: #2563eb; --bg: #f3f4f6; --text: #1f2937; --danger: #dc2626; --danger-bg: #fee2e2; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 500px; width: 100%; }
         .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 20px;}
-        .header h1 { color: var(--primary); font-size: 22px; margin: 0 0 10px 0; line-height: 1.4; }
+        .header h1 { color: var(--primary); font-size: 22px; margin: 0 0 10px 0; }
         .header p { color: #6b7280; font-size: 14px; margin: 0; }
-        
         .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #374151; font-size: 15px;}
-        input[type="email"] { 
-            width: 100%; padding: 14px; border: 1px solid #d1d5db; 
-            border-radius: 8px; box-sizing: border-box; font-size: 16px; transition: border-color 0.3s;
-        }
-        input[type="email"]:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1); }
-        
-        .package-info {
-            background: #eff6ff; border: 2px solid var(--primary); padding: 15px; 
-            border-radius: 8px; text-align: center; margin-bottom: 25px;
-        }
-        
-        button { 
-            background-color: var(--primary); color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; 
-            cursor: pointer; transition: background-color 0.3s; opacity: 0.5; pointer-events: none;
-        }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px;}
+        input { width: 100%; padding: 14px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1); }
+        .package-info { background: #eff6ff; border: 2px solid var(--primary); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 25px; }
+        button { background-color: var(--primary); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; opacity: 0.5; pointer-events: none; }
         button.ready { opacity: 1; pointer-events: auto; }
-        button.ready:hover { background-color: var(--secondary); }
-        
-        #qr-container { 
-            margin-top: 30px; display: none; padding-top: 25px; 
-            border-top: 1px dashed #d1d5db; text-align: center; animation: fadeIn 0.5s;
-        }
-        #qr-container img { max-width: 250px; border-radius: 12px; border: 1px solid #e5e7eb; padding: 10px; background: #fff;}
-        .instruction { font-size: 14px; color: var(--danger); margin-top: 15px; font-weight: bold; background: var(--danger-bg); padding: 12px; border-radius: 6px; line-height: 1.5;}
-        
-        .support-info {
-            margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb;
-            text-align: center; font-size: 14px; color: #4b5563; background-color: #f9fafb; border-radius: 8px;
-        }
-        .support-info strong { color: var(--primary); font-size: 18px; display: block; margin-top: 5px;}
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        #qr-container { margin-top: 30px; display: none; padding-top: 25px; border-top: 1px dashed #d1d5db; text-align: center; }
+        #qr-container img { max-width: 250px; border-radius: 12px; border: 1px solid #e5e7eb; padding: 10px;}
+        .instruction { font-size: 14px; color: var(--danger); margin-top: 15px; font-weight: bold; background: var(--danger-bg); padding: 12px; border-radius: 6px;}
+        .support-info { margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 14px; color: #4b5563;}
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1>Phần mềm Hỗ trợ Kiểm tra<br>tại trụ sở cơ quan Thuế 2026</h1>
+        <h1>Phần mềm Hỗ trợ Kiểm tra</h1>
         <p>Đăng ký & Kích hoạt bản quyền tự động</p>
     </div>
     
     <div class="package-info">
-        <div style="font-size: 18px; font-weight: bold; color: #111827;">Gói Bản Quyền: 6 Tháng</div>
-        <div style="font-size: 16px; color: var(--primary); font-weight: 600; margin-top: 5px;">Giá: 500.000 VNĐ</div>
+        <div style="font-size: 18px; font-weight: bold;">Gói Bản Quyền: 6 Tháng</div>
+        <div style="font-size: 16px; color: var(--primary); font-weight: 600;">Giá: 500.000 VNĐ</div>
     </div>
 
     <div class="form-group">
-        <label for="email">1. Nhập Email nhận Key bản quyền (Bắt buộc):</label>
-        <input type="email" id="email" placeholder="Ví dụ: canbothue@gmail.com" required onkeyup="checkFormReady()">
+        <label>1. Số điện thoại (Dùng để xác thực):</label>
+        <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" required onkeyup="checkFormReady()">
     </div>
 
-    <button id="btn-generate" onclick="generateQR()">2. Tạo Mã QR Thanh Toán</button>
+    <div class="form-group">
+        <label>2. Email nhận Key (Bắt buộc):</label>
+        <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
+    </div>
+
+    <button id="btn-generate" onclick="generateQR()">3. Tạo Mã QR Thanh Toán</button>
 
     <div id="qr-container">
-        <h3 style="margin-top:0; color: #1f2937;">Mở App Ngân hàng quét mã</h3>
-        <p style="font-size: 14px; color: #4b5563; margin-bottom: 15px;">Hệ thống sẽ tự động gửi Key vào email của anh/chị sau 1-2 phút kể từ khi chuyển khoản thành công.</p>
+        <h3>Mở App Ngân hàng quét mã</h3>
+        <p>Hệ thống tự động gửi Key qua Email sau 1-2 phút.</p>
         <img id="qr-img" src="" alt="Mã QR Thanh Toán">
-        <p class="instruction">⚠️ QUAN TRỌNG: Vui lòng KHÔNG sửa nội dung chuyển khoản.<br>Nếu sửa nội dung, hệ thống sẽ không thể nhận diện email để gửi Key tự động!</p>
+        <p class="instruction">⚠️ QUAN TRỌNG: KHÔNG sửa nội dung chuyển khoản!</p>
     </div>
 
     <div class="support-info">
-        Cần hỗ trợ hoặc gặp sự cố khi thanh toán? Liên hệ ngay:
-        <strong>Zalo/Hotline: 0845 053 702</strong>
+        Cần hỗ trợ? Zalo/Hotline: <strong>0845 053 702</strong>
     </div>
 </div>
 
 <script>
+    // === DÁN LINK GOOGLE APPS SCRIPT CỦA ANH VÀO ĐÂY ===
+    const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
+
     function checkFormReady() {
         const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
         const btn = document.getElementById('btn-generate');
-        if (email.includes('@') && email.length > 5) {
+        
+        if (email.includes('@') && phone.length >= 10) {
             btn.classList.add('ready');
         } else {
             btn.classList.remove('ready');
@@ -111,27 +79,40 @@
 
     function generateQR() {
         const email = document.getElementById('email').value.trim();
-        
-        // ĐIỀN THÔNG TIN TÀI KHOẢN NGÂN HÀNG CỦA ANH VÀO ĐÂY
-        const BANK_ID = "TPBank"; // Mã ngân hàng (VD: VCB, MB, TCB, CTG...)
-        const ACCOUNT_NO = "10004471820"; // Số tài khoản
+        const phone = document.getElementById('phone').value.trim();
+        const btn = document.getElementById('btn-generate');
 
-        if (!email || !email.includes('@')) {
-            alert('Vui lòng nhập email hợp lệ!');
-            return;
-        }
+        // Báo trạng thái đang tải
+        btn.innerHTML = "Đang tạo hệ thống mã...";
+        btn.style.pointerEvents = "none";
 
-        // Tạo nội dung chuyển khoản mặc định
-        let description = `6THANG ${email}`.replace(/\s+/g, ' ');
+        // Gửi SĐT và Email lên lưu trước vào Google Sheets
+        fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "saveInfo", phone: phone, email: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Sau khi lưu thành công, hiển thị QR Code chứa Số Điện Thoại
+            btn.innerHTML = "Tạo Mã QR Thanh Toán";
+            
+            // --- ĐIỀN THÔNG TIN TÀI KHOẢN NGÂN HÀNG CỦA ANH VÀO ĐÂY ---
+            const BANK_ID = "VCB"; 
+            const ACCOUNT_NO = "123456789"; 
 
-        // Gọi API tạo mã QR với giá cứng 500.000
-        let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
-        
-        document.getElementById('qr-img').src = qrUrl;
-        document.getElementById('qr-container').style.display = 'block';
-        
-        // Cuộn màn hình xuống phần mã QR
-        document.getElementById('qr-container').scrollIntoView({ behavior: 'smooth' });
+            let description = `6THANG ${phone}`; 
+            let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
+            
+            document.getElementById('qr-img').src = qrUrl;
+            document.getElementById('qr-container').style.display = 'block';
+            document.getElementById('qr-container').scrollIntoView({ behavior: 'smooth' });
+        })
+        .catch(error => {
+            alert("Lỗi kết nối máy chủ, vui lòng thử lại!");
+            btn.innerHTML = "Tạo Mã QR Thanh Toán";
+            btn.style.pointerEvents = "auto";
+        });
     }
 </script>
 
