@@ -68,7 +68,12 @@
 
     <div id="qr-container">
         <h3 style="color: #c62828; margin-top: 0;">Mở App Ngân hàng quét mã</h3>
-        <p style="font-size: 14px; color: #4b5563;">Hệ thống tự động gửi Key qua Email sau 1-2 phút.</p>
+        
+        <p style="font-size: 14px; color: #4b5563; line-height: 1.5;">
+            Hệ thống tự động gửi Key qua Email sau 1-2 phút.<br>
+            <span style="color: #d32f2f; font-weight: bold;">(Lưu ý: Vui lòng kiểm tra cả mục Spam/Thư rác nếu không thấy ở Hộp thư đến)</span>
+        </p>
+
         <img id="qr-img" src="" alt="Mã QR Thanh Toán">
         <p class="instruction">⚠️ QUAN TRỌNG: KHÔNG sửa nội dung chuyển khoản!</p>
     </div>
@@ -121,12 +126,7 @@
         .catch(error => {
             alert("Lỗi kết nối máy chủ, vui lòng thử lại!");
             btn.innerHTML = "TẠO MÃ QR THANH TOÁN";
-            setTimeout(() => {
-                btn.innerHTML = "TẠO MÃ QR THANH TOÁN (THỬ LẠI)";
-                btn.style.pointerEvents = "auto";
-            }, 30000); // 30000 ms = 30 giây khóa nút
-                    
-        
+            btn.style.pointerEvents = "auto";
         });
     }
 </script>
