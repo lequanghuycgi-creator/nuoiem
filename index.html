@@ -121,7 +121,12 @@
         .catch(error => {
             alert("Lỗi kết nối máy chủ, vui lòng thử lại!");
             btn.innerHTML = "TẠO MÃ QR THANH TOÁN";
-            btn.style.pointerEvents = "auto";
+            setTimeout(() => {
+                btn.innerHTML = "TẠO MÃ QR THANH TOÁN (THỬ LẠI)";
+                btn.style.pointerEvents = "auto";
+            }, 30000); // 30000 ms = 30 giây khóa nút
+                    
+        
         });
     }
 </script>
