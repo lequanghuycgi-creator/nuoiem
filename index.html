@@ -98,8 +98,8 @@
             btn.innerHTML = "Tạo Mã QR Thanh Toán";
             
             // --- ĐIỀN THÔNG TIN TÀI KHOẢN NGÂN HÀNG CỦA ANH VÀO ĐÂY ---
-            const BANK_ID = "TPBANK"; 
-            const ACCOUNT_NO = "10004471820"; 
+            const BANK_ID = "MB"; 
+            const ACCOUNT_NO = "1300117826666"; 
 
             let description = `6THANG ${phone}`; 
             let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
