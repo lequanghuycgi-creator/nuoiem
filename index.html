@@ -3,133 +3,404 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website kích hoạt Bản Quyền - Phần mềm Hỗ trợ Kiểm tra Thuế</title>
+    <title>Phần mềm Hỗ trợ Kiểm tra Thuế - Tự động hóa nghiệp vụ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #c62828; /* Đỏ cờ */
-            --secondary: #b71c1c; /* Đỏ đậm */
-            --accent: #fbc02d; /* Vàng */
+            --primary: #c62828; 
+            --primary-hover: #b71c1c; 
+            --secondary: #1f2937;
+            --accent: #fbc02d; 
             --accent-hover: #f9a825;
-            --bg: #fdfaf6; /* Nền hơi ngà vàng cho hợp tông */
-            --text: #1f2937; 
-            --danger: #d32f2f; 
-            --danger-bg: #ffebee; 
+            --bg-color: #f9fafb; 
+            --surface: #ffffff;
+            --text-main: #111827; 
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .container { background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(198, 40, 40, 0.1); max-width: 500px; width: 100%; border-top: 5px solid var(--primary); }
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 20px;}
-        .header img { width: 75px; height: auto; margin-bottom: 10px; }
-        .header h1 { color: var(--primary); font-size: 22px; margin: 0 0 5px 0; text-transform: uppercase; line-height: 1.4;}
-        .header h1 span { color: var(--accent-hover); font-size: 18px; }
-        .header p { color: #6b7280; font-size: 14px; margin: 0; font-style: italic;}
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 15px; color: #374151;}
-        input { width: 100%; padding: 14px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
-        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--surface);
+            padding: 15px 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-nav { font-size: 18px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo-nav img { width: 32px; height: 32px; }
+        .nav-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .btn-outline { color: var(--primary); border: 2px solid var(--primary); margin-right: 10px; }
+        .btn-outline:hover { background: var(--primary); color: white; }
         
-        .package-info { background: #fff8e1; border: 2px dashed var(--accent); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 25px; }
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+            border-bottom: 1px solid var(--border);
+        }
+        .badge {
+            background: #fef2f2;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid #fecaca;
+        }
+        .hero h1 { font-size: 42px; font-weight: 800; color: var(--secondary); max-width: 800px; margin: 0 auto 20px; line-height: 1.2; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
         
-        button { background-color: var(--primary); color: white; border: none; border-bottom: 4px solid var(--secondary); padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; opacity: 0.5; pointer-events: none; transition: all 0.2s;}
-        button.ready { opacity: 1; pointer-events: auto; }
-        button.ready:hover { background-color: var(--secondary); color: var(--accent); transform: translateY(1px); border-bottom-width: 3px;}
+        .cta-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(198, 40, 40, 0.4); }
+        .btn-secondary {
+            background: white;
+            color: var(--secondary);
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover { border-color: var(--secondary); }
+
+        /* Features Section */
+        .features { padding: 80px 5%; max-width: 1000px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 40px; color: var(--secondary); }
         
-        #qr-container { margin-top: 30px; display: none; padding-top: 25px; border-top: 1px dashed #d1d5db; text-align: center; }
-        #qr-container img { max-width: 250px; border-radius: 12px; border: 1px solid #e5e7eb; padding: 10px; background: #fff;}
-        .instruction { font-size: 14px; color: var(--danger); margin-top: 15px; font-weight: bold; background: var(--danger-bg); padding: 12px; border-radius: 6px;}
-        .support-info { margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 14px; color: #4b5563;}
+        .table-responsive { overflow-x: auto; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th, td { padding: 18px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f9fafb; font-weight: 700; color: var(--secondary); font-size: 15px; }
+        th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) { text-align: center; width: 15%; }
+        th.vip-col { background: var(--primary); color: white; }
+        td.vip-cell { background: #fffcfc; font-weight: 600;}
+        tr:hover td { background-color: #f9fafb; }
+        tr:hover td.vip-cell { background-color: #fef2f2; }
+        .check { color: var(--success); font-size: 20px; font-weight: bold; }
+        .cross { color: #d1d5db; font-size: 16px; }
+
+        /* Activation Section */
+        .activation {
+            padding: 80px 5%;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+        .form-card {
+            max-width: 550px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            border-top: 6px solid var(--primary);
+        }
+        .package-info {
+            background: #fffbeb;
+            border: 2px dashed var(--accent);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .package-info h3 { color: #b45309; font-size: 20px; margin-bottom: 5px; }
+        .package-info p { color: #92400e; font-weight: 600; font-size: 16px; }
+        
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-weight: 600; margin-bottom: 10px; color: var(--secondary); font-size: 15px;}
+        input { 
+            width: 100%; padding: 16px; border: 2px solid var(--border); 
+            border-radius: 8px; font-size: 16px; transition: all 0.3s;
+            font-family: inherit;
+        }
+        input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1); }
+        
+        button.btn-submit { 
+            background-color: var(--primary); color: white; border: none; 
+            padding: 18px; width: 100%; border-radius: 8px; font-size: 16px; 
+            font-weight: bold; cursor: pointer; opacity: 0.6; pointer-events: none; 
+            transition: all 0.3s; font-family: inherit;
+        }
+        button.btn-submit.ready { opacity: 1; pointer-events: auto; }
+        button.btn-submit.ready:hover { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(198, 40, 40, 0.2); }
+        
+        /* QR Container */
+        #qr-container { 
+            margin-top: 30px; display: none; padding-top: 30px; 
+            border-top: 1px dashed var(--border); text-align: center; 
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #qr-container h3 { color: var(--primary); margin-bottom: 15px; }
+        #qr-container img { max-width: 280px; border-radius: 12px; border: 1px solid var(--border); padding: 15px; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.05);}
+        .instruction { font-size: 14px; color: #991b1b; margin-top: 20px; font-weight: bold; background: #fef2f2; padding: 15px; border-radius: 8px; border: 1px solid #fecaca;}
+        
+        /* Footer */
+        .footer { text-align: center; padding: 40px 20px; background: var(--secondary); color: white; font-size: 14px; }
+        .footer strong { color: var(--accent); font-size: 16px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .nav-buttons a.btn-outline { display: none; }
+            .form-card { padding: 25px; }
+            .cta-group { flex-direction: column; }
+            .btn-main, .btn-secondary { width: 100%; justify-content: center; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <img src="logo.ico" alt="Logo Thuế">
-        <h1>PHẦN MỀM HỖ TRỢ KIỂM TRA THUẾ<br><span>TẠI TRỤ SỞ CƠ QUAN THUẾ</span></h1>
-        <p>Website Đăng ký & Kích hoạt bản quyền tự động</p>
-    </div>
-    
-    <div class="package-info">
-        <div style="font-size: 18px; font-weight: bold; color: #c62828;">Gói Bản Quyền: 6 Tháng</div>
-        <div style="font-size: 16px; color: #b71c1c; font-weight: 600; margin-top: 5px;">Góp gạo Nuôi "Em": 500.000 VNĐ</div>
-    </div>
+    <nav class="navbar">
+        <div class="logo-nav">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            TOOL THUẾ
+        </div>
+        <div class="nav-buttons">
+            <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-outline">Tải Phần Mềm</a>
+            <a href="#kich-hoat" class="btn-main" style="padding: 10px 20px;">Đăng Ký VIP</a>
+        </div>
+    </nav>
 
-    <div class="form-group">
-        <label>1. Số điện thoại (Dùng để xác thực):</label>
-        <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" required onkeyup="checkFormReady()">
-    </div>
+    <header class="hero">
+        <div class="badge">🚀 Phiên bản mới nhất - Cập nhật liên tục</div>
+        <h1>Phần mềm Hỗ trợ Kiểm tra Thuế<br><span>Tại trụ sở Cơ quan Thuế</span></h1>
+        <p>Sứ mệnh của chúng tôi: Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế, gia tăng sự hài lòng và tin tưởng của Người nộp thuế.</p>
+        <div class="cta-group">
+            <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-main">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Tải Xuống Ngay
+            </a>
+            <a href="#kich-hoat" class="btn-secondary">Nâng Cấp VIP</a>
+        </div>
+    </header>
 
-    <div class="form-group">
-        <label>2. Email nhận Key (Bắt buộc):</label>
-        <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
-    </div>
+    <section class="features">
+        <h2 class="section-title">Tính năng vượt trội của Bản VIP</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chức năng hệ thống</th>
+                        <th>Bản Free</th>
+                        <th class="vip-col">Bản VIP 👑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Lấy thông tin NNT cần phân tích</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>2. Tải hóa đơn điện tử Mua vào - Bán ra (gồm cả HĐ MTT) nhiều năm</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>3. Tải hóa đơn điện tử CQT khác chuyển về (Nhiều năm)</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>4. Lấy chi tiết mặt hàng của từng hóa đơn</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>5. Lấy trạng thái của NNT trên hệ thống TMS</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>6. Tải tờ khai GTGT, TNDN... trên trục truyền tin 3.2.3.3</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>7. Tải Tờ khai Hải quan trên trang DVC</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>8. Phân tích 5 năm theo từng sắc thuế, chênh lệch TK-HĐ (Phục vụ TTKT)</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>9. Tải Hóa đơn định dạng PDF hàng loạt</td>
+                        <td><span class="cross">❌</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>10. Kéo dữ liệu TNCN nhiều nguồn của NNT</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>11. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở)</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                    <tr>
+                        <td>12. Xuất file Word Tờ trình, thông báo tự động</td>
+                        <td><span class="check">✅</span></td>
+                        <td class="vip-cell"><span class="check">✅</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-    <button id="btn-generate" onclick="generateQR()">3. Tạo mã QR Nuôi "Em"</button>
+    <section id="kich-hoat" class="activation">
+        <h2 class="section-title">Kích Hoạt Bản Quyền</h2>
+        <div class="form-card">
+            <div class="package-info">
+                <h3>Gói Bản Quyền: 6 Tháng VIP</h3>
+                <p>🎁 Quỹ Góp Gạo Nuôi "Em": 500.000 VNĐ</p>
+            </div>
 
-    <div id="qr-container">
-        <h3 style="color: #c62828; margin-top: 0;">Anh chị Vui lòng mở App Ngân hàng quét mã QR dưới đây</h3>
-        
-        <p style="font-size: 14px; color: #4b5563; line-height: 1.5;">
-            Hệ thống sẽ tự động gửi KEY qua Email mà anh chị đã nhập ở trên sau 1-2 phút.<br>
-            <span style="color: #d32f2f; font-weight: bold;">(Lưu ý: Vui lòng kiểm tra cả mục Spam/Thư rác nếu không thấy ở Hộp thư đến)</span>
-        </p>
+            <div class="form-group">
+                <label>1. Số điện thoại Zalo (Dùng để xác thực):</label>
+                <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" required onkeyup="checkFormReady()">
+            </div>
 
-        <img id="qr-img" src="" alt="Mã QR Thanh Toán">
-        <p class="instruction">⚠️ QUAN TRỌNG: Anh chị vui lòng KHÔNG sửa nội dung chuyển khoản!</p>
-    </div>
+            <div class="form-group">
+                <label>2. Email nhận Key kích hoạt (Bắt buộc):</label>
+                <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
+            </div>
 
-    <div class="support-info">
-        Cần hỗ trợ? Zalo/Hotline: <strong style="color: #c62828; font-size: 16px;">0845 053 702</strong>
-    </div>
-</div>
+            <button id="btn-generate" class="btn-submit" onclick="generateQR()">3. TẠO MÃ QR THANH TOÁN</button>
 
-<script>
-    // Link Webhook Google Sheets
-    const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
+            <div id="qr-container">
+                <h3>Quét mã QR qua App Ngân hàng</h3>
+                <p style="font-size: 15px; color: #4b5563; margin-bottom: 20px;">
+                    Hệ thống tự động gửi KEY qua Email sau 1-2 phút.<br>
+                    <span style="color: var(--danger);">(Vui lòng kiểm tra cả mục Spam/Thư rác)</span>
+                </p>
 
-    function checkFormReady() {
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const btn = document.getElementById('btn-generate');
-        if (email.includes('@') && phone.length >= 10) { btn.classList.add('ready'); } 
-        else { btn.classList.remove('ready'); }
-    }
+                <img id="qr-img" src="" alt="Mã QR Thanh Toán">
+                
+                <div class="instruction">
+                    ⚠️ QUAN TRỌNG: Vui lòng KHÔNG sửa nội dung chuyển khoản để hệ thống tự động duyệt!
+                </div>
+            </div>
+        </div>
+    </section>
 
-    function generateQR() {
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const btn = document.getElementById('btn-generate');
+    <footer class="footer">
+        <p>Phát triển bởi đội ngũ tâm huyết hỗ trợ Ngành Thuế</p>
+        <p style="margin-top: 10px;">Cần hỗ trợ kỹ thuật? Zalo/Hotline: <strong>0845 053 702</strong></p>
+    </footer>
 
-        btn.innerHTML = "Đang tạo mã QR, Vui lòng chờ trong giây lát...";
-        btn.style.pointerEvents = "none";
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
-        fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "saveInfo", phone: phone, email: email })
-        })
-        .then(response => response.json())
-        .then(data => {
-            btn.innerHTML = "TẠO MÃ QR THANH TOÁN";
-            
-            // --- THÔNG TIN TÀI KHOẢN NGÂN HÀNG ĐÃ ĐƯỢC CẬP NHẬT ---
-            const BANK_ID = "MB"; 
-            const ACCOUNT_NO = "1300117826666"; 
+        function checkFormReady() {
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const btn = document.getElementById('btn-generate');
+            // Basic validation
+            if (email.includes('@') && email.includes('.') && phone.length >= 10) { 
+                btn.classList.add('ready'); 
+            } else { 
+                btn.classList.remove('ready'); 
+            }
+        }
 
-            let description = `6THANG ${phone}`; 
-            let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
-            
-            document.getElementById('qr-img').src = qrUrl;
-            document.getElementById('qr-container').style.display = 'block';
-            document.getElementById('qr-container').scrollIntoView({ behavior: 'smooth' });
-        })
-        .catch(error => {
-            alert("Lỗi kết nối máy chủ, vui lòng thử lại!");
-            btn.innerHTML = "TẠO MÃ QR THANH TOÁN";
-            btn.style.pointerEvents = "auto";
+        function generateQR() {
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const btn = document.getElementById('btn-generate');
+
+            btn.innerHTML = "Đang kết nối hệ thống, vui lòng chờ...";
+            btn.style.pointerEvents = "none";
+
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "saveInfo", phone: phone, email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.innerHTML = "ĐÃ TẠO MÃ QR THÀNH CÔNG";
+                btn.style.backgroundColor = "#10b981"; // Đổi màu xanh lá báo thành công
+                
+                const BANK_ID = "MB"; 
+                const ACCOUNT_NO = "1300117826666"; 
+
+                let description = `6THANG ${phone}`; 
+                let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
+                
+                document.getElementById('qr-img').src = qrUrl;
+                document.getElementById('qr-container').style.display = 'block';
+                
+                // Cuộn mượt mà xuống phần QR
+                setTimeout(() => {
+                    document.getElementById('qr-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            })
+            .catch(error => {
+                alert("Lỗi kết nối máy chủ, vui lòng kiểm tra mạng và thử lại!");
+                btn.innerHTML = "3. TẠO MÃ QR THANH TOÁN";
+                btn.style.pointerEvents = "auto";
+                btn.style.backgroundColor = "";
+            });
+        }
+
+        // Smooth scroll cho các thẻ a có href bắt đầu bằng #
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-    }
-</script>
-
+    </script>
 </body>
 </html>
