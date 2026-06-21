@@ -43,7 +43,21 @@
             top: 0;
             z-index: 100;
         }
-        .logo-nav { font-size: 18px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo-nav { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: var(--primary); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        /* Style cho logo.ico */
+        .logo-nav img { 
+            width: 32px; 
+            height: 32px; 
+            object-fit: contain;
+        }
+        
         .nav-buttons { display: flex; gap: 10px; align-items: center;}
         .nav-buttons a {
             text-decoration: none;
@@ -78,7 +92,7 @@
         .btn-secondary { background: white; color: var(--secondary); padding: 16px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; text-decoration: none; border: 2px solid var(--border); transition: all 0.3s; }
         .btn-secondary:hover { border-color: var(--secondary); }
 
-        /* Demo Gallery Section (MỚI) */
+        /* Demo Gallery Section */
         .demo-section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 10px; color: var(--secondary); }
         .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 40px; font-size: 16px; }
@@ -193,7 +207,7 @@
 
     <nav class="navbar">
         <div class="logo-nav">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <img src="logo.ico" alt="Logo KiemTraThue">
             kiemtrathue.vn
         </div>
         <div class="nav-buttons">
@@ -204,9 +218,9 @@
     </nav>
 
     <header class="hero">
-        <div class="badge">🚀 Phiên bản mới nhất - Cập nhật liên tục</div>
+        <div class="badge">🚀 Phiên bản mới nhất - Liên tục được cập nhật</div>
         <h1>Phần mềm Hỗ trợ Kiểm tra Thuế<br><span>Tại trụ sở Cơ quan Thuế</span></h1>
-        <p>Sứ mệnh của chúng tôi: Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế -  Tăng sự hài lòng của Người nộp thuế.</p>
+        <p>Sứ mệnh của chúng tôi: Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế, gia tăng sự hài lòng và tin tưởng của Người nộp thuế.</p>
         <div class="cta-group">
             <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-main">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -229,7 +243,7 @@
     </div>
 
     <section class="features">
-        <h2 class="section-title">Tính năng vượt trội của Bản VIP</h2>
+        <h2 class="section-title">Các tính năng vượt trội của Bản VIP</h2>
         <div class="table-responsive">
             <table>
                 <thead>
@@ -278,9 +292,9 @@
             <button id="btn-generate" class="btn-submit" onclick="generateQR()">3. TẠO MÃ QR THANH TOÁN</button>
 
             <div id="qr-container">
-                <h3>Quét mã QR qua App Ngân hàng</h3>
+                <h3>Anh chị vui lòng quét mã QR bằng App Ngân hàng</h3>
                 <p style="font-size: 15px; color: #4b5563; margin-bottom: 20px;">
-                    Hệ thống tự động gửi KEY qua Email sau 1-2 phút.<br>
+                    Hệ thống sẽ tự động gửi KEY qua Email mà anh chị đã điền sau 1-2 phút.<br>
                     <span style="color: var(--danger);">(Vui lòng kiểm tra cả mục Spam/Thư rác)</span>
                 </p>
 
@@ -294,16 +308,11 @@
     </section>
 
     <footer class="footer">
-        <p>Phát triển bởi đội ngũ tâm huyết hỗ trợ Ngành Thuế</p>
-        <p style="margin-top: 10px;">Cần hỗ trợ kỹ thuật? Zalo/Hotline: <strong>0845 053 702</strong></p>
+        <p>Phát triển bởi đội ngũ Công chức Thuế tâm huyết</p>
+        <p style="margin-top: 10px;">Hỗ trợ kỹ thuật: Zalo/Hotline: <strong>0845 053 702</strong></p>
     </footer>
 
     <script>
-        // ==============================================================
-        // 1. CẤU HÌNH DANH SÁCH ẢNH DEMO Ở ĐÂY
-        // Anh chỉ cần thêm hoặc xóa tên file ảnh trong dấu ngoặc vuông này.
-        // Cú pháp: 'tên-file.png', (nhớ có dấu phẩy ở cuối mỗi tên file)
-        // ==============================================================
         const demoImages = [
             'demo1.png',
             'demo2.png',
@@ -315,7 +324,6 @@
             'demo8.png'
         ];
 
-        // Hàm render ảnh ra giao diện tự động
         function renderGallery() {
             const gallery = document.getElementById('demo-gallery');
             let html = '';
@@ -338,23 +346,21 @@
             gallery.innerHTML = html;
         }
 
-        // Các hàm xử lý Lightbox (Phóng to ảnh)
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
         function openLightbox(imgSrc) {
             lightboxImg.src = imgSrc;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeLightbox() {
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+            document.body.style.overflow = 'auto'; 
             setTimeout(() => { lightboxImg.src = ''; }, 300);
         }
 
-        // Bấm ra ngoài vùng ảnh hoặc bấm phím ESC để đóng Lightbox
         lightbox.addEventListener('click', function(e) {
             if (e.target === lightbox) closeLightbox();
         });
@@ -362,13 +368,8 @@
             if (e.key === "Escape" && lightbox.classList.contains('active')) closeLightbox();
         });
 
-        // Chạy hàm render ảnh khi trang vừa load xong
         document.addEventListener('DOMContentLoaded', renderGallery);
 
-
-        // ==============================================================
-        // 2. KỊCH BẢN XỬ LÝ QR CODE & GOOGLE SHEETS
-        // ==============================================================
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
         function checkFormReady() {
@@ -420,7 +421,6 @@
             });
         }
 
-        // Smooth scroll cho Navbar
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
