@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bản Quyền - Phần mềm Hỗ trợ Kiểm tra Thuế</title>
+    <title>Website kích hoạt Bản Quyền - Phần mềm Hỗ trợ Kiểm tra Thuế</title>
     <style>
         :root { 
             --primary: #c62828; /* Đỏ cờ */
@@ -46,12 +46,12 @@
     <div class="header">
         <img src="logo.ico" alt="Logo Thuế">
         <h1>PHẦN MỀM HỖ TRỢ KIỂM TRA THUẾ<br><span>TẠI TRỤ SỞ CƠ QUAN THUẾ</span></h1>
-        <p>Cổng Đăng ký & Kích hoạt bản quyền tự động</p>
+        <p>Website Đăng ký & Kích hoạt bản quyền tự động</p>
     </div>
     
     <div class="package-info">
         <div style="font-size: 18px; font-weight: bold; color: #c62828;">Gói Bản Quyền: 6 Tháng</div>
-        <div style="font-size: 16px; color: #b71c1c; font-weight: 600; margin-top: 5px;">Mức phí: 500.000 VNĐ</div>
+        <div style="font-size: 16px; color: #b71c1c; font-weight: 600; margin-top: 5px;">Góp gạo Nuôi "Em": 500.000 VNĐ</div>
     </div>
 
     <div class="form-group">
@@ -64,18 +64,18 @@
         <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
     </div>
 
-    <button id="btn-generate" onclick="generateQR()">3. TẠO MÃ QR THANH TOÁN</button>
+    <button id="btn-generate" onclick="generateQR()">3. Tạo mã QR Nuôi "Em"</button>
 
     <div id="qr-container">
-        <h3 style="color: #c62828; margin-top: 0;">Mở App Ngân hàng quét mã</h3>
+        <h3 style="color: #c62828; margin-top: 0;">Anh chị Vui lòng mở App Ngân hàng quét mã QR dưới đây</h3>
         
         <p style="font-size: 14px; color: #4b5563; line-height: 1.5;">
-            Hệ thống tự động gửi Key qua Email sau 1-2 phút.<br>
+            Hệ thống sẽ tự động gửi KEY qua Email mà anh chị đã nhập ở trên sau 1-2 phút.<br>
             <span style="color: #d32f2f; font-weight: bold;">(Lưu ý: Vui lòng kiểm tra cả mục Spam/Thư rác nếu không thấy ở Hộp thư đến)</span>
         </p>
 
         <img id="qr-img" src="" alt="Mã QR Thanh Toán">
-        <p class="instruction">⚠️ QUAN TRỌNG: KHÔNG sửa nội dung chuyển khoản!</p>
+        <p class="instruction">⚠️ QUAN TRỌNG: Anh chị vui lòng KHÔNG sửa nội dung chuyển khoản!</p>
     </div>
 
     <div class="support-info">
@@ -100,7 +100,7 @@
         const phone = document.getElementById('phone').value.trim();
         const btn = document.getElementById('btn-generate');
 
-        btn.innerHTML = "Đang tạo hệ thống mã...";
+        btn.innerHTML = "Đang tạo mã QR, Vui lòng chờ trong giây lát...";
         btn.style.pointerEvents = "none";
 
         fetch(API_URL, {
@@ -110,7 +110,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            btn.innerHTML = "TẠO MÃ QR THANH TOÁN";
+            btn.innerHTML = "TẠO MÃ QR NUÔI "EM"";
             
             // --- THÔNG TIN TÀI KHOẢN NGÂN HÀNG ĐÃ ĐƯỢC CẬP NHẬT ---
             const BANK_ID = "MB"; 
