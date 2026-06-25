@@ -272,10 +272,10 @@
     </section>
 
     <section id="kich-hoat" class="activation">
-        <h2 class="section-title">Kích Hoạt Bản Quyền</h2>
+        <h2 class="section-title">Kích Hoạt VIP</h2>
         <div class="form-card">
             <div class="package-info">
-                <h3>Gói Bản Quyền: 6 Tháng VIP</h3>
+                <h3>6 Tháng VIP</h3>
                 <p>🎁 Quỹ Góp Gạo Nuôi "Em": 500.000 VNĐ</p>
             </div>
 
@@ -289,7 +289,7 @@
                 <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
             </div>
 
-            <button id="btn-generate" class="btn-submit" onclick="generateQR()">3. TẠO MÃ QR THANH TOÁN</button>
+            <button id="btn-generate" class="btn-submit" onclick="generateQR()">3. TẠO MÃ QR NUÔI EM</button>
 
             <div id="qr-container">
                 <h3>Anh chị vui lòng quét mã QR bằng App Ngân hàng</h3>
@@ -321,7 +321,9 @@
             'demo5.png',
             'demo6.png',
             'demo7.png',
-            'demo8.png'
+            'demo8.png',
+            'demo9.png',
+            'demo10.png'
         ];
 
         function renderGallery() {
@@ -403,7 +405,7 @@
                 
                 const BANK_ID = "MB"; 
                 const ACCOUNT_NO = "1300117826666"; 
-                let description = `6THANG ${phone}`; 
+                let description = `THANKYOU ${phone}`; 
                 let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
                 
                 document.getElementById('qr-img').src = qrUrl;
@@ -415,7 +417,7 @@
             })
             .catch(error => {
                 alert("Lỗi kết nối máy chủ, vui lòng kiểm tra mạng và thử lại!");
-                btn.innerHTML = "3. TẠO MÃ QR THANH TOÁN";
+                btn.innerHTML = "3. TẠO MÃ QR NUÔI EM";
                 btn.style.pointerEvents = "auto";
                 btn.style.backgroundColor = "";
             });
