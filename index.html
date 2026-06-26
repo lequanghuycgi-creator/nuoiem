@@ -177,10 +177,14 @@
         .package-info { background: #fffbeb; border: 2px dashed var(--accent); padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 30px; }
         .package-info h3 { color: #b45309; font-size: 20px; margin-bottom: 5px; }
         .package-info p { color: #92400e; font-weight: 600; font-size: 16px; }
-        .form-group { margin-bottom: 25px; }
+        .form-group { margin-bottom: 25px; position: relative; }
         label { display: block; font-weight: 600; margin-bottom: 10px; color: var(--secondary); font-size: 15px;}
         input { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px; transition: all 0.3s; font-family: inherit; }
         input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1); }
+        
+        /* Thông báo lỗi nhập liệu SĐT */
+        .phone-error { color: var(--danger); font-size: 13px; font-weight: 500; margin-top: 6px; display: none; }
+
         button.btn-submit { background-color: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; opacity: 0.6; pointer-events: none; transition: all 0.3s; font-family: inherit; }
         button.btn-submit.ready { opacity: 1; pointer-events: auto; }
         button.btn-submit.ready:hover { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(198, 40, 40, 0.2); }
@@ -280,9 +284,12 @@
                 <p>🎁 Quỹ Góp Gạo Nuôi "Em": 500.000 VNĐ</p>
             </div>
 
+            <!-- TƯỜNG LỬA WEB: Chỉ cho phép nhập số, cảnh báo khi nhập sai -->
             <div class="form-group">
                 <label>1. Số điện thoại (Dùng để xác thực):</label>
-                <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" required onkeyup="checkFormReady()">
+                <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" 
+                       oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkFormReady();" required>
+                <div id="phone-error" class="phone-error">Số điện thoại phải gồm 10 số và bắt đầu bằng 03, 05, 07, 08 hoặc 09.</div>
             </div>
 
             <div class="form-group">
@@ -315,16 +322,8 @@
 
     <script>
         const demoImages = [
-            'demo1.png',
-            'demo2.png',
-            'demo3.png',
-            'demo4.png',
-            'demo5.png',
-            'demo6.png',
-            'demo7.png',
-            'demo8.png',
-            'demo9.png',
-            'demo10.png'
+            'demo1.png', 'demo2.png', 'demo3.png', 'demo4.png', 'demo5.png',
+            'demo6.png', 'demo7.png', 'demo8.png', 'demo9.png', 'demo10.png'
         ];
 
         function renderGallery() {
@@ -375,11 +374,27 @@
 
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
+        // THUẬT TOÁN TƯỜNG LỬA WEB: Kiểm tra khắt khe SĐT và Email
         function checkFormReady() {
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const btn = document.getElementById('btn-generate');
-            if (email.includes('@') && email.includes('.') && phone.length >= 10) { 
+            const errorMsg = document.getElementById('phone-error');
+            
+            const isValidEmail = email.includes('@') && email.includes('.');
+            
+            // Regex chuẩn cho SĐT nhà mạng Việt Nam (10 số, đầu 03, 05, 07, 08, 09)
+            const phoneRegex = /^0[35789]\d{8}$/;
+            const isValidPhone = phoneRegex.test(phone);
+
+            // Hiện/ẩn cảnh báo lỗi SĐT
+            if (phone.length > 0 && !isValidPhone && phone.length === 10) {
+                errorMsg.style.display = 'block';
+            } else {
+                errorMsg.style.display = 'none';
+            }
+
+            if (isValidEmail && isValidPhone) { 
                 btn.classList.add('ready'); 
             } else { 
                 btn.classList.remove('ready'); 
@@ -406,7 +421,25 @@
                 
                 const BANK_ID = "MB"; 
                 const ACCOUNT_NO = "1300117826666"; 
-                let description = `THANKYOU ${phone}`; 
+                
+                // DANH SÁCH 50 CỤM TỪ NGỤY TRANG CÔNG SỞ (Tránh tuyệt đối từ khóa TNCN/Thương mại)
+                const PHRASES = [
+                    "Tra tien an trua", "Gui tien com", "Tra tien cafe", "Gui tien tra sua", "Gop tien sinh nhat",
+                    "Tien hoa qua phong", "Gui tien mua ho", "Tra tien hom qua", "Gop quy nhom", "Tien an chieu",
+                    "Share tien com", "Cam on anh nhe", "Cam on chi nhe", "Em gui anh", "Em gui chi",
+                    "Anh gui em", "Chi gui em", "Tra no tien com", "Tien taxi hom qua", "Share tien grab",
+                    "Tien di chung xe", "Gui tien nuoc", "Gop tien lien hoan", "Tien an sang", "Tra tien banh mi",
+                    "Gui tien cf", "Tien an nhe", "Gop tien mua qua", "Tien tham om", "Gop tien mung",
+                    "Tien dam cuoi", "Gui phong bi", "Tra bac tien com", "Gui em tien cf", "Gui ban tien nuoc",
+                    "Em tra tien an", "Tien cf hqua", "Share tien an", "Gui tien dong phuc", "Gop tien an uong",
+                    "Tra tien mua do", "Gui lai tien hqua", "Tien ve que chung", "Gop tien san bong", "Tra tien san cau",
+                    "Tien lien hoan phong", "Gui tien an trua", "Tien uong nuoc", "Em gui tien", "Tra tien anh nhe"
+                ];
+
+                // Bốc thăm 1 câu ngẫu nhiên
+                const randomPhrase = PHRASES[Math.floor(Math.random() * PHRASES.length)];
+                let description = `${randomPhrase} ${phone}`; 
+                
                 let qrUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=500000&addInfo=${encodeURIComponent(description)}`;
                 
                 document.getElementById('qr-img').src = qrUrl;
