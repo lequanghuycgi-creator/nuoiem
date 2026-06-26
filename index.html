@@ -51,7 +51,6 @@
             align-items: center; 
             gap: 10px; 
         }
-        /* Style cho logo.ico */
         .logo-nav img { 
             width: 32px; 
             height: 32px; 
@@ -185,8 +184,8 @@
         /* Thông báo lỗi nhập liệu SĐT */
         .phone-error { color: var(--danger); font-size: 13px; font-weight: 500; margin-top: 6px; display: none; }
 
-        button.btn-submit { background-color: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; opacity: 0.6; pointer-events: none; transition: all 0.3s; font-family: inherit; }
-        button.btn-submit.ready { opacity: 1; pointer-events: auto; }
+        button.btn-submit { background-color: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: not-allowed; opacity: 0.6; transition: all 0.3s; font-family: inherit; }
+        button.btn-submit.ready { opacity: 1; cursor: pointer; }
         button.btn-submit.ready:hover { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(198, 40, 40, 0.2); }
         
         #qr-container { margin-top: 30px; display: none; padding-top: 30px; border-top: 1px dashed var(--border); text-align: center; animation: fadeIn 0.5s; }
@@ -284,12 +283,11 @@
                 <p>🎁 Quỹ Góp Gạo Nuôi "Em": 500.000 VNĐ</p>
             </div>
 
-            <!-- TƯỜNG LỬA WEB: Chỉ cho phép nhập số, cảnh báo khi nhập sai -->
             <div class="form-group">
                 <label>1. Số điện thoại (Dùng để xác thực):</label>
                 <input type="tel" id="phone" placeholder="VD: 0912345678" maxlength="10" 
                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkFormReady();" required>
-                <div id="phone-error" class="phone-error">Số điện thoại phải gồm 10 số và bắt đầu bằng 03, 05, 07, 08 hoặc 09.</div>
+                <div id="phone-error" class="phone-error">⚠️ Số điện thoại phải gồm 10 số và bắt đầu bằng 03, 05, 07, 08 hoặc 09.</div>
             </div>
 
             <div class="form-group">
@@ -297,7 +295,7 @@
                 <input type="email" id="email" placeholder="VD: canbothue@gmail.com" required onkeyup="checkFormReady()">
             </div>
 
-            <button id="btn-generate" class="btn-submit" onclick="generateQR()">3. TẠO MÃ QR NUÔI EM</button>
+            <button id="btn-generate" class="btn-submit" onclick="generateQR()" disabled>3. TẠO MÃ QR NUÔI EM</button>
 
             <div id="qr-container">
                 <h3>Anh chị vui lòng quét mã QR bằng App Ngân hàng</h3>
@@ -374,7 +372,6 @@
 
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
-      
         function checkFormReady() {
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -383,7 +380,7 @@
             
             const isValidEmail = email.includes('@') && email.includes('.');
             
-            // Regex chuẩn cho SĐT nhà mạng Việt Nam (10 số, đầu 03, 05, 07, 08, 09)
+            // Regex chuẩn cho SĐT nhà mạng Việt Nam
             const phoneRegex = /^0[35789]\d{8}$/;
             const isValidPhone = phoneRegex.test(phone);
 
@@ -394,20 +391,34 @@
                 errorMsg.style.display = 'none';
             }
 
+            // Bật/tắt nút bằng thuộc tính disabled (Chặn cứng truy cập)
             if (isValidEmail && isValidPhone) { 
                 btn.classList.add('ready'); 
+                btn.removeAttribute('disabled');
             } else { 
                 btn.classList.remove('ready'); 
+                btn.setAttribute('disabled', 'true');
             }
         }
 
         function generateQR() {
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            const btn = document.getElementById('btn-generate');
+            
+            // TƯỜNG LỬA CHỐT CHẶN BÊN TRONG HÀM (Ngăn chặn hack nút)
+            const phoneRegex = /^0[35789]\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                alert("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số di động Việt Nam.");
+                return; // Dừng lập tức
+            }
+            if (!email.includes('@') || !email.includes('.')) {
+                alert("Vui lòng nhập Email hợp lệ!");
+                return; // Dừng lập tức
+            }
 
+            const btn = document.getElementById('btn-generate');
             btn.innerHTML = "Đang kết nối hệ thống, vui lòng chờ...";
-            btn.style.pointerEvents = "none";
+            btn.setAttribute('disabled', 'true'); // Khóa nút lúc đang tải
 
             fetch(API_URL, {
                 method: "POST",
@@ -422,7 +433,7 @@
                 const BANK_ID = "MB"; 
                 const ACCOUNT_NO = "1300117826666"; 
                 
-                
+                // DANH SÁCH 50 CỤM TỪ NGỤY TRANG CÔNG SỞ (Tránh tuyệt đối từ khóa TNCN/Thương mại)
                 const PHRASES = [
                     "Tra tien an trua", "Gui tien com", "Tra tien cafe", "Gui tien tra sua", "Gop tien sinh nhat",
                     "Tien hoa qua phong", "Gui tien mua ho", "Tra tien hom qua", "Gop quy nhom", "Tien an chieu",
@@ -435,7 +446,6 @@
                     "Tra tien mua do", "Gui lai tien hqua", "Tien ve que chung", "Gop tien san bong", "Tra tien san cau",
                     "Tien lien hoan phong", "Gui tien an trua", "Tien uong nuoc", "Em gui tien", "Tra tien anh nhe"
                 ];
-
                
                 const randomPhrase = PHRASES[Math.floor(Math.random() * PHRASES.length)];
                 let description = `${randomPhrase} ${phone}`; 
@@ -452,7 +462,7 @@
             .catch(error => {
                 alert("Lỗi kết nối máy chủ, vui lòng kiểm tra mạng và thử lại!");
                 btn.innerHTML = "3. TẠO MÃ QR NUÔI EM";
-                btn.style.pointerEvents = "auto";
+                btn.removeAttribute('disabled');
                 btn.style.backgroundColor = "";
             });
         }
