@@ -374,7 +374,7 @@
 
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
-        // THUẬT TOÁN TƯỜNG LỬA WEB: Kiểm tra khắt khe SĐT và Email
+      
         function checkFormReady() {
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -422,7 +422,7 @@
                 const BANK_ID = "MB"; 
                 const ACCOUNT_NO = "1300117826666"; 
                 
-                // DANH SÁCH 50 CỤM TỪ NGỤY TRANG CÔNG SỞ (Tránh tuyệt đối từ khóa TNCN/Thương mại)
+                
                 const PHRASES = [
                     "Tra tien an trua", "Gui tien com", "Tra tien cafe", "Gui tien tra sua", "Gop tien sinh nhat",
                     "Tien hoa qua phong", "Gui tien mua ho", "Tra tien hom qua", "Gop quy nhom", "Tien an chieu",
@@ -436,7 +436,7 @@
                     "Tien lien hoan phong", "Gui tien an trua", "Tien uong nuoc", "Em gui tien", "Tra tien anh nhe"
                 ];
 
-                // Bốc thăm 1 câu ngẫu nhiên
+               
                 const randomPhrase = PHRASES[Math.floor(Math.random() * PHRASES.length)];
                 let description = `${randomPhrase} ${phone}`; 
                 
