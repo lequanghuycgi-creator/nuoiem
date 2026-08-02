@@ -108,9 +108,17 @@
             margin-bottom: 25px; 
             box-shadow: 0 10px 25px rgba(217, 4, 41, 0.1);
         }
+        
+        /* --- ĐÃ CHỈNH SỬA PHẦN NÀY ĐỂ ÉP TIÊU ĐỀ TRÊN 1 DÒNG --- */
         .hero h1 { 
-            font-size: 52px; font-weight: 800; color: var(--navy); 
-            max-width: 900px; margin: 0 auto 20px; line-height: 1.2; letter-spacing: -1px; 
+            font-size: 48px; 
+            font-weight: 800; 
+            color: var(--navy); 
+            max-width: 100%; 
+            margin: 0 auto 20px; 
+            line-height: 1.3; 
+            letter-spacing: -1px; 
+            white-space: nowrap; 
         }
         .hero h1 span { 
             background: linear-gradient(to right, var(--primary), var(--accent), var(--primary));
@@ -291,13 +299,15 @@
         .footer { text-align: center; padding: 60px 20px; background: var(--navy); color: #cbd5e1; font-size: 15px; }
         .footer strong { color: #ffffff; font-size: 18px; display: block; margin-top: 8px;}
 
+        /* Bố cục Responsive */
         @media (max-width: 992px) {
+            .hero h1 { font-size: 36px; white-space: normal; } /* Cho phép tự ngắt dòng trên Ipad/màn nhỏ */
             .bento-grid { grid-template-columns: repeat(2, 1fr); }
             .col-span-2 { grid-column: span 1; }
         }
         @media (max-width: 768px) {
             .hero { padding: 150px 20px 80px; }
-            .hero h1 { font-size: 36px; }
+            .hero h1 { font-size: 28px; }
             .nav-container { width: 95%; padding: 10px 15px; }
             .nav-buttons .btn-text { display: none; }
             .bento-grid { grid-template-columns: 1fr; }
@@ -327,7 +337,7 @@
             Phiên bản 2026 - Cập nhật liên tục
         </div>
         
-        <h1>Phần mềm tự động hóa nghiệp vụ quản lý Thuế<br><span>Tại trụ sở Cơ quan Thuế</span></h1>
+        <h1>Phần mềm tự động hóa nghiệp vụ <span>quản lý Thuế</span></h1>
         
         <div class="hero-desc">
             <p class="mission"><strong>Sứ mệnh của chúng tôi:</strong> Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế, gia tăng sự hài lòng của Người nộp thuế.</p>
@@ -523,7 +533,6 @@
 
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
-        // Đã khóa cứng mức giá chỉ còn gói duy nhất
         let selectedPackageAmount = 899000;
 
         function checkFormReady() {
@@ -576,7 +585,6 @@
                 btn.style.boxShadow = "0 15px 30px rgba(5, 150, 105, 0.4)";
                 btn.style.opacity = "1";
                 
-                // --- ĐỌC NGÂN HÀNG TỪ API GOOGLE SHEETS & BỐC NGẪU NHIÊN ---
                 let bankList = data.banks;
                 
                 if (!bankList || bankList.length === 0) {
@@ -586,7 +594,6 @@
                 const selectedBank = bankList[Math.floor(Math.random() * bankList.length)];
                 const BANK_ID = selectedBank.bankId; 
                 const ACCOUNT_NO = selectedBank.accountNo; 
-                // -----------------------------------------------------------
    
                 const PHRASES = [
                     "Tra tien an trua", "Gui tien com", "Tra tien cafe", "Gui tien tra sua", "Gop tien sinh nhat",
@@ -597,7 +604,7 @@
                     "Gui tien cf", "Tien an nhe", "Gop tien mua qua", "Tien tham om", "Gop tien mung",
                     "Tien dam cuoi", "Gui phong bi", "Tra bac tien com", "Gui em tien cf", "Gui ban tien nuoc",
                     "Em tra tien an", "Tien cf hqua", "Share tien an", "Gui tien dong phuc", "Gop tien an uong",
-                    "Tra tien mua do", "Gui lai tien hqua", "Tien ve que chung", "Gop tien san bong", "Tra tien san cau",
+                    "Tra tien mua do", "Gui lai tien hqua", "Tien ve chung", "Gop tien san bong", "Tra tien san cau",
                     "Tien lien hoan phong", "Gui tien an trua", "Tien uong nuoc", "Em gui tien", "Tra tien anh nhe"
                 ];
                
