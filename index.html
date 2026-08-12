@@ -436,24 +436,39 @@
             document.getElementById('offline-search-input').value = '';
         }
 
+        // --- XỬ LÝ MODAL OFFLINE ĐÃ ĐƯỢC TỐI ƯU CƠ CHẾ CORS ---
         function submitOfflineSearch(e) {
             e.preventDefault();
             const query = document.getElementById('offline-search-input').value.trim();
             const resultDiv = document.getElementById('offline-result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang tra cứu trên hệ thống...</p>';
-
-            fetch(`${API_URL}?search=${encodeURIComponent(query)}`)
-            .then(res => res.text())
-            .then(htmlContent => {
-                // Lọc lấy phần kết quả trả về từ doGet của Apps Script
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const contentBox = doc.querySelector('div[style*="margin-top"]') || doc.body;
-                resultDiv.innerHTML = contentBox.innerHTML;
+            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang kết nối hệ thống...</p>';
+        
+            // Chuyển từ GET sang POST text/plain để vượt qua rào cản CORS của trình duyệt
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "searchOffline", search: query })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.found) {
+                    resultDiv.innerHTML = `
+                        <div style="margin-top:25px; padding:20px; background:#e8f4f8; border-left: 5px solid #17a2b8; border-radius:4px; text-align:left;">
+                            <p style="margin:0 0 10px 0; color:#333;"><b>Mã Offline của bạn là:</b></p>
+                            <span style="display:block; font-size:22px; color:#d9534f; font-weight:bold; letter-spacing: 1px; user-select:all; word-break: break-all; margin-bottom: 10px;">${data.key}</span>
+                            <p style="margin:0; color:#155724; background:#d4edda; padding:8px; border-radius:4px; font-size:14px;">
+                            ⏳ Thời hạn: <b>${data.date}</b><br><i style="font-size:12px;">(Được giữ nguyên đúng theo Key Online)</i></p>
+                            <p style="font-size:13px; color:#666; margin-top:15px; line-height:1.5;">Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
+                        </div>`;
+                } else if (data.blocked) {
+                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
+                } else {
+                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Không tìm thấy thông tin trùng khớp. Vui lòng kiểm tra lại Key/HWID!</div>';
+                }
             })
             .catch(err => {
-                resultDiv.innerHTML = '<p style="color:red; text-align:center;">Lỗi kết nối máy chủ!</p>';
+                resultDiv.innerHTML = '<p style="color:red; text-align:center;">Lỗi kết nối máy chủ! Vui lòng thử lại.</p>';
             });
         }
 
