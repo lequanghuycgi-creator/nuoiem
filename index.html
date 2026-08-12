@@ -32,7 +32,6 @@
                 radial-gradient(circle at 100% 100%, rgba(10, 36, 99, 0.08) 0%, transparent 40%);
         }
 
-        /* Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -47,71 +46,32 @@
             100% { box-shadow: 0 0 0 0 rgba(217, 4, 41, 0); }
         }
 
-        /* Floating Navbar */
         .nav-container {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 3px solid var(--primary);
-            border-radius: 100px; 
-            padding: 10px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 15px 35px rgba(10, 36, 99, 0.1);
+            position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1000px; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 3px solid var(--primary); border-radius: 100px; 
+            padding: 10px 24px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 1000; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.1);
         }
-        .logo-nav { 
-            font-size: 18px; font-weight: 800; color: var(--navy); 
-            display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;
-        }
+        .logo-nav { font-size: 18px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;}
         .logo-nav img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(217,4,41,0.3));}
         
         .nav-buttons { display: flex; gap: 8px; align-items: center;}
-        .nav-buttons a {
-            text-decoration: none; padding: 10px 20px; border-radius: 50px;
-            font-weight: 700; font-size: 14px; transition: all 0.3s ease;
-        }
-        .btn-text { color: var(--navy); }
+        .nav-buttons a, .nav-buttons button { text-decoration: none; padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 14px; transition: all 0.3s ease; border: none; cursor: pointer; font-family: inherit;}
+        .btn-text { color: var(--navy); background: transparent;}
         .btn-text:hover { color: var(--primary); background: rgba(217, 4, 41, 0.05); }
-        .btn-main-nav { 
-            background: linear-gradient(135deg, var(--primary), #9f001b); 
-            color: white; 
-            box-shadow: 0 6px 15px rgba(217, 4, 41, 0.3); 
-        }
+        .btn-offline { background: #e2e8f0; color: var(--navy); }
+        .btn-offline:hover { background: #cbd5e1; }
+        .btn-main-nav { background: linear-gradient(135deg, var(--primary), #9f001b); color: white; box-shadow: 0 6px 15px rgba(217, 4, 41, 0.3); }
         .btn-main-nav:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(217, 4, 41, 0.4); }
         
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 180px 20px 120px;
-            position: relative;
-            animation: fadeUp 1s ease-out;
-        }
-        .badge { 
-            background: #ffffff; 
-            border: 2px solid #fecdd3;
-            color: var(--primary); 
-            padding: 8px 24px; 
-            border-radius: 100px; 
-            font-size: 14px; 
-            font-weight: 800; 
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 25px; 
-            box-shadow: 0 10px 25px rgba(217, 4, 41, 0.1);
-        }
+        .hero { text-align: center; padding: 180px 20px 120px; position: relative; animation: fadeUp 1s ease-out;}
+        .badge { background: #ffffff; border: 2px solid #fecdd3; color: var(--primary); padding: 8px 24px; border-radius: 100px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(217, 4, 41, 0.1);}
         
-        /* --- ĐÃ CHỈNH SỬA PHẦN NÀY ĐỂ ÉP TIÊU ĐỀ TRÊN 1 DÒNG --- */
+        /* Cố định tiêu đề trên 1 dòng duy nhất trên màn hình lớn */
         .hero h1 { 
-            font-size: 48px; 
+            font-size: 44px; 
             font-weight: 800; 
             color: var(--navy); 
             max-width: 100%; 
@@ -129,114 +89,49 @@
         }
         
         .hero-desc { max-width: 750px; margin: 0 auto 50px; }
-        
-        .hero p.mission { 
-            font-size: 18px; color: #ffffff; margin-bottom: 24px; line-height: 1.6;
-            padding: 24px 30px; background: linear-gradient(135deg, var(--navy), #061a4a); 
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(10, 36, 99, 0.2);
-            font-weight: 500;
-        }
+        .hero p.mission { font-size: 18px; color: #ffffff; margin-bottom: 24px; line-height: 1.6; padding: 24px 30px; background: linear-gradient(135deg, var(--navy), #061a4a); border-radius: 20px; box-shadow: 0 20px 40px rgba(10, 36, 99, 0.2); font-weight: 500;}
         .hero p.mission strong { color: var(--accent); font-weight: 800; }
-        
-        .hero p.highlight-desc {
-            font-size: 17px; color: var(--text-muted); line-height: 1.6;
-            font-weight: 600;
-        }
+        .hero p.highlight-desc { font-size: 17px; color: var(--text-muted); line-height: 1.6; font-weight: 600;}
         
         .cta-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-main { 
-            background: linear-gradient(135deg, var(--primary), #9f001b); 
-            color: #fff; padding: 18px 45px; border-radius: 100px; 
-            font-size: 16px; font-weight: 800; text-decoration: none; 
-            transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; 
-            box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3);
-        }
+        .btn-main { background: linear-gradient(135deg, var(--primary), #9f001b); color: #fff; padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3);}
         .btn-main:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(217, 4, 41, 0.4); }
-        .btn-secondary { 
-            background: #ffffff; color: var(--navy); padding: 18px 45px; border-radius: 100px; 
-            font-size: 16px; font-weight: 800; text-decoration: none; border: 2px solid var(--navy); 
-            transition: all 0.3s; box-shadow: 0 10px 20px rgba(10, 36, 99, 0.05);
-        }
+        .btn-secondary { background: #ffffff; color: var(--navy); padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; border: 2px solid var(--navy); transition: all 0.3s; box-shadow: 0 10px 20px rgba(10, 36, 99, 0.05);}
         .btn-secondary:hover { background: var(--navy); color: #ffffff; box-shadow: 0 15px 30px rgba(10, 36, 99, 0.2); }
 
-        /* Modern Bento Grid */
         .bento-section { padding: 40px 5% 80px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10;}
         .section-title { text-align: center; font-size: 40px; font-weight: 800; margin-bottom: 60px; color: var(--navy); letter-spacing: -1px;}
         
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .bento-card {
-            background: var(--bg-card); border: 1px solid var(--border-card);
-            border-radius: 24px; padding: 40px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(10, 36, 99, 0.05);
-        }
-        .bento-card:hover { 
-            transform: translateY(-8px); 
-            border-color: var(--primary); 
-            box-shadow: 0 25px 50px rgba(217, 4, 41, 0.1); 
-        }
+        .bento-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 24px; padding: 40px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(10, 36, 99, 0.05);}
+        .bento-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 25px 50px rgba(217, 4, 41, 0.1); }
         
         .bento-content { position: relative; z-index: 1; }
         .col-span-2 { grid-column: span 2; }
-        .bento-icon { 
-            font-size: 32px; margin-bottom: 24px; background: linear-gradient(135deg, #ffe5e5, #ffccd5); 
-            color: var(--primary); width: 70px; height: 70px; 
-            display: flex; align-items: center; justify-content: center; border-radius: 20px; 
-            box-shadow: 0 5px 15px rgba(217, 4, 41, 0.15);
-        }
+        .bento-icon { font-size: 32px; margin-bottom: 24px; background: linear-gradient(135deg, #ffe5e5, #ffccd5); color: var(--primary); width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: 0 5px 15px rgba(217, 4, 41, 0.15);}
         .bento-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: var(--navy); }
         .bento-card p { color: var(--text-muted); font-size: 16px; line-height: 1.6; font-weight: 500;}
 
-        /* Hợp nhất Section Subtitle */
-        .section-subtitle { 
-            text-align: center; color: var(--text-muted); margin-top: -45px; 
-            margin-bottom: 50px; font-size: 18px; 
-        }       
+        .section-subtitle { text-align: center; color: var(--text-muted); margin-top: -45px; margin-bottom: 50px; font-size: 18px; }       
 
-        /* Demo Gallery Section */
         .demo-section { padding: 40px 5% 80px; max-width: 1200px; margin: 0 auto; }
         .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .demo-item {
-            position: relative; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(10, 36, 99, 0.08); cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid var(--border-card);
-            background: var(--bg-card); aspect-ratio: 16/10;
-        }
+        .demo-item { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.08); cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid var(--border-card); background: var(--bg-card); aspect-ratio: 16/10;}
         .demo-item:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(217, 4, 41, 0.15); border-color: var(--primary); }
         .demo-item img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s ease; }
         .demo-item:hover img { transform: scale(1.08); }
-        .demo-overlay {
-            position: absolute; inset: 0; background: rgba(10, 36, 99, 0.8);
-            backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
+        .demo-overlay { position: absolute; inset: 0; background: rgba(10, 36, 99, 0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;}
         .demo-item:hover .demo-overlay { opacity: 1; }
         .demo-overlay svg { color: var(--accent); width: 64px; height: 64px; filter: drop-shadow(0 4px 10px rgba(255, 183, 3, 0.5));}
 
-        /* Lightbox */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 8, 23, 0.95); backdrop-filter: blur(12px); z-index: 10000;
-            display: none; align-items: center; justify-content: center;
-            padding: 20px; opacity: 0; transition: opacity 0.3s ease;
-        }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 8, 23, 0.95); backdrop-filter: blur(12px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease;}
         .lightbox.active { display: flex; opacity: 1; }
         .lightbox img { max-width: 95%; max-height: 90vh; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); object-fit: contain; border: 2px solid var(--navy);}
-        .lightbox-close {
-            position: absolute; top: 20px; right: 30px; color: #ffffff; font-size: 40px; cursor: pointer;
-            transition: all 0.2s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-            background: var(--primary); border-radius: 50%; box-shadow: 0 5px 15px rgba(217, 4, 41, 0.4);
-        }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: #ffffff; font-size: 40px; cursor: pointer; transition: all 0.2s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--primary); border-radius: 50%; box-shadow: 0 5px 15px rgba(217, 4, 41, 0.4);}
         .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: #ff0033;}
 
-        /* Cyber Table */
         .features { padding: 40px 5% 100px; max-width: 1000px; margin: 0 auto;}
-        .table-responsive { 
-            overflow-x: auto; background: var(--bg-card); border-radius: 20px; 
-            border: 1px solid var(--border-card); box-shadow: 0 20px 40px rgba(10, 36, 99, 0.08); 
-        }
+        .table-responsive { overflow-x: auto; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-card); box-shadow: 0 20px 40px rgba(10, 36, 99, 0.08); }
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th, td { padding: 24px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: var(--navy); font-weight: 800; color: #ffffff; font-size: 15px; text-transform: uppercase; letter-spacing: 1px;}
@@ -248,46 +143,22 @@
         .check { color: var(--success); font-size: 22px; font-weight: 900; }
         .cross { color: #94a3b8; font-size: 16px; }
 
-        /* Activation Section & Packages */
         .activation { padding: 100px 5%; position: relative; }
-        .form-card { 
-            max-width: 600px; margin: 0 auto; background: #ffffff; padding: 48px; border-radius: 24px; 
-            box-shadow: 0 30px 60px rgba(10, 36, 99, 0.12); border: 1px solid var(--border-card); border-top: 6px solid var(--primary);
-        }
+        .form-card { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 48px; border-radius: 24px; box-shadow: 0 30px 60px rgba(10, 36, 99, 0.12); border: 1px solid var(--border-card); border-top: 6px solid var(--primary);}
 
-        .package-card { 
-            border: 2px solid var(--primary); border-radius: 16px; padding: 20px 10px; text-align: center; 
-            position: relative; background: linear-gradient(145deg, var(--navy), #061a4a); 
-            box-shadow: 0 10px 20px rgba(10, 36, 99, 0.2); margin-bottom: 30px; cursor: default;
-        }
+        .package-card { border: 2px solid var(--primary); border-radius: 16px; padding: 20px 10px; text-align: center; position: relative; background: linear-gradient(145deg, var(--navy), #061a4a); box-shadow: 0 10px 20px rgba(10, 36, 99, 0.2); margin-bottom: 30px; cursor: default;}
         .package-card h4 { font-size: 20px; color: white; margin-bottom: 5px; font-weight: 800; }
         .package-card .price { font-size: 16px; color: var(--accent); font-weight: 700; }
-        .save-badge { 
-            position: absolute; top: -14px; right: -10px; background: var(--primary); 
-            color: white; font-size: 13px; font-weight: 800; padding: 6px 12px; 
-            border-radius: 20px; box-shadow: 0 4px 10px rgba(217, 4, 41, 0.3);
-            animation: pulse 2s infinite; letter-spacing: 0.5px;
-        }
+        .save-badge { position: absolute; top: -14px; right: -10px; background: var(--primary); color: white; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(217, 4, 41, 0.3); animation: pulse 2s infinite; letter-spacing: 0.5px;}
 
         .form-group { margin-bottom: 25px; }
         label { display: block; font-weight: 800; margin-bottom: 12px; color: var(--navy); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;}
-        input { 
-            width: 100%; padding: 18px 24px; background: #f8fafc; border: 2px solid #cbd5e1; 
-            border-radius: 12px; color: var(--text-main); font-size: 16px; 
-            transition: all 0.3s ease; font-family: inherit; font-weight: 600;
-        }
+        input { width: 100%; padding: 18px 24px; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; color: var(--text-main); font-size: 16px; transition: all 0.3s ease; font-family: inherit; font-weight: 600;}
         input:focus { background: #ffffff; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(217, 4, 41, 0.15); }
         .phone-error { color: var(--primary); font-size: 13px; font-weight: 700; margin-top: 10px; display: none; }
 
-        button.btn-submit { 
-            background: #e2e8f0; color: #64748b; border: none; padding: 22px; width: 100%; border-radius: 12px; 
-            font-size: 16px; font-weight: 800; cursor: not-allowed; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            font-family: inherit; text-transform: uppercase; letter-spacing: 1px;
-        }
-        button.btn-submit.ready { 
-            background: linear-gradient(135deg, var(--primary), #9f001b); color: white; cursor: pointer; 
-            box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3); 
-        }
+        button.btn-submit { background: #e2e8f0; color: #64748b; border: none; padding: 22px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: not-allowed; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit; text-transform: uppercase; letter-spacing: 1px;}
+        button.btn-submit.ready { background: linear-gradient(135deg, var(--primary), #9f001b); color: white; cursor: pointer; box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3); }
         button.btn-submit.ready:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(217, 4, 41, 0.4); }
         
         #qr-container { margin-top: 40px; display: none; padding-top: 40px; border-top: 2px dashed #cbd5e1; text-align: center; animation: fadeUp 0.5s; }
@@ -295,19 +166,23 @@
         #qr-container img { max-width: 280px; border-radius: 16px; border: 2px solid #cbd5e1; padding: 15px; background: #fff; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.1);}
         .instruction { font-size: 15px; color: #b45309; margin-top: 25px; font-weight: 800; background: #fffbeb; padding: 20px; border-radius: 16px; border: 2px solid #fde68a;}
         
-        /* Footer */
+        /* Modal lấy Key Offline */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;}
+        .modal-card { background: white; width: 100%; max-width: 480px; border-radius: 24px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); position: relative; border-top: 5px solid var(--navy);}
+        .modal-close { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; color: #64748b;}
+        .modal-close:hover { background: #e2e8f0; color: #0f172a;}
+
         .footer { text-align: center; padding: 60px 20px; background: var(--navy); color: #cbd5e1; font-size: 15px; }
         .footer strong { color: #ffffff; font-size: 18px; display: block; margin-top: 8px;}
 
-        /* Bố cục Responsive */
         @media (max-width: 992px) {
-            .hero h1 { font-size: 36px; white-space: normal; } /* Cho phép tự ngắt dòng trên Ipad/màn nhỏ */
+            .hero h1 { font-size: 32px; white-space: normal; } 
             .bento-grid { grid-template-columns: repeat(2, 1fr); }
             .col-span-2 { grid-column: span 1; }
         }
         @media (max-width: 768px) {
             .hero { padding: 150px 20px 80px; }
-            .hero h1 { font-size: 28px; }
+            .hero h1 { font-size: 24px; }
             .nav-container { width: 95%; padding: 10px 15px; }
             .nav-buttons .btn-text { display: none; }
             .bento-grid { grid-template-columns: 1fr; }
@@ -326,7 +201,8 @@
         </div>
         <div class="nav-buttons">
             <a href="#demo" class="btn-text">Tính Năng</a>
-            <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-text">Tải Về Ngay</a>
+            <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-text">Tải Về</a>
+            <button onclick="openOfflineModal()" class="btn-offline">Chuyển đổi sang Key Offline</button>
             <a href="#kich-hoat" class="btn-main-nav">Kích Hoạt VIP</a>
         </div>
     </nav>
@@ -349,6 +225,25 @@
             <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-secondary">Tải Phần Mềm Ngay Tại Đây</a>
         </div>
     </header>
+
+    <!-- Modal Lấy Key Offline -->
+    <div id="offline-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeOfflineModal()">&times;</button>
+            <h2 style="color: var(--navy); font-size: 22px; margin-bottom: 8px; font-weight: 800;">Chuyển đổi sang Key Offline</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Dành cho máy tính bị tường lửa hoặc cấu hình mạng chặn kết nối trực tuyến.</p>
+            
+            <form id="offline-form" onsubmit="submitOfflineSearch(event)">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="font-size: 12px;">Nhập Key Online hoặc Mã máy (HWID):</label>
+                    <input type="text" id="offline-search-input" placeholder="VD: ktr-xxxx hoặc HWID..." required style="padding: 14px; font-size: 15px;">
+                </div>
+                <button type="submit" class="btn-submit ready" style="padding: 14px; font-size: 15px;">Chuyển Đổi Sang Key Offline</button>
+            </form>
+
+            <div id="offline-result" style="margin-top: 20px; display: none;"></div>
+        </div>
+    </div>
 
     <section class="bento-section">
         <h2 class="section-title">Các tính năng vượt trội của Phiên bản VIP</h2>
@@ -531,6 +426,37 @@
         document.addEventListener('keydown', function(e) { if (e.key === "Escape" && lightbox && lightbox.classList.contains('active')) closeLightbox(); });
         document.addEventListener('DOMContentLoaded', renderGallery);
 
+        // --- XỬ LÝ MODAL OFFLINE ---
+        function openOfflineModal() {
+            document.getElementById('offline-modal').style.display = 'flex';
+        }
+        function closeOfflineModal() {
+            document.getElementById('offline-modal').style.display = 'none';
+            document.getElementById('offline-result').style.display = 'none';
+            document.getElementById('offline-search-input').value = '';
+        }
+
+        function submitOfflineSearch(e) {
+            e.preventDefault();
+            const query = document.getElementById('offline-search-input').value.trim();
+            const resultDiv = document.getElementById('offline-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang tra cứu trên hệ thống...</p>';
+
+            fetch(`${API_URL}?search=${encodeURIComponent(query)}`)
+            .then(res => res.text())
+            .then(htmlContent => {
+                // Lọc lấy phần kết quả trả về từ doGet của Apps Script
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                const contentBox = doc.querySelector('div[style*="margin-top"]') || doc.body;
+                resultDiv.innerHTML = contentBox.innerHTML;
+            })
+            .catch(err => {
+                resultDiv.innerHTML = '<p style="color:red; text-align:center;">Lỗi kết nối máy chủ!</p>';
+            });
+        }
+
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
         let selectedPackageAmount = 899000;
@@ -604,7 +530,7 @@
                     "Gui tien cf", "Tien an nhe", "Gop tien mua qua", "Tien tham om", "Gop tien mung",
                     "Tien dam cuoi", "Gui phong bi", "Tra bac tien com", "Gui em tien cf", "Gui ban tien nuoc",
                     "Em tra tien an", "Tien cf hqua", "Share tien an", "Gui tien dong phuc", "Gop tien an uong",
-                    "Tra tien mua do", "Gui lai tien hqua", "Tien ve chung", "Gop tien san bong", "Tra tien san cau",
+                    "Tra tien mua do", "Gui lai tien hqua", "Tien ve chung", "Gop tien san bong", "Tien san cau",
                     "Tien lien hoan phong", "Gui tien an trua", "Tien uong nuoc", "Em gui tien", "Tra tien anh nhe"
                 ];
                
