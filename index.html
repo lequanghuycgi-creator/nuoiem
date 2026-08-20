@@ -296,25 +296,63 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Tính năng</th>
-                        <th>Bản Free</th>
-                        <th class="vip-col">Bản VIP</th>
+                        <th>Chức năng</th>
+                        <th>Phiên bản Free</th>
+                        <th class="vip-col">Phiên bản VIP</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- PHÂN HỆ I -->
+                    <tr style="background-color: #f1f5f9;">
+                        <td style="font-weight: 800; color: var(--navy); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">I. Phân hệ: Kiểm tra Thuế tại trụ sở CQT</td>
+                        <td></td>
+                        <td class="vip-cell"></td>
+                    </tr>
                     <tr><td>1. Lấy thông tin NNT cần phân tích</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>2. Tải HĐĐT Mua vào - Bán ra (gồm cả HĐ MTT) nhiều năm</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>3. Tải HĐĐT CQT khác chuyển về (Nhiều năm)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>4. Bóc tách chi tiết mặt hàng của từng hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>5. Check trạng thái NNT realtime trên hệ thống TMS</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>2. Tải hóa đơn điện tử Mua vào - Bán ra (gồm cả hóa đơn MTT) - Có thể lấy dữ liệu nhiều năm</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>3. Tải hóa đơn điện tử CQT khác (NNT chuyển từ CQT khác về) - Có thể lấy dữ liệu nhiều năm</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>4. Lấy chi tiết mặt hàng từng của từng hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>5. Lấy trạng thái của NNT trên TMS</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>6. Tải tờ khai GTGT, TNDN... trên trục truyền tin 3.2.3.3</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>7. Tải Tờ khai Hải quan trên trang DVC</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>8. Phân tích chênh lệch TK-HĐ 5 năm (Phục vụ TTKT)</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>9. Tự động in & tải Hóa đơn định dạng PDF hàng loạt</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>10. Phân tích rủi ro BCTC theo 28 tiêu chí chuẩn mực</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>11. Kéo dữ liệu TNCN many nguồn của NNT</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>12. Tạo phiếu phân tích tự động (Kiểm tra tại trụ sở)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>13. Export Tờ trình, thông báo tự động (Word)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>8. Phân tích 5 năm theo từng sắc thuế, chênh lệch TK-HĐ (Phục vụ công tác thanh tra, kiểm tra tại trụ sở NNT)</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>9. Tải Hóa đơn định dạng PDF hàng loạt (Kết hợp công cụ in PDF hàng loạt - Cung cấp miễn phí)</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>10. Phân tích rủi ro BCTC - TK GTGT - TK TNDN - TK TNCN theo 28 tiêu chí rủi ro</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>11. Tạo báo cáo 360 Độ NNTT - cung cấp 11 chỉ tiêu báo cáo của 1 NNT</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>12. Tổng hợp, chia sẻ, đối chiếu Các công văn cảnh báo rủi ro đã được ban hành - Dựa vào dữ liệu thời gian thực mà người dùng gửi lên</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>13. PHÂN TÍCH BÁO CÁO RỦI RO THEO QĐ SỐ 1109/QĐ-CT NGÀY 30/07/2026</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>14. Kéo dữ liệu TNCN nhiều nguồn của NNT đang phân tích</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>15. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>16. Xuất file Word Tờ trình, thông báo (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+
+                    <!-- PHÂN HỆ II -->
+                    <tr style="background-color: #f1f5f9;">
+                        <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">II. Phân hệ Quản lý nợ và Cưỡng chế nợ thuế</td>
+                        <td><span class="cross">✕</span></td>
+                        <td class="vip-cell"><span class="check">✔</span></td>
+                    </tr>
+                    <tr><td>1. Ban hành thông báo Sẽ THXC</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>2. Tự động cập nhật Mã địa bàn HC 2 cấp (TMS 8.16)</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>3. Ban hành thông báo THXC</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>4. Giải tỏa cưỡng chế Tài khoản - Hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+                    <tr><td>5. Cưỡng chế hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td></tr>
+                    <tr><td>6. Cưỡng chế tài khoản</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td></tr>
+                    <tr><td>7. Bảng tính tiền chậm nộp Lệ phí môn bài</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
+
+                    <!-- PHÂN HỆ III -->
+                    <tr style="background-color: #f1f5f9;">
+                        <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">III. Phân hệ Kê khai, Kế toán thuế</td>
+                        <td><span class="cross">✕</span></td>
+                        <td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td>
+                    </tr>
+
+                    <!-- PHÂN HỆ IV -->
+                    <tr style="background-color: #f1f5f9;">
+                        <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">IV. Phân hệ Tiện ích khác</td>
+                        <td><span class="cross">✕</span></td>
+                        <td class="vip-cell"><span class="check">✔</span></td>
+                    </tr>
+                    <tr><td>1. Tự động in tờ khai XML</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -380,7 +418,7 @@
 
         const demoImages = [
             'demo1.png', 'demo2.png', 'demo3.png', 'demo4.png', 'demo5.png',
-            'demo6.png', 'demo7.png', 'demo8.png', 'demo9.png', 'demo10.png'
+            'demo6.png', 'demo7.png', 'demo8.png', 'demo9.png', 'demo11.png','demo12.png','demo13.png','demo14.png','demo15.png','demo16.png','demo17.png','demo18.png','demo10.png'
         ];
 
         function renderGallery() {
