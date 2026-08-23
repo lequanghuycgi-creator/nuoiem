@@ -226,19 +226,22 @@
         </div>
     </header>
 
-    <!-- Modal Lấy Key Offline -->
+    <!-- Modal Lấy Key Offline Đã Thiết Kế Lại -->
     <div id="offline-modal" class="modal-overlay">
         <div class="modal-card">
             <button class="modal-close" onclick="closeOfflineModal()">&times;</button>
             <h2 style="color: var(--navy); font-size: 22px; margin-bottom: 8px; font-weight: 800;">Chuyển đổi sang Key Offline</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Dành cho máy tính bị tường lửa hoặc cấu hình mạng chặn kết nối trực tuyến.</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Hệ thống sẽ tự động đồng bộ mã máy của bạn và khởi tạo Key Offline.</p>
             
             <form id="offline-form" onsubmit="submitOfflineSearch(event)">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="font-size: 12px;">Nhập Key Online hoặc Mã máy (HWID):</label>
-                    <input type="text" id="offline-search-input" placeholder="VD: ktr-xxxx hoặc HWID..." required style="padding: 14px; font-size: 15px;">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="font-size: 12px; margin-bottom: 6px;">1. Nhập Key Bản Quyền (Nhận từ Email):</label>
+                    <input type="text" id="offline-key-input" placeholder="VD: ktr-xxxx..." required style="padding: 14px; font-size: 15px; margin-bottom: 15px;">
+                    
+                    <label style="font-size: 12px; margin-bottom: 6px;">2. Nhập Mã Máy (HWID hiển thị trên Phần mềm):</label>
+                    <input type="text" id="offline-hwid-input" placeholder="VD: 4CBB5E6C" required style="padding: 14px; font-size: 15px;">
                 </div>
-                <button type="submit" class="btn-submit ready" style="padding: 14px; font-size: 15px;">Chuyển Đổi Sang Key Offline</button>
+                <button type="submit" class="btn-submit ready" style="padding: 14px; font-size: 15px; width: 100%;">Tự Động Điền & Tạo Mã</button>
             </form>
 
             <div id="offline-result" style="margin-top: 20px; display: none;"></div>
@@ -471,38 +474,44 @@
         function closeOfflineModal() {
             document.getElementById('offline-modal').style.display = 'none';
             document.getElementById('offline-result').style.display = 'none';
-            document.getElementById('offline-search-input').value = '';
+            document.getElementById('offline-key-input').value = '';
+            document.getElementById('offline-hwid-input').value = '';
         }
 
-        // --- XỬ LÝ MODAL OFFLINE ĐÃ ĐƯỢC TỐI ƯU CƠ CHẾ CORS ---
+        // --- XỬ LÝ MODAL OFFLINE ĐÃ ĐƯỢC TỐI ƯU CƠ CHẾ CORS VÀ GỬI 2 THAM SỐ ---
         function submitOfflineSearch(e) {
             e.preventDefault();
-            const query = document.getElementById('offline-search-input').value.trim();
+            const keyInput = document.getElementById('offline-key-input').value.trim();
+            const hwidInput = document.getElementById('offline-hwid-input').value.trim();
+            
             const resultDiv = document.getElementById('offline-result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang kết nối hệ thống...</p>';
+            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang đồng bộ mã máy và khởi tạo Key...</p>';
         
-            // Chuyển từ GET sang POST text/plain để vượt qua rào cản CORS của trình duyệt
             fetch(API_URL, {
                 method: "POST",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "searchOffline", search: query })
+                body: JSON.stringify({ action: "searchOffline", key: keyInput, hwid: hwidInput })
             })
             .then(res => res.json())
             .then(data => {
-                if (data.found) {
+                if (data.errorMsg) {
+                    // Trả lỗi từ Apps Script (nếu sai HWID)
+                    resultDiv.innerHTML = `<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px; line-height: 1.5;">${data.errorMsg}</div>`;
+                } else if (data.found) {
+                    // Thành công
                     resultDiv.innerHTML = `
                         <div style="margin-top:25px; padding:20px; background:#e8f4f8; border-left: 5px solid #17a2b8; border-radius:4px; text-align:left;">
                             <p style="margin:0 0 10px 0; color:#333;"><b>Mã Offline của bạn là:</b></p>
                             <span style="display:block; font-size:22px; color:#d9534f; font-weight:bold; letter-spacing: 1px; user-select:all; word-break: break-all; margin-bottom: 10px;">${data.key}</span>
                             <p style="margin:0; color:#155724; background:#d4edda; padding:8px; border-radius:4px; font-size:14px;">
-                            ⏳ Thời hạn: <b>${data.date}</b><br><i style="font-size:12px;">(Được giữ nguyên đúng theo Key Online)</i></p>
+                            ⏳ Thời hạn: <b>${data.date}</b></p>
                             <p style="font-size:13px; color:#666; margin-top:15px; line-height:1.5;">Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
                         </div>`;
                 } else if (data.blocked) {
                     resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
                 } else {
-                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Không tìm thấy thông tin trùng khớp. Vui lòng kiểm tra lại Key/HWID!</div>';
+                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Không tìm thấy Key Bản Quyền. Vui lòng kiểm tra lại Email!</div>';
                 }
             })
             .catch(err => {
