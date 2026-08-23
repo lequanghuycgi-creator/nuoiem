@@ -69,24 +69,8 @@
         .hero { text-align: center; padding: 180px 20px 120px; position: relative; animation: fadeUp 1s ease-out;}
         .badge { background: #ffffff; border: 2px solid #fecdd3; color: var(--primary); padding: 8px 24px; border-radius: 100px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(217, 4, 41, 0.1);}
         
-        /* Cố định tiêu đề trên 1 dòng duy nhất trên màn hình lớn */
-        .hero h1 { 
-            font-size: 44px; 
-            font-weight: 800; 
-            color: var(--navy); 
-            max-width: 100%; 
-            margin: 0 auto 20px; 
-            line-height: 1.3; 
-            letter-spacing: -1px; 
-            white-space: nowrap; 
-        }
-        .hero h1 span { 
-            background: linear-gradient(to right, var(--primary), var(--accent), var(--primary));
-            background-size: 200% auto;
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            animation: textShine 4s linear infinite;
-        }
+        .hero h1 { font-size: 44px; font-weight: 800; color: var(--navy); max-width: 100%; margin: 0 auto 20px; line-height: 1.3; letter-spacing: -1px; white-space: nowrap; }
+        .hero h1 span { background: linear-gradient(to right, var(--primary), var(--accent), var(--primary)); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 4s linear infinite;}
         
         .hero-desc { max-width: 750px; margin: 0 auto 50px; }
         .hero p.mission { font-size: 18px; color: #ffffff; margin-bottom: 24px; line-height: 1.6; padding: 24px 30px; background: linear-gradient(135deg, var(--navy), #061a4a); border-radius: 20px; box-shadow: 0 20px 40px rgba(10, 36, 99, 0.2); font-weight: 500;}
@@ -226,22 +210,28 @@
         </div>
     </header>
 
-    <!-- Modal Lấy Key Offline Đã Thiết Kế Lại -->
+    <!-- Modal Lấy Key Offline Đã Thiết Kế Lại (Luồng 2 Bước) -->
     <div id="offline-modal" class="modal-overlay">
         <div class="modal-card">
             <button class="modal-close" onclick="closeOfflineModal()">&times;</button>
             <h2 style="color: var(--navy); font-size: 22px; margin-bottom: 8px; font-weight: 800;">Chuyển đổi sang Key Offline</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Hệ thống sẽ tự động đồng bộ mã máy của bạn và khởi tạo Key Offline.</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Dành cho máy tính bị tường lửa hoặc cấu hình mạng chặn kết nối trực tuyến.</p>
             
             <form id="offline-form" onsubmit="submitOfflineSearch(event)">
                 <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="font-size: 12px; margin-bottom: 6px;">1. Nhập Key Bản Quyền (Nhận từ Email):</label>
+                    <label style="font-size: 12px; margin-bottom: 6px;">Nhập Key Bản Quyền (Nhận từ Email):</label>
                     <input type="text" id="offline-key-input" placeholder="VD: ktr-xxxx..." required style="padding: 14px; font-size: 15px; margin-bottom: 15px;">
                     
-                    <label style="font-size: 12px; margin-bottom: 6px;">2. Nhập Mã Máy (HWID hiển thị trên Phần mềm):</label>
-                    <input type="text" id="offline-hwid-input" placeholder="VD: 4CBB5E6C" required style="padding: 14px; font-size: 15px;">
+                    <!-- Khung nhập HWID mặc định sẽ ẨN đi -->
+                    <div id="hwid-wrapper" style="display: none;">
+                        <label style="font-size: 12px; margin-bottom: 6px;">Nhập Mã Máy (HWID hiển thị trên Phần mềm):</label>
+                        <input type="text" id="offline-hwid-input" placeholder="VD: 4CBB5E6C" style="padding: 14px; font-size: 15px;">
+                        <p style="font-size: 13px; color: #b45309; margin-top: 10px; font-weight: 600; line-height: 1.4;">
+                            💡 Hướng dẫn lấy HWID: Bấm vào nút <strong style="color: #d90429;">"Kiểm tra máy tính"</strong> trong sheet TT_BANQUYEN
+                        </p>
+                    </div>
                 </div>
-                <button type="submit" class="btn-submit ready" style="padding: 14px; font-size: 15px; width: 100%;">Tự Động Điền & Tạo Mã</button>
+                <button type="submit" id="offline-btn-submit" class="btn-submit ready" style="padding: 14px; font-size: 15px; width: 100%;">Tra Cứu Key</button>
             </form>
 
             <div id="offline-result" style="margin-top: 20px; display: none;"></div>
@@ -305,7 +295,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- PHÂN HỆ I -->
                     <tr style="background-color: #f1f5f9;">
                         <td style="font-weight: 800; color: var(--navy); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">I. Phân hệ: Kiểm tra Thuế tại trụ sở CQT</td>
                         <td></td>
@@ -328,7 +317,6 @@
                     <tr><td>15. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>16. Xuất file Word Tờ trình, thông báo (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
 
-                    <!-- PHÂN HỆ II -->
                     <tr style="background-color: #f1f5f9;">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">II. Phân hệ Quản lý nợ và Cưỡng chế nợ thuế</td>
                         <td><span class="cross">✕</span></td>
@@ -342,14 +330,12 @@
                     <tr><td>6. Cưỡng chế tài khoản</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td></tr>
                     <tr><td>7. Bảng tính tiền chậm nộp Lệ phí môn bài</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
 
-                    <!-- PHÂN HỆ III -->
                     <tr style="background-color: #f1f5f9;">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">III. Phân hệ Kê khai, Kế toán thuế</td>
                         <td><span class="cross">✕</span></td>
                         <td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td>
                     </tr>
 
-                    <!-- PHÂN HỆ IV -->
                     <tr style="background-color: #f1f5f9;">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">IV. Phân hệ Tiện ích khác</td>
                         <td><span class="cross">✕</span></td>
@@ -467,7 +453,7 @@
         document.addEventListener('keydown', function(e) { if (e.key === "Escape" && lightbox && lightbox.classList.contains('active')) closeLightbox(); });
         document.addEventListener('DOMContentLoaded', renderGallery);
 
-        // --- XỬ LÝ MODAL OFFLINE ---
+        // --- XỬ LÝ MODAL OFFLINE THÔNG MINH (2 BƯỚC) ---
         function openOfflineModal() {
             document.getElementById('offline-modal').style.display = 'flex';
         }
@@ -476,17 +462,30 @@
             document.getElementById('offline-result').style.display = 'none';
             document.getElementById('offline-key-input').value = '';
             document.getElementById('offline-hwid-input').value = '';
+            
+            // Trả lại trạng thái mặc định (Ẩn HWID, mở khóa ô Key)
+            document.getElementById('offline-key-input').readOnly = false;
+            document.getElementById('hwid-wrapper').style.display = 'none';
+            const btn = document.getElementById('offline-btn-submit');
+            btn.innerHTML = "Tra Cứu Key";
+            btn.style.display = "block";
         }
 
-        // --- XỬ LÝ MODAL OFFLINE ĐÃ ĐƯỢC TỐI ƯU CƠ CHẾ CORS VÀ GỬI 2 THAM SỐ ---
         function submitOfflineSearch(e) {
             e.preventDefault();
             const keyInput = document.getElementById('offline-key-input').value.trim();
             const hwidInput = document.getElementById('offline-hwid-input').value.trim();
+            const hwidWrapper = document.getElementById('hwid-wrapper');
+            
+            // Nếu khung HWID đang hiện mà user không điền, báo lỗi
+            if (hwidWrapper.style.display === 'block' && hwidInput === '') {
+                alert("Vui lòng điền Mã Máy (HWID) để tiếp tục!");
+                return;
+            }
             
             const resultDiv = document.getElementById('offline-result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang đồng bộ mã máy và khởi tạo Key...</p>';
+            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang truy xuất dữ liệu hệ thống...</p>';
         
             fetch(API_URL, {
                 method: "POST",
@@ -495,11 +494,22 @@
             })
             .then(res => res.json())
             .then(data => {
-                if (data.errorMsg) {
-                    // Trả lỗi từ Apps Script (nếu sai HWID)
+                if (data.requireHwid) {
+                    // KEY HỢP LỆ NHƯNG CHƯA CÓ HWID -> Yêu cầu nhập HWID
+                    hwidWrapper.style.display = 'block';
+                    document.getElementById('offline-key-input').readOnly = true; // Khóa dòng nhập Key
+                    document.getElementById('offline-btn-submit').innerHTML = "Tạo Key Offline Gắn Theo Máy";
+                    
+                    resultDiv.innerHTML = `
+                        <div style="margin-top:10px; padding:15px; background:#fffbeb; color:#b45309; border-radius:4px; font-weight:bold; font-size:14px; text-align:center; line-height: 1.5;">
+                            ✅ Key hoàn toàn hợp lệ!<br>
+                            Hệ thống phát hiện đây là lần đầu kích hoạt. Vui lòng nhập thêm <span style="text-decoration: underline;">Mã máy (HWID)</span> bên trên để gắn kết thiết bị.
+                        </div>`;
+                } else if (data.errorMsg) {
+                    // Lỗi nhập sai HWID
                     resultDiv.innerHTML = `<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px; line-height: 1.5;">${data.errorMsg}</div>`;
                 } else if (data.found) {
-                    // Thành công
+                    // THÀNH CÔNG -> Trả mã Offline
                     resultDiv.innerHTML = `
                         <div style="margin-top:25px; padding:20px; background:#e8f4f8; border-left: 5px solid #17a2b8; border-radius:4px; text-align:left;">
                             <p style="margin:0 0 10px 0; color:#333;"><b>Mã Offline của bạn là:</b></p>
@@ -508,6 +518,10 @@
                             ⏳ Thời hạn: <b>${data.date}</b></p>
                             <p style="font-size:13px; color:#666; margin-top:15px; line-height:1.5;">Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
                         </div>`;
+                    
+                    // Ẩn thanh điền HWID và nút Button cho đỡ rối
+                    hwidWrapper.style.display = 'none';
+                    document.getElementById('offline-btn-submit').style.display = 'none';
                 } else if (data.blocked) {
                     resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
                 } else {
