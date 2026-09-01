@@ -2,13 +2,13 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Phần Mềm Tự Động Hóa Nghiệp Vụ Quản Lý Thuế - kiemtrathue.vn</title>
     
-    <!-- Google Fonts 100% Chuẩn Tiếng Việt: Be Vietnam Pro & Plus Jakarta Sans -->
+    <!-- Google Fonts 100% Chuẩn Tiếng Việt với font-display: swap giúp tải trang siêu tốc -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -17,7 +17,7 @@
             --font-heading: 'Be Vietnam Pro', 'Plus Jakarta Sans', sans-serif;
             --font-body: 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif;
 
-            /* Hệ màu Đẳng cấp Cơ quan Nhà nước / Công chức Thuế Hiện Đại */
+            /* Hệ màu Cơ quan Nhà nước / Công chức Thuế Hiện Đại */
             --navy-deep: #050d1a;
             --navy-dark: #0a192f;
             --navy-card: #0e2246;
@@ -48,13 +48,12 @@
             --text-body: #94a3b8;
             --text-muted: #64748b;
 
-            --radius-sm: 12px;
-            --radius-md: 20px;
-            --radius-lg: 28px;
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
             --radius-full: 9999px;
 
-            --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -62,6 +61,12 @@
             margin: 0;
             padding: 0;
             -webkit-font-smoothing: antialiased;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
         }
 
         html {
@@ -73,8 +78,6 @@
             background-color: var(--bg-body);
             color: var(--text-body);
             line-height: 1.65;
-            overflow-x: hidden;
-            position: relative;
             min-height: 100vh;
         }
 
@@ -82,7 +85,7 @@
             font-family: var(--font-heading);
         }
 
-        /* Canvas 3D Space Background */
+        /* Canvas 3D Space Background - Tối ưu GPU */
         #canvas3d {
             position: fixed;
             top: 0;
@@ -91,133 +94,113 @@
             height: 100vh;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.85;
+            opacity: 0.8;
+            transform: translateZ(0);
         }
 
-        /* 3D Glowing Ambient Orbs */
+        /* Ambient Glow Orbs - Tối ưu hiệu năng, giảm blur nặng */
         .ambient-orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(120px);
             pointer-events: none;
             z-index: 0;
-            animation: orbFloat 14s infinite alternate ease-in-out;
+            transform: translateZ(0);
+            opacity: 0.6;
         }
 
         .orb-1 {
             top: -10%;
             left: 15%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(230, 57, 70, 0.15), transparent 70%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(230, 57, 70, 0.18), transparent 70%);
         }
 
         .orb-2 {
             top: 40%;
             right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(10, 36, 99, 0.35), transparent 70%);
-            animation-duration: 18s;
-            animation-delay: -5s;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(10, 36, 99, 0.4), transparent 70%);
         }
 
         .orb-3 {
             bottom: -10%;
             left: 5%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
-            animation-duration: 16s;
-            animation-delay: -3s;
-        }
-
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, 60px) scale(1.1); }
-            100% { transform: translate(-30px, -40px) scale(0.95); }
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15), transparent 70%);
         }
 
         /* Container & Grid Standards */
         .container {
             width: 100%;
-            max-width: 1240px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
             position: relative;
             z-index: 2;
         }
 
-        /* --- 3D NAVIGATION BAR --- */
+        /* --- 3D FLOATING CAPSULE NAVIGATION --- */
         .nav-wrapper {
             position: fixed;
-            top: 20px;
+            top: 16px;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
             z-index: 1000;
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         .nav-capsule {
             width: 100%;
-            max-width: 1120px;
-            background: rgba(10, 25, 47, 0.78);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            max-width: 1100px;
+            background: rgba(10, 25, 47, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--surface-glass-border);
             border-radius: var(--radius-full);
-            padding: 10px 24px;
+            padding: 8px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6),
-                        0 0 0 1px rgba(255, 255, 255, 0.05),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6),
+                        0 0 0 1px rgba(255, 255, 255, 0.05);
             transition: var(--transition-smooth);
-        }
-
-        .nav-capsule:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px -15px rgba(230, 57, 70, 0.15),
-                        0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
         .logo-nav {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: var(--text-white);
             font-family: var(--font-heading);
             font-weight: 800;
-            font-size: 20px;
+            font-size: 18px;
             letter-spacing: -0.5px;
-            transition: var(--transition-smooth);
-        }
-
-        .logo-nav:hover {
-            transform: scale(1.03);
+            flex-shrink: 0;
         }
 
         .logo-icon-box {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(10, 36, 99, 0.4));
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.25), rgba(10, 36, 99, 0.5));
             border: 1px solid rgba(230, 57, 70, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px var(--primary-glow);
+            box-shadow: 0 4px 12px var(--primary-glow);
             overflow: hidden;
-            position: relative;
+            flex-shrink: 0;
         }
 
         .logo-icon-box img {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             object-fit: contain;
         }
 
@@ -237,34 +220,33 @@
             color: var(--text-body);
             font-weight: 600;
             font-size: 14px;
-            padding: 9px 18px;
+            padding: 8px 16px;
             border-radius: var(--radius-full);
             transition: var(--transition-smooth);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             border: 1px solid transparent;
             cursor: pointer;
             background: transparent;
             font-family: inherit;
+            white-space: nowrap;
         }
 
         .nav-link:hover {
             color: var(--text-white);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.08);
             transform: translateY(-1px);
         }
 
         .btn-nav-offline {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-heading);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .btn-nav-offline:hover {
             background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.25);
             color: #fff;
         }
 
@@ -272,44 +254,19 @@
             background: var(--primary-gradient);
             color: #ffffff !important;
             font-weight: 700;
-            box-shadow: 0 6px 20px var(--primary-glow),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-nav-vip::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                60deg,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transform: rotate(30deg);
-            animation: shineSweep 4s infinite;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .btn-nav-vip:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.6);
-        }
-
-        @keyframes shineSweep {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            30%, 100% { transform: translateX(100%) rotate(30deg); }
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
         }
 
         /* --- HERO SECTION --- */
         .hero-section {
-            padding-top: 175px;
-            padding-bottom: 90px;
+            padding-top: 140px;
+            padding-bottom: 70px;
             text-align: center;
             position: relative;
         }
@@ -317,25 +274,18 @@
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 22px;
-            background: rgba(230, 57, 70, 0.1);
-            border: 1px solid rgba(230, 57, 70, 0.3);
+            gap: 8px;
+            padding: 6px 18px;
+            background: rgba(230, 57, 70, 0.12);
+            border: 1px solid rgba(230, 57, 70, 0.35);
             border-radius: var(--radius-full);
             color: #ff6b7a;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-bottom: 28px;
-            box-shadow: 0 0 25px rgba(230, 57, 70, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            animation: floatBadge 3s ease-in-out infinite;
-        }
-
-        @keyframes floatBadge {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            margin-bottom: 22px;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.2);
         }
 
         .pulse-dot {
@@ -349,19 +299,18 @@
 
         @keyframes dotPulse {
             0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.8); }
-            70% { box-shadow: 0 0 0 12px rgba(230, 57, 70, 0); }
+            70% { box-shadow: 0 0 0 10px rgba(230, 57, 70, 0); }
             100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
         }
 
         .hero-title {
             font-family: var(--font-heading);
-            font-size: 54px;
+            font-size: 46px;
             font-weight: 900;
             color: var(--text-white);
             line-height: 1.25;
-            letter-spacing: -1.2px;
-            margin-bottom: 28px;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            letter-spacing: -1px;
+            margin-bottom: 24px;
         }
 
         .hero-title .gradient-text {
@@ -381,7 +330,7 @@
 
         .hero-desc-wrapper {
             max-width: 840px;
-            margin: 0 auto 40px;
+            margin: 0 auto 35px;
         }
 
         /* 3D Mission Glass Card */
@@ -390,44 +339,34 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-left: 4px solid var(--primary);
             border-radius: var(--radius-md);
-            padding: 22px 30px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            padding: 18px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
             text-align: left;
             display: flex;
             align-items: center;
-            gap: 18px;
-            transform: perspective(1000px) rotateX(1deg);
-            transition: var(--transition-smooth);
-        }
-
-        .mission-glass-card:hover {
-            transform: perspective(1000px) rotateX(0deg) translateY(-3px);
-            border-color: rgba(230, 57, 70, 0.4);
-            box-shadow: 0 25px 50px -10px rgba(230, 57, 70, 0.15);
+            gap: 16px;
         }
 
         .mission-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             flex-shrink: 0;
-            border-radius: 14px;
+            border-radius: 12px;
             background: var(--primary-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 20px;
-            box-shadow: 0 8px 18px var(--primary-glow);
+            font-size: 18px;
+            box-shadow: 0 6px 15px var(--primary-glow);
         }
 
         .mission-text {
-            font-size: 17px;
+            font-size: 16px;
             color: #f1f5f9;
             font-weight: 500;
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
         .mission-text strong {
@@ -436,72 +375,62 @@
         }
 
         .hero-highlight {
-            font-size: 18px;
+            font-size: 16px;
             color: #cbd5e1;
             font-weight: 600;
             line-height: 1.6;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
-        /* 3D Quick Metrics Bar */
+        /* Quick Metrics Bar */
         .metrics-bar {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 16px;
-            margin: 32px 0 45px;
+            gap: 12px;
+            margin: 26px 0 35px;
         }
 
         .metric-pill {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            padding: 8px 16px;
             border-radius: var(--radius-full);
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
+            gap: 8px;
+            font-size: 13px;
             color: var(--text-heading);
             font-weight: 600;
-            transition: var(--transition-smooth);
         }
 
         .metric-pill i {
             color: var(--cyan-accent);
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .metric-pill:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--cyan-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--cyan-glow);
-        }
-
-        /* 3D Main CTAs */
+        /* Main CTAs */
         .hero-cta-group {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .btn-3d {
-            padding: 18px 40px;
+            padding: 16px 36px;
             border-radius: var(--radius-full);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             transition: var(--transition-smooth);
             position: relative;
             cursor: pointer;
-            letter-spacing: 0.3px;
             font-family: inherit;
         }
 
@@ -509,62 +438,46 @@
             background: var(--primary-gradient);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 35px -5px var(--primary-glow),
-                        inset 0 1px 2px rgba(255, 255, 255, 0.4);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px -5px var(--primary-glow);
         }
 
         .btn-3d-primary:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 25px 45px -5px rgba(230, 57, 70, 0.6),
-                        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -5px rgba(230, 57, 70, 0.6);
             color: #ffffff;
         }
 
         .btn-3d-secondary {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             color: var(--text-white);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(16px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .btn-3d-secondary:hover {
             background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
             color: #ffffff;
         }
 
-        /* --- 3D INTERACTIVE SOFTWARE MOCKUP SHOWCASE --- */
+        /* 3D Showcase Window */
         .showcase-window-wrapper {
-            margin-top: 60px;
-            perspective: 1200px;
+            margin-top: 45px;
         }
 
         .showcase-window {
             background: linear-gradient(180deg, #101f3d 0%, #091326 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8),
-                        0 0 40px rgba(230, 57, 70, 0.15),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            transform: rotateX(6deg);
-            transition: var(--transition-spring);
-        }
-
-        .showcase-window:hover {
-            transform: rotateX(0deg) translateY(-8px);
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9),
-                        0 0 60px rgba(230, 57, 70, 0.25);
-            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8),
+                        0 0 30px rgba(230, 57, 70, 0.12);
+            cursor: pointer;
         }
 
         .window-header {
             background: rgba(6, 14, 28, 0.85);
-            padding: 14px 20px;
+            padding: 12px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -573,12 +486,12 @@
 
         .window-dots {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .window-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
 
@@ -592,176 +505,153 @@
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .window-badge {
             font-size: 11px;
             background: rgba(16, 185, 129, 0.15);
             color: #34d399;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .window-body {
             position: relative;
-            padding: 10px;
+            padding: 8px;
             background: #081122;
         }
 
         .window-body img {
             width: 100%;
             height: auto;
-            border-radius: 14px;
+            border-radius: 10px;
             display: block;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         /* --- SECTION COMMONS --- */
         .section {
-            padding: 100px 0;
+            padding: 80px 0;
             position: relative;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 65px;
+            margin-bottom: 45px;
             position: relative;
         }
 
         .section-tag {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 13px;
+            gap: 6px;
+            font-size: 12px;
             font-weight: 800;
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
         }
 
         .section-title {
             font-family: var(--font-heading);
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 800;
             color: var(--text-white);
             letter-spacing: -0.8px;
             line-height: 1.3;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .section-subtitle {
-            font-size: 17px;
+            font-size: 15px;
             color: var(--text-body);
             max-width: 650px;
             margin: 0 auto;
             font-weight: 500;
         }
 
-        /* --- 3D BENTO GRID SECTION --- */
+        /* --- BENTO GRID SECTION --- */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
+            gap: 20px;
         }
 
         .bento-card {
             background: var(--surface-glass);
             border: 1px solid var(--surface-glass-border);
             border-radius: var(--radius-lg);
-            padding: 38px 34px;
+            padding: 32px 28px;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.4);
             transition: var(--transition-smooth);
-            transform-style: preserve-3d;
-        }
-
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 60%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
         }
 
         .bento-card:hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: translateY(-5px);
             border-color: rgba(230, 57, 70, 0.35);
-            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.6),
-                        0 0 35px rgba(230, 57, 70, 0.15);
-            background: var(--surface-glass-hover);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(230, 57, 70, 0.15);
         }
 
         .col-8 { grid-column: span 8; }
         .col-4 { grid-column: span 4; }
 
         .bento-icon-3d {
-            width: 68px;
-            height: 68px;
-            border-radius: 20px;
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
             background: linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(10, 36, 99, 0.5));
             border: 1px solid rgba(230, 57, 70, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 24px;
             color: #ff4d6d;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 25px var(--primary-glow);
-            transition: var(--transition-smooth);
+            margin-bottom: 18px;
+            box-shadow: 0 8px 20px var(--primary-glow);
         }
 
         .bento-card:hover .bento-icon-3d {
-            transform: scale(1.1) rotate(5deg);
             background: var(--primary-gradient);
             color: #fff;
-            box-shadow: 0 15px 35px var(--primary-glow);
         }
 
         .bento-card h3 {
             font-family: var(--font-heading);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--text-white);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             letter-spacing: -0.5px;
         }
 
         .bento-card p {
             color: var(--text-body);
-            font-size: 15px;
-            line-height: 1.65;
-            font-weight: 500;
+            font-size: 14.5px;
+            line-height: 1.6;
         }
 
         .bento-badge {
             display: inline-block;
             font-size: 11px;
             font-weight: 800;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: var(--radius-full);
             background: rgba(245, 158, 11, 0.15);
             color: var(--gold);
             border: 1px solid rgba(245, 158, 11, 0.3);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-transform: uppercase;
         }
 
-        /* --- 3D DEMO GALLERY SECTION --- */
+        /* --- DEMO GALLERY SECTION --- */
         .demo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .demo-card {
@@ -772,7 +662,7 @@
             position: relative;
             aspect-ratio: 16/10;
             cursor: pointer;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             transition: var(--transition-smooth);
         }
 
@@ -781,18 +671,17 @@
             height: 100%;
             object-fit: cover;
             object-position: top;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s ease;
         }
 
         .demo-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-5px);
             border-color: var(--primary);
-            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.6),
-                        0 0 30px rgba(230, 57, 70, 0.25);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(230, 57, 70, 0.25);
         }
 
         .demo-card:hover img {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         .demo-overlay {
@@ -804,9 +693,8 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            backdrop-filter: blur(3px);
             transition: var(--transition-smooth);
-            padding: 20px;
+            padding: 16px;
         }
 
         .demo-card:hover .demo-overlay {
@@ -814,51 +702,44 @@
         }
 
         .demo-zoom-btn {
-            width: 54px;
-            height: 54px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--primary-gradient);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 10px 25px var(--primary-glow);
-            transform: scale(0.7);
-            transition: var(--transition-spring);
-        }
-
-        .demo-card:hover .demo-zoom-btn {
-            transform: scale(1);
+            font-size: 18px;
+            box-shadow: 0 8px 20px var(--primary-glow);
         }
 
         .demo-index-tag {
             position: absolute;
-            top: 14px;
-            left: 14px;
-            background: rgba(6, 12, 24, 0.75);
+            top: 10px;
+            left: 10px;
+            background: rgba(6, 12, 24, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
+            padding: 3px 8px;
+            border-radius: 12px;
         }
 
-        /* --- ENHANCED LIGHTBOX --- */
+        /* --- LIGHTBOX MODAL --- */
         .lightbox-modal {
             position: fixed;
             inset: 0;
             background: rgba(3, 7, 18, 0.95);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 30px;
+            padding: 20px;
             opacity: 0;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .lightbox-modal.active {
@@ -868,8 +749,8 @@
 
         .lightbox-wrapper {
             position: relative;
-            max-width: 92vw;
-            max-height: 88vh;
+            max-width: 95vw;
+            max-height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -877,53 +758,53 @@
 
         .lightbox-img {
             max-width: 100%;
-            max-height: 85vh;
-            border-radius: var(--radius-md);
+            max-height: 82vh;
+            border-radius: var(--radius-sm);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(230, 57, 70, 0.2);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
             object-fit: contain;
         }
 
         .lightbox-btn {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
             z-index: 10;
         }
 
         .lightbox-btn:hover {
             background: var(--primary-gradient);
             border-color: transparent;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--primary-glow);
+            transform: scale(1.08);
         }
 
-        .lightbox-close { top: -20px; right: -20px; }
-        .lightbox-prev { left: -70px; }
-        .lightbox-next { right: -70px; }
+        .lightbox-close { top: -20px; right: -10px; }
+        .lightbox-prev { left: -60px; }
+        .lightbox-next { right: -60px; }
 
         .lightbox-counter {
             position: absolute;
-            bottom: -35px;
+            bottom: -30px;
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
         }
 
-        /* --- 3D COMPARISON MATRIX TABLE --- */
+        /* ==========================================================
+           --- COMPARISON MATRIX: 100% RESPONSIVE - KHÔNG CUỘN NGANG ---
+           ========================================================== */
         .features-section {
-            padding: 80px 0 100px;
+            padding: 70px 0 90px;
         }
 
         .matrix-table-container {
@@ -931,63 +812,70 @@
             border: 1px solid var(--surface-glass-border);
             border-radius: var(--radius-lg);
             overflow: hidden;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+            width: 100%;
         }
 
+        /* Bảng Desktop & Tablet */
         .matrix-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            table-layout: fixed;
         }
 
         .matrix-table th {
-            padding: 24px 28px;
-            font-size: 15px;
+            padding: 18px 20px;
+            font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             background: #091730;
             color: var(--text-white);
             border-bottom: 2px solid rgba(255, 255, 255, 0.08);
             font-family: var(--font-heading);
         }
 
-        .matrix-table th.col-free,
-        .matrix-table th.col-vip {
+        .matrix-table th.col-feature {
+            width: 62%;
+        }
+
+        .matrix-table th.col-free {
             text-align: center;
-            width: 20%;
+            width: 19%;
         }
 
         .matrix-table th.col-vip {
+            text-align: center;
+            width: 19%;
             background: linear-gradient(180deg, rgba(230, 57, 70, 0.35) 0%, rgba(159, 0, 27, 0.35) 100%);
             border-left: 1px solid rgba(230, 57, 70, 0.3);
             border-right: 1px solid rgba(230, 57, 70, 0.3);
             color: #ffccd5;
-            position: relative;
         }
 
         .vip-crown-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             background: var(--gold-gradient);
             color: #000;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 900;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
-            margin-bottom: 4px;
-            box-shadow: 0 4px 10px var(--gold-glow);
+            margin-bottom: 2px;
+            box-shadow: 0 3px 8px var(--gold-glow);
         }
 
         .matrix-table td {
-            padding: 20px 28px;
-            font-size: 15px;
+            padding: 14px 20px;
+            font-size: 14px;
             color: #cbd5e1;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: background 0.2s ease;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .matrix-table tr:hover td {
@@ -995,14 +883,13 @@
         }
 
         .matrix-table tr.category-row td {
-            background: rgba(14, 34, 70, 0.65);
+            background: rgba(14, 34, 70, 0.75);
             font-weight: 800;
             color: var(--cyan-accent);
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            padding-top: 22px;
-            padding-bottom: 22px;
+            padding: 16px 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-family: var(--font-heading);
         }
@@ -1027,8 +914,8 @@
         }
 
         .badge-check {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--success-bg);
             border: 1px solid rgba(16, 185, 129, 0.35);
@@ -1036,13 +923,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            font-size: 13px;
         }
 
         .badge-cross {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1050,31 +936,30 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .badge-dev {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
+            gap: 4px;
+            padding: 4px 10px;
             border-radius: var(--radius-full);
             background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.35);
             color: #fbbf24;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.2px;
         }
 
-        /* --- 3D ACTIVATION & VIETQR PAYMENT SECTION --- */
+        /* --- ACTIVATION & VIETQR PAYMENT SECTION --- */
         .activation-section {
-            padding: 100px 0 120px;
+            padding: 80px 0 100px;
             position: relative;
         }
 
         .activation-container {
-            max-width: 680px;
+            max-width: 640px;
             margin: 0 auto;
         }
 
@@ -1082,10 +967,8 @@
             background: linear-gradient(145deg, #0e2246 0%, #08152e 100%);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: var(--radius-lg);
-            padding: 50px 42px;
-            box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.8),
-                        0 0 50px rgba(230, 57, 70, 0.15),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            padding: 42px 34px;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(230, 57, 70, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -1096,67 +979,64 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
+            height: 4px;
             background: var(--primary-gradient);
         }
 
-        /* 3D Pricing Package Card */
         .vip-package-box {
             background: linear-gradient(135deg, rgba(230, 57, 70, 0.15) 0%, rgba(10, 36, 99, 0.4) 100%);
             border: 2px solid var(--primary);
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 20px;
             text-align: center;
             position: relative;
-            margin-bottom: 35px;
-            box-shadow: 0 15px 35px rgba(230, 57, 70, 0.2),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
         }
 
         .vip-save-badge {
             position: absolute;
-            top: -14px;
-            right: 20px;
+            top: -12px;
+            right: 16px;
             background: var(--primary-gradient);
             color: #fff;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
-            padding: 5px 16px;
+            padding: 4px 12px;
             border-radius: var(--radius-full);
-            box-shadow: 0 5px 15px var(--primary-glow);
+            box-shadow: 0 4px 12px var(--primary-glow);
             letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .vip-package-box h4 {
             font-family: var(--font-heading);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .vip-package-box .price-tag {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--gold);
             font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .form-label {
             display: block;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-white);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .input-wrapper {
@@ -1165,22 +1045,21 @@
 
         .input-icon {
             position: absolute;
-            left: 20px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 16px;
-            transition: var(--transition-smooth);
+            font-size: 15px;
         }
 
         .form-input {
             width: 100%;
-            padding: 16px 20px 16px 52px;
-            background: rgba(6, 15, 32, 0.8);
+            padding: 15px 18px 15px 48px;
+            background: rgba(6, 15, 32, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: var(--radius-sm);
             color: #ffffff;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             font-family: inherit;
             outline: none;
@@ -1190,7 +1069,7 @@
         .form-input:focus {
             background: #08142a;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.2);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
         }
 
         .form-input:focus + .input-icon {
@@ -1199,108 +1078,109 @@
 
         .form-error {
             color: #ff6b7a;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            margin-top: 8px;
+            margin-top: 6px;
             display: none;
         }
 
         .btn-submit-action {
             width: 100%;
-            padding: 20px;
+            padding: 18px;
             border-radius: var(--radius-sm);
             border: none;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             cursor: not-allowed;
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
             transition: var(--transition-smooth);
             font-family: inherit;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .btn-submit-action.ready {
             background: var(--primary-gradient);
             color: #ffffff;
             cursor: pointer;
-            box-shadow: 0 15px 35px var(--primary-glow);
+            box-shadow: 0 10px 25px var(--primary-glow);
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .btn-submit-action.ready:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 45px rgba(230, 57, 70, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(230, 57, 70, 0.6);
         }
 
         /* 3D QR Container */
         #qr-container {
-            margin-top: 40px;
-            padding-top: 35px;
+            margin-top: 35px;
+            padding-top: 30px;
             border-top: 2px dashed rgba(255, 255, 255, 0.12);
             text-align: center;
             display: none;
-            animation: fadeInQR 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeInQR 0.5s ease;
         }
 
         @keyframes fadeInQR {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         #qr-container h3 {
             font-family: var(--font-heading);
-            font-size: 24px;
+            font-size: 22px;
             color: var(--text-white);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 800;
         }
 
         .qr-box-3d {
             position: relative;
             display: inline-block;
-            padding: 16px;
+            padding: 12px;
             background: #ffffff;
             border-radius: var(--radius-md);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 255, 255, 0.1);
-            margin: 20px 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            margin: 16px 0;
         }
 
         .qr-box-3d img {
-            width: 260px;
+            width: 240px;
+            max-width: 100%;
             height: auto;
             display: block;
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         .qr-warning-box {
             background: rgba(245, 158, 11, 0.12);
             border: 1px solid rgba(245, 158, 11, 0.3);
             border-radius: var(--radius-sm);
-            padding: 18px 22px;
+            padding: 15px 18px;
             color: #fbbf24;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 700;
-            line-height: 1.55;
-            margin-top: 20px;
+            line-height: 1.5;
+            margin-top: 16px;
             text-align: left;
         }
 
-        /* --- 3D SMART OFFLINE MODAL --- */
+        /* --- SMART OFFLINE MODAL --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(2, 6, 23, 0.88);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+            padding: 16px;
             opacity: 0;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal-overlay.active {
@@ -1311,64 +1191,56 @@
         .modal-card {
             background: linear-gradient(145deg, #0e2246 0%, #08152e 100%);
             width: 100%;
-            max-width: 520px;
+            max-width: 480px;
             border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(10, 36, 99, 0.5);
+            padding: 32px 24px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-top: 5px solid var(--cyan-accent);
-            animation: modalScale 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes modalScale {
-            from { transform: scale(0.9) translateY(20px); }
-            to { transform: scale(1) translateY(0); }
+            border-top: 4px solid var(--cyan-accent);
         }
 
         .modal-close-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-body);
             cursor: pointer;
-            transition: var(--transition-smooth);
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .modal-close-btn:hover {
             background: var(--primary);
             color: #fff;
-            transform: rotate(90deg);
         }
 
         .modal-card h2 {
             font-family: var(--font-heading);
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--text-white);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .modal-card p.modal-desc {
             color: var(--text-body);
-            font-size: 14px;
-            margin-bottom: 24px;
+            font-size: 13.5px;
+            margin-bottom: 20px;
         }
 
         /* --- FOOTER --- */
         .footer-section {
             background: #030814;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 60px 0 40px;
+            padding: 50px 0 35px;
             text-align: center;
             position: relative;
             z-index: 2;
@@ -1376,10 +1248,10 @@
 
         .footer-brand {
             font-family: var(--font-heading);
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             color: #ffffff;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .footer-brand span {
@@ -1388,30 +1260,21 @@
 
         .footer-text {
             color: var(--text-body);
-            font-size: 15px;
-            margin-bottom: 16px;
+            font-size: 14px;
+            margin-bottom: 14px;
         }
 
         .footer-contact-pill {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 24px;
+            gap: 8px;
+            padding: 9px 20px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-full);
             color: #fff;
-            font-size: 15px;
+            font-size: 14px;
             text-decoration: none;
-            transition: var(--transition-smooth);
-        }
-
-        .footer-contact-pill:hover {
-            background: rgba(230, 57, 70, 0.15);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            color: #fff;
-            box-shadow: 0 8px 20px var(--primary-glow);
         }
 
         .footer-contact-pill strong {
@@ -1419,36 +1282,255 @@
             font-weight: 800;
         }
 
-        /* --- RESPONSIVE MEDIA QUERIES --- */
+        /* ==========================================================
+           --- ĐIỀU CHỈNH MOBILE CHUYÊN SÂU (<= 768px & <= 480px) ---
+           ========================================================== */
         @media (max-width: 992px) {
-            .hero-title { font-size: 38px; }
+            .hero-title { font-size: 36px; }
             .col-8, .col-4 { grid-column: span 12; }
-            .matrix-table { min-width: 680px; }
-            .matrix-table-container { overflow-x: auto; }
         }
 
         @media (max-width: 768px) {
-            .hero-section { padding-top: 130px; }
-            .hero-title { font-size: 28px; letter-spacing: -0.5px; }
-            .nav-capsule { padding: 8px 16px; }
-            .nav-link.hide-mobile { display: none; }
-            .mission-glass-card { flex-direction: column; text-align: center; }
-            .hero-cta-group { flex-direction: column; width: 100%; }
-            .btn-3d { width: 100%; }
-            .activation-card { padding: 35px 20px; }
-            .bento-card { padding: 28px 22px; }
-            .lightbox-prev { left: 10px; }
-            .lightbox-next { right: 10px; }
-            .lightbox-close { top: 10px; right: 10px; }
+            /* 1. Tối ưu Navbar Mobile (Không bị tràn, không bị cắt nút) */
+            .nav-wrapper {
+                top: 10px;
+                padding: 0 10px;
+            }
+
+            .nav-capsule {
+                padding: 6px 12px;
+                border-radius: 50px;
+            }
+
+            .logo-nav {
+                font-size: 15px;
+                gap: 8px;
+            }
+
+            .logo-icon-box {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+            }
+
+            .logo-icon-box img {
+                width: 18px;
+                height: 18px;
+            }
+
+            .nav-menu {
+                gap: 5px;
+            }
+
+            .nav-link.hide-mobile {
+                display: none;
+            }
+
+            .btn-nav-offline {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .btn-nav-vip {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            /* 2. Tối ưu Hero Mobile */
+            .hero-section {
+                padding-top: 95px;
+                padding-bottom: 45px;
+            }
+
+            .hero-badge {
+                font-size: 11px;
+                padding: 5px 14px;
+                margin-bottom: 16px;
+            }
+
+            .hero-title {
+                font-size: 26px;
+                letter-spacing: -0.5px;
+                line-height: 1.28;
+                margin-bottom: 18px;
+            }
+
+            .mission-glass-card {
+                padding: 14px 16px;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .mission-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+
+            .mission-text {
+                font-size: 14px;
+            }
+
+            .hero-highlight {
+                font-size: 14px;
+            }
+
+            .metrics-bar {
+                gap: 8px;
+                margin: 20px 0 28px;
+            }
+
+            .metric-pill {
+                font-size: 12px;
+                padding: 6px 12px;
+                width: calc(50% - 4px);
+                justify-content: center;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                width: 100%;
+                gap: 12px;
+            }
+
+            .btn-3d {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 14.5px;
+            }
+
+            /* 3. Tối ưu Bảng So Sánh Trên Mobile (KHÔNG CẦN CUỘN NGANG) */
+            .section {
+                padding: 55px 0;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .section-subtitle {
+                font-size: 14px;
+            }
+
+            .matrix-table-container {
+                border-radius: var(--radius-md);
+            }
+
+            .matrix-table {
+                table-layout: fixed;
+                width: 100%;
+            }
+
+            .matrix-table th {
+                padding: 12px 6px;
+                font-size: 11.5px;
+                letter-spacing: 0;
+            }
+
+            .matrix-table th.col-feature {
+                width: 54%;
+            }
+
+            .matrix-table th.col-free {
+                width: 23%;
+            }
+
+            .matrix-table th.col-vip {
+                width: 23%;
+                padding: 8px 4px;
+            }
+
+            .vip-crown-badge {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+
+            .matrix-table td {
+                padding: 10px 6px;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+            .matrix-table tr.category-row td {
+                padding: 12px 8px;
+                font-size: 12px;
+                line-height: 1.35;
+            }
+
+            .badge-check, .badge-cross {
+                width: 24px;
+                height: 24px;
+                font-size: 11px;
+            }
+
+            .badge-dev {
+                font-size: 9.5px;
+                padding: 3px 6px;
+                line-height: 1.2;
+                text-align: center;
+            }
+
+            /* 4. Form & Activation Mobile */
+            .activation-card {
+                padding: 26px 16px;
+            }
+
+            .vip-package-box {
+                padding: 16px 12px;
+            }
+
+            .vip-package-box h4 {
+                font-size: 18px;
+            }
+
+            .vip-package-box .price-tag {
+                font-size: 14.5px;
+            }
+
+            .form-input {
+                padding: 13px 14px 13px 42px;
+                font-size: 14px;
+            }
+
+            .btn-submit-action {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .qr-box-3d img {
+                width: 200px;
+            }
+
+            .lightbox-prev, .lightbox-next {
+                display: none; /* Ẩn nút prev/next trên mobile cho đỡ che ảnh */
+            }
+
+            .lightbox-close {
+                top: -35px;
+                right: 0;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo-text {
+                font-size: 13px;
+            }
+            .btn-nav-offline span,
+            .btn-nav-vip span {
+                font-size: 11px;
+            }
+            .metric-pill {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 3D Interactive Cyber Canvas Background -->
+    <!-- 3D Lightweight Canvas Background -->
     <canvas id="canvas3d"></canvas>
 
-    <!-- 3D Ambient Glowing Light Orbs -->
+    <!-- Ambient Glow Orbs -->
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
     <div class="ambient-orb orb-3"></div>
@@ -1458,7 +1540,7 @@
         <nav class="nav-capsule">
             <a href="#" class="logo-nav">
                 <div class="logo-icon-box">
-                    <img src="logo.ico" alt="kiemtrathue.vn logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-shield-halved\' style=\'color:#ff4d6d\'></i>'">
+                    <img src="logo.ico" alt="logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-shield-halved\' style=\'color:#ff4d6d\'></i>'">
                 </div>
                 <div class="logo-text">kiemtra<span>thue.vn</span></div>
             </a>
@@ -1466,8 +1548,8 @@
             <ul class="nav-menu">
                 <li><a href="#demo" class="nav-link hide-mobile"><i class="fa-solid fa-layer-group"></i> Tính Năng</a></li>
                 <li><a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="nav-link hide-mobile"><i class="fa-solid fa-cloud-arrow-down"></i> Tải Về</a></li>
-                <li><button onclick="openOfflineModal()" class="nav-link btn-nav-offline"><i class="fa-solid fa-key"></i> Key Offline</button></li>
-                <li><a href="#kich-hoat" class="nav-link btn-nav-vip"><i class="fa-solid fa-crown"></i> Kích Hoạt VIP</a></li>
+                <li><button onclick="openOfflineModal()" class="nav-link btn-nav-offline"><i class="fa-solid fa-key"></i> <span>Key Offline</span></button></li>
+                <li><a href="#kich-hoat" class="nav-link btn-nav-vip"><i class="fa-solid fa-crown"></i> <span>VIP 👑</span></a></li>
             </ul>
         </nav>
     </header>
@@ -1475,20 +1557,20 @@
     <!-- HERO SECTION -->
     <section class="hero-section">
         <div class="container">
-            <!-- 3D Pulsing Badge -->
+            <!-- Pulsing Badge -->
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
                 Phiên bản 2026 - Cập nhật liên tục
             </div>
 
-            <!-- Kinetic 3D Main Title -->
+            <!-- Kinetic Main Title -->
             <h1 class="hero-title">
                 Phần mềm tự động hóa nghiệp vụ<br>
                 <span class="gradient-text">quản lý Thuế</span>
             </h1>
 
             <div class="hero-desc-wrapper">
-                <!-- 3D Mission Glass Card -->
+                <!-- Mission Card -->
                 <div class="mission-glass-card">
                     <div class="mission-icon">
                         <i class="fa-solid fa-bullseye"></i>
@@ -1502,16 +1584,16 @@
                     Định nghĩa lại tốc độ xử lý Nghiệp vụ Thuế - Tự động hóa hàng giờ làm việc thủ công chỉ bằng một cú click chuột.
                 </p>
 
-                <!-- 3D Quick Metrics Bar -->
+                <!-- Quick Metrics Bar -->
                 <div class="metrics-bar">
                     <div class="metric-pill"><i class="fa-solid fa-calendar-check"></i> Phân tích 5 năm liên tục</div>
                     <div class="metric-pill"><i class="fa-solid fa-shield-virus"></i> 28 Tiêu chí rủi ro BCTC</div>
                     <div class="metric-pill"><i class="fa-solid fa-bolt-lightning"></i> 1-Click Xử lý siêu tốc</div>
-                    <div class="metric-pill"><i class="fa-solid fa-file-word"></i> 100% Chuẩn mẫu Tổng cục Thuế</div>
+                    <div class="metric-pill"><i class="fa-solid fa-file-word"></i> 100% Chuẩn Tổng cục Thuế</div>
                 </div>
             </div>
 
-            <!-- 3D Main Action Buttons -->
+            <!-- Main Action Buttons -->
             <div class="hero-cta-group">
                 <a href="#kich-hoat" class="btn-3d btn-3d-primary">
                     <i class="fa-solid fa-crown"></i> Mở Khóa VIP 👑
@@ -1521,9 +1603,9 @@
                 </a>
             </div>
 
-            <!-- 3D Floating Interactive Software Window Showcase -->
+            <!-- Floating Software Window Showcase -->
             <div class="showcase-window-wrapper">
-                <div class="showcase-window tilt-card" onclick="openLightbox('demo1.png')">
+                <div class="showcase-window" onclick="openLightbox('demo1.png')">
                     <div class="window-header">
                         <div class="window-dots">
                             <span class="window-dot dot-red"></span>
@@ -1531,10 +1613,10 @@
                             <span class="window-dot dot-green"></span>
                         </div>
                         <div class="window-title">
-                            <i class="fa-solid fa-table-cells"></i> Hệ Thống Tự Động Hóa Nghiệp Vụ Thuế 2026
+                            <i class="fa-solid fa-table-cells"></i> Hệ Thống Quản Lý Thuế 2026
                         </div>
                         <div class="window-badge">
-                            <i class="fa-solid fa-circle-check"></i> Đang hoạt động
+                            <i class="fa-solid fa-circle-check"></i> Sẵn sàng
                         </div>
                     </div>
                     <div class="window-body">
@@ -1545,7 +1627,7 @@
         </div>
     </section>
 
-    <!-- 3D BENTO GRID FEATURES SECTION -->
+    <!-- BENTO GRID FEATURES SECTION -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -1556,7 +1638,7 @@
 
             <div class="bento-grid">
                 <!-- Bento 1 (Large) -->
-                <div class="bento-card col-8 tilt-card">
+                <div class="bento-card col-8">
                     <div class="bento-badge">Trọng tâm nghiệp vụ</div>
                     <div class="bento-icon-3d">
                         <i class="fa-solid fa-chart-line-up"></i>
@@ -1566,7 +1648,7 @@
                 </div>
 
                 <!-- Bento 2 -->
-                <div class="bento-card col-4 tilt-card">
+                <div class="bento-card col-4">
                     <div class="bento-badge">Tích hợp trung tâm</div>
                     <div class="bento-icon-3d">
                         <i class="fa-solid fa-arrows-rotate"></i>
@@ -1576,7 +1658,7 @@
                 </div>
 
                 <!-- Bento 3 -->
-                <div class="bento-card col-4 tilt-card">
+                <div class="bento-card col-4">
                     <div class="bento-badge">Tự động hóa văn bản</div>
                     <div class="bento-icon-3d">
                         <i class="fa-solid fa-file-export"></i>
@@ -1586,7 +1668,7 @@
                 </div>
 
                 <!-- Bento 4 (Large) -->
-                <div class="bento-card col-8 tilt-card">
+                <div class="bento-card col-8">
                     <div class="bento-badge">Chi tiết siêu vi</div>
                     <div class="bento-icon-3d">
                         <i class="fa-solid fa-crosshairs"></i>
@@ -1608,7 +1690,7 @@
             </div>
 
             <div class="demo-grid" id="demo-gallery">
-                <!-- Javascript will dynamically populate demo items -->
+                <!-- Javascript will dynamically render demo images -->
             </div>
         </div>
     </section>
@@ -1625,24 +1707,24 @@
         </div>
     </div>
 
-    <!-- COMPARISON MATRIX TABLE -->
+    <!-- COMPARISON MATRIX: 100% RESPONSIVE - KHÔNG CUỘN NGANG -->
     <section class="features-section">
         <div class="container">
             <div class="section-header">
                 <div class="section-tag"><i class="fa-solid fa-scale-balanced"></i> Phân Định Rõ Ràng</div>
                 <h2 class="section-title">So Sánh Phiên Bản</h2>
-                <p class="section-subtitle">Lựa chọn giải pháp phù hợp nhất để bứt phá hiệu suất công việc của bạn</p>
+                <p class="section-subtitle">Hiển thị trọn vẹn sự khác biệt giữa bản Free và bản VIP trên mọi thiết bị</p>
             </div>
 
             <div class="matrix-table-container">
                 <table class="matrix-table">
                     <thead>
                         <tr>
-                            <th>Chức năng nghiệp vụ chi tiết</th>
-                            <th class="col-free">Phiên bản Free</th>
+                            <th class="col-feature">Chức năng nghiệp vụ chi tiết</th>
+                            <th class="col-free">Bản Free</th>
                             <th class="col-vip">
                                 <div class="vip-crown-badge"><i class="fa-solid fa-crown"></i> VIP PRO</div>
-                                <div>Phiên bản VIP</div>
+                                <div>Bản VIP</div>
                             </th>
                         </tr>
                     </thead>
@@ -1654,82 +1736,82 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>1. Lấy thông tin NNT cần phân tích</td>
+                            <td class="col-feature">1. Lấy thông tin NNT cần phân tích</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>2. Tải hóa đơn điện tử Mua vào - Bán ra (gồm cả hóa đơn MTT) - Có thể lấy dữ liệu nhiều năm</td>
+                            <td class="col-feature">2. Tải hóa đơn điện tử Mua vào - Bán ra (gồm cả hóa đơn MTT) - Có thể lấy dữ liệu nhiều năm</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>3. Tải hóa đơn điện tử CQT khác (NNT chuyển từ CQT khác về) - Có thể lấy dữ liệu nhiều năm</td>
+                            <td class="col-feature">3. Tải hóa đơn điện tử CQT khác (NNT chuyển từ CQT khác về) - Có thể lấy dữ liệu nhiều năm</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>4. Lấy chi tiết mặt hàng từng của từng hóa đơn</td>
+                            <td class="col-feature">4. Lấy chi tiết mặt hàng từng của từng hóa đơn</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>5. Lấy trạng thái của NNT trên TMS</td>
+                            <td class="col-feature">5. Lấy trạng thái của NNT trên TMS</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>6. Tải tờ khai GTGT, TNDN... trên trục truyền tin 3.2.3.3</td>
+                            <td class="col-feature">6. Tải tờ khai GTGT, TNDN... trên trục truyền tin 3.2.3.3</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>7. Tải Tờ khai Hải quan trên trang DVC</td>
+                            <td class="col-feature">7. Tải Tờ khai Hải quan trên trang DVC</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>8. Phân tích 5 năm theo từng sắc thuế, chênh lệch TK-HĐ (Phục vụ công tác thanh tra, kiểm tra tại trụ sở NNT)</td>
+                            <td class="col-feature">8. Phân tích 5 năm theo từng sắc thuế, chênh lệch TK-HĐ (Phục vụ công tác thanh tra, kiểm tra tại trụ sở NNT)</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>9. Tải Hóa đơn định dạng PDF hàng loạt (Kết hợp công cụ in PDF hàng loạt - Cung cấp miễn phí)</td>
+                            <td class="col-feature">9. Tải Hóa đơn định dạng PDF hàng loạt (Kết hợp công cụ in PDF hàng loạt - Cung cấp miễn phí)</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>10. Phân tích rủi ro BCTC - TK GTGT - TK TNDN - TK TNCN theo 28 tiêu chí rủi ro</td>
+                            <td class="col-feature">10. Phân tích rủi ro BCTC - TK GTGT - TK TNDN - TK TNCN theo 28 tiêu chí rủi ro</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>11. Tạo báo cáo 360 Độ NNTT - cung cấp 11 chỉ tiêu báo cáo của 1 NNT</td>
+                            <td class="col-feature">11. Tạo báo cáo 360 Độ NNTT - cung cấp 11 chỉ tiêu báo cáo của 1 NNT</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>12. Tổng hợp, chia sẻ, đối chiếu Các công văn cảnh báo rủi ro đã được ban hành - Dựa vào dữ liệu thời gian thực mà người dùng gửi lên</td>
+                            <td class="col-feature">12. Tổng hợp, chia sẻ, đối chiếu Các công văn cảnh báo rủi ro đã được ban hành - Dựa vào dữ liệu thời gian thực mà người dùng gửi lên</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>13. PHÂN TÍCH BÁO CÁO RỦI RO THEO QĐ SỐ 1109/QĐ-CT NGÀY 30/07/2026</td>
+                            <td class="col-feature">13. PHÂN TÍCH BÁO CÁO RỦI RO THEO QĐ SỐ 1109/QĐ-CT NGÀY 30/07/2026</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>14. Kéo dữ liệu TNCN nhiều nguồn của NNT đang phân tích</td>
+                            <td class="col-feature">14. Kéo dữ liệu TNCN nhiều nguồn của NNT đang phân tích</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>15. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở CQT)</td>
+                            <td class="col-feature">15. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở CQT)</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>16. Xuất file Word Tờ trình, thông báo (Phục vụ Kiểm tra tại trụ sở CQT)</td>
+                            <td class="col-feature">16. Xuất file Word Tờ trình, thông báo (Phục vụ Kiểm tra tại trụ sở CQT)</td>
                             <td class="col-free"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
@@ -1741,37 +1823,37 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>1. Ban hành thông báo Sẽ THXC</td>
+                            <td class="col-feature">1. Ban hành thông báo Sẽ THXC</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>2. Tự động cập nhật Mã địa bàn HC 2 cấp (TMS 8.16)</td>
+                            <td class="col-feature">2. Tự động cập nhật Mã địa bàn HC 2 cấp (TMS 8.16)</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>3. Ban hành thông báo THXC</td>
+                            <td class="col-feature">3. Ban hành thông báo THXC</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>4. Giải tỏa cưỡng chế Tài khoản - Hóa đơn</td>
+                            <td class="col-feature">4. Giải tỏa cưỡng chế Tài khoản - Hóa đơn</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
                         <tr>
-                            <td>5. Cưỡng chế hóa đơn</td>
+                            <td class="col-feature">5. Cưỡng chế hóa đơn</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-dev"><i class="fa-solid fa-gear fa-spin"></i> Đang phát triển</span></td>
                         </tr>
                         <tr>
-                            <td>6. Cưỡng chế tài khoản</td>
+                            <td class="col-feature">6. Cưỡng chế tài khoản</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-dev"><i class="fa-solid fa-gear fa-spin"></i> Đang phát triển</span></td>
                         </tr>
                         <tr>
-                            <td>7. Bảng tính tiền chậm nộp Lệ phí môn bài</td>
+                            <td class="col-feature">7. Bảng tính tiền chậm nộp Lệ phí môn bài</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
@@ -1783,7 +1865,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>1. Các công cụ hỗ trợ tự động kê khai, kế toán thuế</td>
+                            <td class="col-feature">1. Các công cụ hỗ trợ tự động kê khai, kế toán thuế</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-dev"><i class="fa-solid fa-gear fa-spin"></i> Đang phát triển</span></td>
                         </tr>
@@ -1795,7 +1877,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>1. Tự động in tờ khai XML</td>
+                            <td class="col-feature">1. Tự động in tờ khai XML</td>
                             <td class="col-free"><span class="badge-cross"><i class="fa-solid fa-xmark"></i></span></td>
                             <td class="col-vip"><span class="badge-check"><i class="fa-solid fa-check"></i></span></td>
                         </tr>
@@ -1805,7 +1887,7 @@
         </div>
     </section>
 
-    <!-- 3D ACTIVATION & VIETQR PAYMENT SECTION -->
+    <!-- ACTIVATION & VIETQR PAYMENT SECTION -->
     <section id="kich-hoat" class="activation-section">
         <div class="container">
             <div class="section-header">
@@ -1816,7 +1898,7 @@
 
             <div class="activation-container">
                 <div class="activation-card">
-                    <!-- 3D Package Badge -->
+                    <!-- Package Badge -->
                     <div class="vip-package-box">
                         <div class="vip-save-badge">🔥 BẢN NÂNG CẤP</div>
                         <h4>Gói 1 Năm VIP</h4>
@@ -1848,7 +1930,7 @@
                     <!-- VietQR Dynamic Render Area -->
                     <div id="qr-container">
                         <h3>Quét Mã Qua App Ngân Hàng</h3>
-                        <p style="font-size: 15px; color: #94a3b8; margin-bottom: 20px; line-height: 1.6;">
+                        <p style="font-size: 14.5px; color: #94a3b8; margin-bottom: 18px; line-height: 1.55;">
                             Hệ thống sẽ gửi KEY VIP vào Email mà bạn vừa điền trước đó trong 1-2 phút.<br>
                             <span style="color: #ff6b7a; font-weight: 700;">(Hãy kiểm tra cả Hộp thư rác/Spam nếu không thấy email phản hồi)</span>
                         </p>
@@ -1867,7 +1949,7 @@
         </div>
     </section>
 
-    <!-- 3D SMART OFFLINE KEY MODAL -->
+    <!-- SMART OFFLINE KEY MODAL -->
     <div id="offline-modal" class="modal-overlay">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeOfflineModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -1878,27 +1960,27 @@
                 <div class="form-group">
                     <label class="form-label" style="font-size: 12px;">Nhập Key Bản Quyền (Nhận từ Email):</label>
                     <div class="input-wrapper">
-                        <input type="text" id="offline-key-input" class="form-input" placeholder="VD: ktr-xxxx..." required style="padding-left: 20px;">
+                        <input type="text" id="offline-key-input" class="form-input" placeholder="VD: ktr-xxxx..." required style="padding-left: 18px;">
                     </div>
                 </div>
                 
                 <!-- HWID Area (Step 2) -->
-                <div id="hwid-wrapper" style="display: none; margin-bottom: 20px;">
+                <div id="hwid-wrapper" style="display: none; margin-bottom: 18px;">
                     <label class="form-label" style="font-size: 12px;">Nhập Mã Máy (HWID hiển thị trên Phần mềm):</label>
                     <div class="input-wrapper">
-                        <input type="text" id="offline-hwid-input" class="form-input" placeholder="VD: 4CBB5E6C" style="padding-left: 20px;">
+                        <input type="text" id="offline-hwid-input" class="form-input" placeholder="VD: 4CBB5E6C" style="padding-left: 18px;">
                     </div>
-                    <p style="font-size: 13px; color: #fbbf24; margin-top: 10px; font-weight: 600; line-height: 1.4;">
+                    <p style="font-size: 12.5px; color: #fbbf24; margin-top: 8px; font-weight: 600; line-height: 1.4;">
                         💡 Hướng dẫn lấy HWID: Bấm vào nút <strong style="color: #ff4d6d;">"Kiểm tra máy tính"</strong> trong sheet TT_BANQUYEN
                     </p>
                 </div>
 
-                <button type="submit" id="offline-btn-submit" class="btn-submit-action ready" style="padding: 16px;">
+                <button type="submit" id="offline-btn-submit" class="btn-submit-action ready" style="padding: 15px;">
                     Tra Cứu Key
                 </button>
             </form>
 
-            <div id="offline-result" style="margin-top: 20px; display: none;"></div>
+            <div id="offline-result" style="margin-top: 18px; display: none;"></div>
         </div>
     </div>
 
@@ -1915,42 +1997,51 @@
         </div>
     </footer>
 
-    <!-- INTERACTIVE SCRIPTS & 3D ENGINE -->
+    <!-- INTERACTIVE SCRIPTS & PERFORMANCE ENGINE -->
     <script>
         /* ----------------------------------------------------
-           1. 3D INTERACTIVE PARTICLE CANVAS BACKGROUND
+           1. CANVAS 3D HIỆU SUẤT CAO (Tối ưu cho Mobile & Desktop)
            ---------------------------------------------------- */
         const canvas = document.getElementById('canvas3d');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-        let mouse = { x: null, y: null, radius: 150 };
+        let mouse = { x: null, y: null, radius: 120 };
+        const isMobile = window.innerWidth <= 768;
 
         function initCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
-            const particleCount = Math.min(Math.floor((width * height) / 14000), 100);
+            
+            // Trên mobile chỉ tạo 25 hạt để tiết kiệm pin & đạt 60fps mượt mà
+            const particleCount = isMobile ? 25 : Math.min(Math.floor((width * height) / 16000), 75);
 
             for (let i = 0; i < particleCount; i++) {
                 particles.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.8,
-                    vy: (Math.random() - 0.5) * 0.8,
-                    size: Math.random() * 2 + 1,
-                    baseAlpha: Math.random() * 0.5 + 0.2,
+                    vx: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.7),
+                    vy: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.7),
+                    size: Math.random() * 1.8 + 1,
+                    baseAlpha: Math.random() * 0.4 + 0.2,
                     color: Math.random() > 0.4 ? '#e63946' : '#00f2fe'
                 });
             }
         }
 
-        window.addEventListener('resize', initCanvas);
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+        window.addEventListener('resize', () => {
+            initCanvas();
         });
 
+        if (!isMobile) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+        }
+
+        let animationFrameId;
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
 
@@ -1962,15 +2053,15 @@
                 if (p.x < 0 || p.x > width) p.vx *= -1;
                 if (p.y < 0 || p.y > height) p.vy *= -1;
 
-                // Mouse interaction repulsion/pull
-                if (mouse.x !== null) {
+                // Mouse interaction on desktop
+                if (!isMobile && mouse.x !== null) {
                     let dx = mouse.x - p.x;
                     let dy = mouse.y - p.y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < mouse.radius) {
                         let force = (mouse.radius - dist) / mouse.radius;
-                        p.x -= (dx / dist) * force * 3;
-                        p.y -= (dy / dist) * force * 3;
+                        p.x -= (dx / dist) * force * 2;
+                        p.y -= (dy / dist) * force * 2;
                     }
                 }
 
@@ -1978,59 +2069,44 @@
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = p.color;
                 ctx.globalAlpha = p.baseAlpha;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = p.color;
                 ctx.fill();
 
-                // Connect nearby particles with glowing cyber lines
+                // Nối đường cyber lines nhẹ nhàng
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     let dx = p.x - p2.x;
                     let dy = p.y - p2.y;
                     let dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 120) {
+                    if (dist < (isMobile ? 90 : 120)) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = '#00f2fe';
-                        ctx.globalAlpha = (1 - dist / 120) * 0.18;
-                        ctx.lineWidth = 0.8;
+                        ctx.globalAlpha = (1 - dist / (isMobile ? 90 : 120)) * 0.15;
+                        ctx.lineWidth = 0.7;
                         ctx.stroke();
                     }
                 }
             }
 
-            requestAnimationFrame(animateCanvas);
+            animationFrameId = requestAnimationFrame(animateCanvas);
         }
+
+        // Tạm dừng vẽ canvas khi người dùng ẩn tab trình duyệt để tiết kiệm pin
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                cancelAnimationFrame(animationFrameId);
+            } else {
+                animateCanvas();
+            }
+        });
 
         initCanvas();
         animateCanvas();
 
         /* ----------------------------------------------------
-           2. 3D TILT EFFECT ON CARDS
-           ---------------------------------------------------- */
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -7;
-                const rotateY = ((x - centerX) / centerX) * 7;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
-            });
-        });
-
-        /* ----------------------------------------------------
-           3. DEMO GALLERY & LIGHTBOX PRO (18 IMAGES)
+           2. DEMO GALLERY & LIGHTBOX PRO (18 IMAGES)
            ---------------------------------------------------- */
         const demoImages = [
             'demo1.png', 'demo2.png', 'demo3.png', 'demo4.png', 'demo5.png',
@@ -2054,7 +2130,7 @@
                             <div class="demo-zoom-btn">
                                 <i class="fa-solid fa-magnifying-glass-plus"></i>
                             </div>
-                            <span style="color:#fff; font-size:13px; font-weight:700; margin-top:12px;">Xem chi tiết</span>
+                            <span style="color:#fff; font-size:12px; font-weight:700; margin-top:10px;">Xem chi tiết</span>
                         </div>
                     </div>
                 `;
@@ -2117,7 +2193,7 @@
         document.addEventListener('DOMContentLoaded', renderGallery);
 
         /* ----------------------------------------------------
-           4. 2-STEP SMART OFFLINE KEY MODAL
+           3. SMART OFFLINE KEY MODAL (2 Bước)
            ---------------------------------------------------- */
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec"; 
 
@@ -2131,7 +2207,7 @@
             document.getElementById('offline-key-input').value = '';
             document.getElementById('offline-hwid-input').value = '';
             
-            // Reset modal state
+            // Reset modal
             document.getElementById('offline-key-input').readOnly = false;
             document.getElementById('hwid-wrapper').style.display = 'none';
             const btn = document.getElementById('offline-btn-submit');
@@ -2152,7 +2228,7 @@
             
             const resultDiv = document.getElementById('offline-result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p style="text-align:center; color:#94a3b8;"><i class="fa-solid fa-spinner fa-spin"></i> Đang truy xuất dữ liệu hệ thống máy chủ...</p>';
+            resultDiv.innerHTML = '<p style="text-align:center; color:#94a3b8; font-size:13px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang truy xuất hệ thống máy chủ...</p>';
         
             fetch(API_URL, {
                 method: "POST",
@@ -2162,45 +2238,43 @@
             .then(res => res.json())
             .then(data => {
                 if (data.requireHwid) {
-                    // Valid key but requires HWID
                     hwidWrapper.style.display = 'block';
                     document.getElementById('offline-key-input').readOnly = true;
                     document.getElementById('offline-btn-submit').innerHTML = '<i class="fa-solid fa-laptop-code"></i> Tạo Key Offline Gắn Theo Máy';
                     
                     resultDiv.innerHTML = `
-                        <div style="margin-top:10px; padding:16px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; border-radius:12px; font-weight:600; font-size:14px; text-align:center; line-height: 1.5;">
+                        <div style="margin-top:10px; padding:12px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; border-radius:10px; font-weight:600; font-size:13px; text-align:center; line-height: 1.45;">
                             ✅ <strong>Key hoàn toàn hợp lệ!</strong><br>
-                            Hệ thống phát hiện đây là lần đầu kích hoạt. Vui lòng nhập thêm <u>Mã máy (HWID)</u> bên trên để gắn kết thiết bị.
+                            Vui lòng nhập thêm <u>Mã máy (HWID)</u> bên trên để gắn kết thiết bị.
                         </div>`;
                 } else if (data.errorMsg) {
-                    resultDiv.innerHTML = `<div style="margin-top:15px; padding:16px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:12px; line-height: 1.5; font-weight:600;">${data.errorMsg}</div>`;
+                    resultDiv.innerHTML = `<div style="margin-top:12px; padding:12px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:10px; line-height: 1.45; font-size:13px; font-weight:600;">${data.errorMsg}</div>`;
                 } else if (data.found) {
-                    // Success
                     resultDiv.innerHTML = `
-                        <div style="margin-top:20px; padding:20px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); border-radius:14px; text-align:left;">
-                            <p style="margin:0 0 10px 0; color:#cbd5e1; font-weight:600;"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> <b>Mã Offline kích hoạt thành công:</b></p>
-                            <span style="display:block; font-size:20px; color:#ff4d6d; font-weight:800; letter-spacing: 1px; user-select:all; word-break: break-all; margin-bottom: 12px; background:rgba(0,0,0,0.4); padding:10px 14px; border-radius:8px;">${data.key}</span>
-                            <p style="margin:0; color:#34d399; font-size:14px; font-weight:600;">
-                                ⏳ Thời hạn bản quyền: <b>${data.date}</b>
+                        <div style="margin-top:15px; padding:16px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); border-radius:12px; text-align:left;">
+                            <p style="margin:0 0 8px 0; color:#cbd5e1; font-weight:600; font-size:13px;"><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> <b>Mã Offline kích hoạt thành công:</b></p>
+                            <span style="display:block; font-size:18px; color:#ff4d6d; font-weight:800; letter-spacing: 0.5px; user-select:all; word-break: break-all; margin-bottom: 10px; background:rgba(0,0,0,0.4); padding:8px 12px; border-radius:8px;">${data.key}</span>
+                            <p style="margin:0; color:#34d399; font-size:13px; font-weight:600;">
+                                ⏳ Thời hạn: <b>${data.date}</b>
                             </p>
-                            <p style="font-size:13px; color:#94a3b8; margin-top:12px; line-height:1.5;">👉 Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
+                            <p style="font-size:12px; color:#94a3b8; margin-top:8px;">👉 Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
                         </div>`;
                     
                     hwidWrapper.style.display = 'none';
                     document.getElementById('offline-btn-submit').style.display = 'none';
                 } else if (data.blocked) {
-                    resultDiv.innerHTML = '<div style="margin-top:15px; padding:16px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:12px; font-weight:600;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
+                    resultDiv.innerHTML = '<div style="margin-top:12px; padding:12px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:10px; font-size:13px; font-weight:600;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
                 } else {
-                    resultDiv.innerHTML = '<div style="margin-top:15px; padding:16px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:12px; font-weight:600;">Không tìm thấy Key Bản Quyền. Vui lòng kiểm tra lại Email!</div>';
+                    resultDiv.innerHTML = '<div style="margin-top:12px; padding:12px; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.3); color:#ff6b7a; border-radius:10px; font-size:13px; font-weight:600;">Không tìm thấy Key Bản Quyền. Vui lòng kiểm tra lại Email!</div>';
                 }
             })
             .catch(err => {
-                resultDiv.innerHTML = '<p style="color:#ff6b7a; text-align:center; font-weight:600; margin-top:15px;">Lỗi kết nối máy chủ! Vui lòng thử lại.</p>';
+                resultDiv.innerHTML = '<p style="color:#ff6b7a; text-align:center; font-size:13px; font-weight:600; margin-top:12px;">Lỗi kết nối máy chủ! Vui lòng thử lại.</p>';
             });
         }
 
         /* ----------------------------------------------------
-           5. VIP ACTIVATION & VIETQR PAYMENT FORM
+           4. VIP ACTIVATION & VIETQR PAYMENT FORM
            ---------------------------------------------------- */
         let selectedPackageAmount = 899000;
 
@@ -2238,7 +2312,7 @@
             if (!email.includes('@') || !email.includes('.')) { alert("Email không hợp lệ!"); return; }
 
             const btn = document.getElementById('btn-generate');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG XỬ LÝ DỮ LIỆU...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG TẠO MÃ...';
             btn.setAttribute('disabled', 'true');
             btn.style.opacity = "0.7";
 
@@ -2251,7 +2325,7 @@
             .then(data => {
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> MÃ ĐÃ ĐƯỢC TẠO';
                 btn.style.background = "#10b981"; 
-                btn.style.boxShadow = "0 15px 30px rgba(16, 185, 129, 0.4)";
+                btn.style.boxShadow = "0 8px 20px rgba(16, 185, 129, 0.4)";
                 btn.style.opacity = "1";
                 
                 let bankList = data.banks;
