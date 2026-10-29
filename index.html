@@ -8,16 +8,16 @@
     <style>
         :root { 
             /* HALLOWEEN PALETTE */
-            --bg-main: #1a1a2e; /* Đen tím đêm khuya */
-            --bg-card: #22223b; /* Tím than đậm cho thẻ card */
+            --bg-main: #1a1a2e; 
+            --bg-card: #22223b; 
             --border-card: #4a4e69; 
-            --primary: #f77f00; /* Cam bí ngô rực rỡ */
+            --primary: #f77f00; 
             --primary-glow: rgba(247, 127, 0, 0.4);
-            --navy: #e0e1dd; /* Đổi màu chữ tối sang màu sáng để nổi trên nền đen */
-            --accent: #d62828; /* Đỏ máu tạo điểm nhấn */
+            --navy: #e0e1dd; 
+            --accent: #d62828; 
             --text-main: #e0e1dd; 
             --text-muted: #9ca3af;
-            --success: #f77f00; /* Dấu check đổi sang cam */
+            --success: #f77f00; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +28,6 @@
             color: var(--text-main); 
             line-height: 1.6; 
             overflow-x: hidden;
-            /* Nền ma mị Halloween */
             background-image: 
                 radial-gradient(circle at 0% 0%, rgba(214, 40, 40, 0.15) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(247, 127, 0, 0.15) 0%, transparent 40%);
@@ -42,7 +41,6 @@
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-        /* Hiệu ứng tỏa sáng cam bí ngô */
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0.6); }
             70% { box-shadow: 0 0 0 12px rgba(247, 127, 0, 0); }
@@ -54,7 +52,6 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Floating Navbar - Dark Mode */
         .nav-container {
             position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 1000px; background: rgba(26, 26, 46, 0.85);
@@ -76,7 +73,6 @@
         .btn-main-nav { background: linear-gradient(135deg, var(--primary), #e85d04); color: white; box-shadow: 0 6px 15px var(--primary-glow); }
         .btn-main-nav:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(247, 127, 0, 0.6); }
         
-        /* Hero Section */
         .hero { text-align: center; padding: 180px 20px 120px; position: relative; animation: fadeUp 1s ease-out;}
         .badge { background: rgba(34, 34, 59, 0.8); border: 1px solid var(--primary); color: #fff; padding: 8px 24px; border-radius: 100px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 25px; box-shadow: 0 0 20px var(--primary-glow);}
         
@@ -103,7 +99,6 @@
         
         .bento-content { position: relative; z-index: 1; }
         .col-span-2 { grid-column: span 2; }
-        /* Tông màu icon cam ma mị */
         .bento-icon { font-size: 32px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(247, 127, 0, 0.2), rgba(214, 40, 40, 0.2)); color: var(--primary); width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(247, 127, 0, 0.3);}
         .bento-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: #fff; }
         .bento-card p { color: var(--text-muted); font-size: 16px; line-height: 1.6; font-weight: 500;}
@@ -133,7 +128,6 @@
         th { background: #161625; font-weight: 800; color: #fff; font-size: 15px; text-transform: uppercase; letter-spacing: 1px;}
         th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) { text-align: center; width: 18%; }
         th.vip-col { background: linear-gradient(135deg, var(--primary), #e85d04); color: #ffffff; position: relative;}
-        /* Ô VIP sáng nhẹ màu tím/cam */
         td.vip-cell { background: rgba(247, 127, 0, 0.05); font-weight: 800; color: var(--primary);}
         tr:last-child td { border-bottom: none; }
         tr:hover td { background-color: rgba(255,255,255,0.05); }
@@ -173,6 +167,9 @@
         .footer { text-align: center; padding: 60px 20px; background: #161625; color: var(--text-muted); font-size: 15px; border-top: 1px solid var(--border-card);}
         .footer strong { color: var(--primary); font-size: 18px; display: block; margin-top: 8px; filter: drop-shadow(0 0 5px rgba(247, 127, 0, 0.5));}
 
+        /* ---------------------------------------------------- */
+        /* --- ĐÃ CHỈNH SỬA TỐI ƯU CHO GIAO DIỆN ĐIỆN THOẠI --- */
+        /* ---------------------------------------------------- */
         @media (max-width: 992px) {
             .hero h1 { font-size: 32px; white-space: normal; } 
             .bento-grid { grid-template-columns: repeat(2, 1fr); }
@@ -180,9 +177,21 @@
         }
         @media (max-width: 768px) {
             .hero { padding: 150px 20px 80px; }
-            .hero h1 { font-size: 24px; }
-            .nav-container { width: 95%; padding: 10px 15px; }
+            .hero h1 { font-size: 22px; line-height: 1.4; } /* Giảm nhẹ size tiêu đề chính */
+            
+            /* Sửa lỗi tràn bảng tính năng: ép width 100% và giảm đệm */
+            table { min-width: 100%; }
+            th, td { padding: 12px 5px; font-size: 12px; }
+            th { font-size: 11px; }
+            th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) { width: 25%; text-align: center; }
+            .check { font-size: 18px; }
+            
+            /* Sửa lỗi Navbar bị đè chèn nút: Ẩn chữ kiemtrathue.vn, thu nhỏ nút bấm */
+            .nav-container { width: 98%; padding: 8px 10px; }
+            .logo-text { display: none; } /* Ẩn chữ logo để nhường chỗ cho nút */
             .nav-buttons .btn-text { display: none; }
+            .nav-buttons a, .nav-buttons button { padding: 8px 12px; font-size: 11px; }
+            
             .bento-grid { grid-template-columns: 1fr; }
             .form-card { padding: 30px 20px; }
             .cta-group { flex-direction: column; }
@@ -195,7 +204,7 @@
     <nav class="nav-container">
         <div class="logo-nav">
             <img src="logo.ico" alt="Logo">
-            kiemtrathue.vn
+            <span class="logo-text">kiemtrathue.vn</span>
         </div>
         <div class="nav-buttons">
             <a href="#demo" class="btn-text">Tính Năng</a>
@@ -224,7 +233,7 @@
         </div>
     </header>
 
-    <!-- Modal Lấy Key Offline -->
+    <!-- Modal Lấy Key Offline Đã Thiết Kế Lại (Luồng 2 Bước) -->
     <div id="offline-modal" class="modal-overlay">
         <div class="modal-card">
             <button class="modal-close" onclick="closeOfflineModal()">&times;</button>
@@ -408,7 +417,7 @@
     </footer>
 
     <script>
-        // MÃ HÓA BASE64 ĐỂ ẨN LINK API KHỎI SOURCE CODE BÊN NGOÀI
+        // TRẢ LẠI NGUYÊN BẢN LINK API CHUẨN XÁC NHẤT
         const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec";
 
         document.querySelectorAll('.bento-card').forEach(card => {
