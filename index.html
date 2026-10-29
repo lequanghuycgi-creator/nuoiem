@@ -7,16 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg-main: #f0f4f8; 
-            --bg-card: #ffffff;
-            --border-card: #cbd5e1;
-            --primary: #d90429; 
-            --primary-glow: rgba(217, 4, 41, 0.3);
-            --navy: #0a2463; 
-            --accent: #ffb703; 
-            --text-main: #0f172a; 
-            --text-muted: #334155;
-            --success: #059669;
+            /* HALLOWEEN PALETTE */
+            --bg-main: #1a1a2e; /* Đen tím đêm khuya */
+            --bg-card: #22223b; /* Tím than đậm cho thẻ card */
+            --border-card: #4a4e69; 
+            --primary: #f77f00; /* Cam bí ngô rực rỡ */
+            --primary-glow: rgba(247, 127, 0, 0.4);
+            --navy: #e0e1dd; /* Đổi màu chữ tối sang màu sáng để nổi trên nền đen */
+            --accent: #d62828; /* Đỏ máu tạo điểm nhấn */
+            --text-main: #e0e1dd; 
+            --text-muted: #9ca3af;
+            --success: #f77f00; /* Dấu check đổi sang cam */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,9 +28,10 @@
             color: var(--text-main); 
             line-height: 1.6; 
             overflow-x: hidden;
+            /* Nền ma mị Halloween */
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(217, 4, 41, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(10, 36, 99, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 0% 0%, rgba(214, 40, 40, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(247, 127, 0, 0.15) 0%, transparent 40%);
         }
 
         @keyframes fadeUp {
@@ -40,124 +42,136 @@
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
+        /* Hiệu ứng tỏa sáng cam bí ngô */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(217, 4, 41, 0.5); }
-            70% { box-shadow: 0 0 0 10px rgba(217, 4, 41, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(217, 4, 41, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(247, 127, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
         }
 
+        /* Floating Navbar - Dark Mode */
         .nav-container {
             position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 1000px; background: rgba(255, 255, 255, 0.95);
+            width: 90%; max-width: 1000px; background: rgba(26, 26, 46, 0.85);
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-bottom: 3px solid var(--primary); border-radius: 100px; 
+            border-bottom: 2px solid var(--primary); border-radius: 100px; 
             padding: 10px 24px; display: flex; justify-content: space-between;
-            align-items: center; z-index: 1000; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.1);
+            align-items: center; z-index: 1000; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
-        .logo-nav { font-size: 18px; font-weight: 800; color: var(--navy); display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;}
-        .logo-nav img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(217,4,41,0.3));}
+        .logo-nav { font-size: 18px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px;}
+        .logo-nav img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 0 8px var(--primary));}
         
         .nav-buttons { display: flex; gap: 8px; align-items: center;}
         .nav-buttons a, .nav-buttons button { text-decoration: none; padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 14px; transition: all 0.3s ease; border: none; cursor: pointer; font-family: inherit;}
-        .btn-text { color: var(--navy); background: transparent;}
-        .btn-text:hover { color: var(--primary); background: rgba(217, 4, 41, 0.05); }
-        .btn-offline { background: #e2e8f0; color: var(--navy); }
-        .btn-offline:hover { background: #cbd5e1; }
-        .btn-main-nav { background: linear-gradient(135deg, var(--primary), #9f001b); color: white; box-shadow: 0 6px 15px rgba(217, 4, 41, 0.3); }
-        .btn-main-nav:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(217, 4, 41, 0.4); }
+        .btn-text { color: #fff; background: transparent;}
+        .btn-text:hover { color: var(--primary); background: rgba(247, 127, 0, 0.1); }
+        .btn-offline { background: #4a4e69; color: #fff; }
+        .btn-offline:hover { background: #22223b; box-shadow: 0 0 10px var(--primary-glow); }
+        .btn-main-nav { background: linear-gradient(135deg, var(--primary), #e85d04); color: white; box-shadow: 0 6px 15px var(--primary-glow); }
+        .btn-main-nav:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(247, 127, 0, 0.6); }
         
+        /* Hero Section */
         .hero { text-align: center; padding: 180px 20px 120px; position: relative; animation: fadeUp 1s ease-out;}
-        .badge { background: #ffffff; border: 2px solid #fecdd3; color: var(--primary); padding: 8px 24px; border-radius: 100px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(217, 4, 41, 0.1);}
+        .badge { background: rgba(34, 34, 59, 0.8); border: 1px solid var(--primary); color: #fff; padding: 8px 24px; border-radius: 100px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 25px; box-shadow: 0 0 20px var(--primary-glow);}
         
-        .hero h1 { font-size: 44px; font-weight: 800; color: var(--navy); max-width: 100%; margin: 0 auto 20px; line-height: 1.3; letter-spacing: -1px; white-space: nowrap; }
-        .hero h1 span { background: linear-gradient(to right, var(--primary), var(--accent), var(--primary)); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 4s linear infinite;}
+        .hero h1 { font-size: 44px; font-weight: 800; color: #fff; max-width: 100%; margin: 0 auto 20px; line-height: 1.3; letter-spacing: -1px; white-space: nowrap; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);}
+        .hero h1 span { background: linear-gradient(to right, #f77f00, #ffb703, #f77f00); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShine 4s linear infinite; filter: drop-shadow(0 0 8px rgba(247, 127, 0, 0.3));}
         
         .hero-desc { max-width: 750px; margin: 0 auto 50px; }
-        .hero p.mission { font-size: 18px; color: #ffffff; margin-bottom: 24px; line-height: 1.6; padding: 24px 30px; background: linear-gradient(135deg, var(--navy), #061a4a); border-radius: 20px; box-shadow: 0 20px 40px rgba(10, 36, 99, 0.2); font-weight: 500;}
-        .hero p.mission strong { color: var(--accent); font-weight: 800; }
+        .hero p.mission { font-size: 18px; color: #fff; margin-bottom: 24px; line-height: 1.6; padding: 24px 30px; background: linear-gradient(135deg, rgba(34, 34, 59, 0.9), rgba(26, 26, 46, 0.9)); border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); font-weight: 500; border: 1px solid var(--border-card);}
+        .hero p.mission strong { color: var(--primary); font-weight: 800; }
         .hero p.highlight-desc { font-size: 17px; color: var(--text-muted); line-height: 1.6; font-weight: 600;}
         
         .cta-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-main { background: linear-gradient(135deg, var(--primary), #9f001b); color: #fff; padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3);}
-        .btn-main:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(217, 4, 41, 0.4); }
-        .btn-secondary { background: #ffffff; color: var(--navy); padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; border: 2px solid var(--navy); transition: all 0.3s; box-shadow: 0 10px 20px rgba(10, 36, 99, 0.05);}
-        .btn-secondary:hover { background: var(--navy); color: #ffffff; box-shadow: 0 15px 30px rgba(10, 36, 99, 0.2); }
+        .btn-main { background: linear-gradient(135deg, var(--primary), #e85d04); color: #fff; padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 15px 30px rgba(247, 127, 0, 0.4);}
+        .btn-main:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(247, 127, 0, 0.6); }
+        .btn-secondary { background: rgba(34, 34, 59, 0.8); color: #fff; padding: 18px 45px; border-radius: 100px; font-size: 16px; font-weight: 800; text-decoration: none; border: 2px solid var(--border-card); transition: all 0.3s; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);}
+        .btn-secondary:hover { background: #fff; color: var(--bg-main); box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2); }
 
         .bento-section { padding: 40px 5% 80px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10;}
-        .section-title { text-align: center; font-size: 40px; font-weight: 800; margin-bottom: 60px; color: var(--navy); letter-spacing: -1px;}
+        .section-title { text-align: center; font-size: 40px; font-weight: 800; margin-bottom: 60px; color: #fff; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
         
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .bento-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 24px; padding: 40px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(10, 36, 99, 0.05);}
-        .bento-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 25px 50px rgba(217, 4, 41, 0.1); }
+        .bento-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 24px; padding: 40px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);}
+        .bento-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 25px 50px rgba(247, 127, 0, 0.2); }
         
         .bento-content { position: relative; z-index: 1; }
         .col-span-2 { grid-column: span 2; }
-        .bento-icon { font-size: 32px; margin-bottom: 24px; background: linear-gradient(135deg, #ffe5e5, #ffccd5); color: var(--primary); width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: 0 5px 15px rgba(217, 4, 41, 0.15);}
-        .bento-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: var(--navy); }
+        /* Tông màu icon cam ma mị */
+        .bento-icon { font-size: 32px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(247, 127, 0, 0.2), rgba(214, 40, 40, 0.2)); color: var(--primary); width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(247, 127, 0, 0.3);}
+        .bento-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: #fff; }
         .bento-card p { color: var(--text-muted); font-size: 16px; line-height: 1.6; font-weight: 500;}
 
         .section-subtitle { text-align: center; color: var(--text-muted); margin-top: -45px; margin-bottom: 50px; font-size: 18px; }       
 
         .demo-section { padding: 40px 5% 80px; max-width: 1200px; margin: 0 auto; }
         .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .demo-item { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.08); cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid var(--border-card); background: var(--bg-card); aspect-ratio: 16/10;}
-        .demo-item:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(217, 4, 41, 0.15); border-color: var(--primary); }
-        .demo-item img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s ease; }
-        .demo-item:hover img { transform: scale(1.08); }
-        .demo-overlay { position: absolute; inset: 0; background: rgba(10, 36, 99, 0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;}
+        .demo-item { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid var(--border-card); background: var(--bg-card); aspect-ratio: 16/10;}
+        .demo-item:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(247, 127, 0, 0.3); border-color: var(--primary); }
+        .demo-item img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s ease; opacity: 0.85; filter: contrast(1.1);}
+        .demo-item:hover img { transform: scale(1.08); opacity: 1;}
+        .demo-overlay { position: absolute; inset: 0; background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;}
         .demo-item:hover .demo-overlay { opacity: 1; }
-        .demo-overlay svg { color: var(--accent); width: 64px; height: 64px; filter: drop-shadow(0 4px 10px rgba(255, 183, 3, 0.5));}
+        .demo-overlay svg { color: var(--primary); width: 64px; height: 64px; filter: drop-shadow(0 4px 10px rgba(247, 127, 0, 0.5));}
 
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 8, 23, 0.95); backdrop-filter: blur(12px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease;}
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(12px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s ease;}
         .lightbox.active { display: flex; opacity: 1; }
-        .lightbox img { max-width: 95%; max-height: 90vh; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); object-fit: contain; border: 2px solid var(--navy);}
-        .lightbox-close { position: absolute; top: 20px; right: 30px; color: #ffffff; font-size: 40px; cursor: pointer; transition: all 0.2s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--primary); border-radius: 50%; box-shadow: 0 5px 15px rgba(217, 4, 41, 0.4);}
-        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: #ff0033;}
+        .lightbox img { max-width: 95%; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 50px rgba(247, 127, 0, 0.2); object-fit: contain; border: 2px solid var(--border-card);}
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; transition: all 0.2s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);}
+        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: var(--accent); color: white;}
 
         .features { padding: 40px 5% 100px; max-width: 1000px; margin: 0 auto;}
-        .table-responsive { overflow-x: auto; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-card); box-shadow: 0 20px 40px rgba(10, 36, 99, 0.08); }
+        .table-responsive { overflow-x: auto; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-card); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         table { width: 100%; border-collapse: collapse; min-width: 700px; }
-        th, td { padding: 24px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { background: var(--navy); font-weight: 800; color: #ffffff; font-size: 15px; text-transform: uppercase; letter-spacing: 1px;}
+        th, td { padding: 24px; text-align: left; border-bottom: 1px solid var(--border-card); color: var(--text-main); }
+        th { background: #161625; font-weight: 800; color: #fff; font-size: 15px; text-transform: uppercase; letter-spacing: 1px;}
         th:nth-child(2), th:nth-child(3), td:nth-child(2), td:nth-child(3) { text-align: center; width: 18%; }
-        th.vip-col { background: linear-gradient(135deg, var(--primary), #9f001b); color: #ffffff; position: relative;}
-        td.vip-cell { background: #fff5f5; font-weight: 800; color: #9f001b;}
+        th.vip-col { background: linear-gradient(135deg, var(--primary), #e85d04); color: #ffffff; position: relative;}
+        /* Ô VIP sáng nhẹ màu tím/cam */
+        td.vip-cell { background: rgba(247, 127, 0, 0.05); font-weight: 800; color: var(--primary);}
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background-color: #f8fafc; }
-        .check { color: var(--success); font-size: 22px; font-weight: 900; }
-        .cross { color: #94a3b8; font-size: 16px; }
+        tr:hover td { background-color: rgba(255,255,255,0.05); }
+        .check { color: var(--success); font-size: 22px; font-weight: 900; text-shadow: 0 0 10px rgba(247, 127, 0, 0.5);}
+        .cross { color: #6b7280; font-size: 16px; }
 
         .activation { padding: 100px 5%; position: relative; }
-        .form-card { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 48px; border-radius: 24px; box-shadow: 0 30px 60px rgba(10, 36, 99, 0.12); border: 1px solid var(--border-card); border-top: 6px solid var(--primary);}
+        .form-card { max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 48px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); border: 1px solid var(--border-card); border-top: 6px solid var(--primary);}
 
-        .package-card { border: 2px solid var(--primary); border-radius: 16px; padding: 20px 10px; text-align: center; position: relative; background: linear-gradient(145deg, var(--navy), #061a4a); box-shadow: 0 10px 20px rgba(10, 36, 99, 0.2); margin-bottom: 30px; cursor: default;}
+        .package-card { border: 2px solid var(--primary); border-radius: 16px; padding: 20px 10px; text-align: center; position: relative; background: linear-gradient(145deg, #22223b, #1a1a2e); box-shadow: 0 0 20px rgba(247, 127, 0, 0.2); margin-bottom: 30px; cursor: default;}
         .package-card h4 { font-size: 20px; color: white; margin-bottom: 5px; font-weight: 800; }
-        .package-card .price { font-size: 16px; color: var(--accent); font-weight: 700; }
-        .save-badge { position: absolute; top: -14px; right: -10px; background: var(--primary); color: white; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(217, 4, 41, 0.3); animation: pulse 2s infinite; letter-spacing: 0.5px;}
+        .package-card .price { font-size: 16px; color: var(--primary); font-weight: 700; }
+        .save-badge { position: absolute; top: -14px; right: -10px; background: var(--primary); color: white; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(247, 127, 0, 0.5); animation: pulse 2s infinite; letter-spacing: 0.5px;}
 
         .form-group { margin-bottom: 25px; }
-        label { display: block; font-weight: 800; margin-bottom: 12px; color: var(--navy); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;}
-        input { width: 100%; padding: 18px 24px; background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; color: var(--text-main); font-size: 16px; transition: all 0.3s ease; font-family: inherit; font-weight: 600;}
-        input:focus { background: #ffffff; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(217, 4, 41, 0.15); }
-        .phone-error { color: var(--primary); font-size: 13px; font-weight: 700; margin-top: 10px; display: none; }
+        label { display: block; font-weight: 800; margin-bottom: 12px; color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;}
+        input { width: 100%; padding: 18px 24px; background: #1a1a2e; border: 2px solid var(--border-card); border-radius: 12px; color: #fff; font-size: 16px; transition: all 0.3s ease; font-family: inherit; font-weight: 600;}
+        input:focus { background: #161625; border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(247, 127, 0, 0.2); }
+        input::placeholder { color: #6b7280; }
+        .phone-error { color: var(--accent); font-size: 13px; font-weight: 700; margin-top: 10px; display: none; }
 
-        button.btn-submit { background: #e2e8f0; color: #64748b; border: none; padding: 22px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: not-allowed; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit; text-transform: uppercase; letter-spacing: 1px;}
-        button.btn-submit.ready { background: linear-gradient(135deg, var(--primary), #9f001b); color: white; cursor: pointer; box-shadow: 0 15px 30px rgba(217, 4, 41, 0.3); }
-        button.btn-submit.ready:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(217, 4, 41, 0.4); }
+        button.btn-submit { background: #4a4e69; color: #9ca3af; border: none; padding: 22px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: not-allowed; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-family: inherit; text-transform: uppercase; letter-spacing: 1px;}
+        button.btn-submit.ready { background: linear-gradient(135deg, var(--primary), #e85d04); color: white; cursor: pointer; box-shadow: 0 15px 30px rgba(247, 127, 0, 0.4); }
+        button.btn-submit.ready:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(247, 127, 0, 0.6); }
         
-        #qr-container { margin-top: 40px; display: none; padding-top: 40px; border-top: 2px dashed #cbd5e1; text-align: center; animation: fadeUp 0.5s; }
-        #qr-container h3 { color: var(--navy); margin-bottom: 15px; font-size: 22px; font-weight: 800;}
-        #qr-container img { max-width: 280px; border-radius: 16px; border: 2px solid #cbd5e1; padding: 15px; background: #fff; box-shadow: 0 15px 35px rgba(10, 36, 99, 0.1);}
-        .instruction { font-size: 15px; color: #b45309; margin-top: 25px; font-weight: 800; background: #fffbeb; padding: 20px; border-radius: 16px; border: 2px solid #fde68a;}
+        #qr-container { margin-top: 40px; display: none; padding-top: 40px; border-top: 2px dashed var(--border-card); text-align: center; animation: fadeUp 0.5s; }
+        #qr-container h3 { color: #fff; margin-bottom: 15px; font-size: 22px; font-weight: 800;}
+        #qr-container img { max-width: 280px; border-radius: 16px; border: 2px solid var(--primary); padding: 15px; background: #fff; box-shadow: 0 0 30px rgba(247, 127, 0, 0.3);}
+        .instruction { font-size: 15px; color: #fff; margin-top: 25px; font-weight: 800; background: rgba(214, 40, 40, 0.2); padding: 20px; border-radius: 16px; border: 1px solid var(--accent);}
         
-        /* Modal lấy Key Offline */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;}
-        .modal-card { background: white; width: 100%; max-width: 480px; border-radius: 24px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); position: relative; border-top: 5px solid var(--navy);}
-        .modal-close { position: absolute; top: 20px; right: 20px; background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; color: #64748b;}
-        .modal-close:hover { background: #e2e8f0; color: #0f172a;}
+        /* Modal lấy Key Offline - Dark Theme */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;}
+        .modal-card { background: var(--bg-card); width: 100%; max-width: 480px; border-radius: 24px; padding: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.8); position: relative; border-top: 5px solid var(--primary);}
+        .modal-close { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.1); border: none; width: 36px; height: 36px; border-radius: 50%; font-weight: bold; cursor: pointer; color: #fff;}
+        .modal-close:hover { background: var(--accent); color: #fff;}
 
-        .footer { text-align: center; padding: 60px 20px; background: var(--navy); color: #cbd5e1; font-size: 15px; }
-        .footer strong { color: #ffffff; font-size: 18px; display: block; margin-top: 8px;}
+        .footer { text-align: center; padding: 60px 20px; background: #161625; color: var(--text-muted); font-size: 15px; border-top: 1px solid var(--border-card);}
+        .footer strong { color: var(--primary); font-size: 18px; display: block; margin-top: 8px; filter: drop-shadow(0 0 5px rgba(247, 127, 0, 0.5));}
 
         @media (max-width: 992px) {
             .hero h1 { font-size: 32px; white-space: normal; } 
@@ -186,15 +200,15 @@
         <div class="nav-buttons">
             <a href="#demo" class="btn-text">Tính Năng</a>
             <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-text">Tải Về</a>
-            <button onclick="openOfflineModal()" class="btn-offline">Chuyển đổi sang Key Offline</button>
+            <button onclick="openOfflineModal()" class="btn-offline">Lấy Key Offline 👻</button>
             <a href="#kich-hoat" class="btn-main-nav">Kích Hoạt VIP</a>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="badge">
-            <span style="display:inline-block; width:8px; height:8px; background:#ef4444; border-radius:50%; box-shadow: 0 0 10px #ef4444; animation: pulse 2s infinite;"></span>
-            Phiên bản 2026 - Cập nhật liên tục
+        <div class="badge" style="animation: float 3s ease-in-out infinite;">
+            <span style="display:inline-block; width:8px; height:8px; background:var(--primary); border-radius:50%; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite;"></span>
+            Phiên bản 2026 - Cập nhật liên tục 🎃
         </div>
         
         <h1>Phần mềm tự động hóa nghiệp vụ <span>quản lý Thuế</span></h1>
@@ -205,16 +219,16 @@
         </div>
 
         <div class="cta-group">
-            <a href="#kich-hoat" class="btn-main">Mở Khóa VIP 👑</a>
+            <a href="#kich-hoat" class="btn-main">Mở Khóa VIP 🦇</a>
             <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" class="btn-secondary">Tải Phần Mềm Ngay Tại Đây</a>
         </div>
     </header>
 
-    <!-- Modal Lấy Key Offline Đã Thiết Kế Lại (Luồng 2 Bước) -->
+    <!-- Modal Lấy Key Offline -->
     <div id="offline-modal" class="modal-overlay">
         <div class="modal-card">
             <button class="modal-close" onclick="closeOfflineModal()">&times;</button>
-            <h2 style="color: var(--navy); font-size: 22px; margin-bottom: 8px; font-weight: 800;">Chuyển đổi sang Key Offline</h2>
+            <h2 style="color: #fff; font-size: 22px; margin-bottom: 8px; font-weight: 800;">Chuyển đổi sang Key Offline 👻</h2>
             <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Hệ thống sẽ tự động đồng bộ mã máy của bạn và khởi tạo Key Offline.</p>
             
             <form id="offline-form" onsubmit="submitOfflineSearch(event)">
@@ -225,8 +239,8 @@
                     <div id="hwid-wrapper" style="display: none;">
                         <label style="font-size: 12px; margin-bottom: 6px;">Nhập Mã Máy (HWID hiển thị trên Phần mềm):</label>
                         <input type="text" id="offline-hwid-input" placeholder="VD: 4CBB5E6C" style="padding: 14px; font-size: 15px;">
-                        <p style="font-size: 13px; color: #b45309; margin-top: 10px; font-weight: 600; line-height: 1.4;">
-                            💡 Hướng dẫn lấy HWID: Bấm vào nút <strong style="color: #d90429;">"Kiểm tra máy tính"</strong> trong sheet TT_BANQUYEN
+                        <p style="font-size: 13px; color: var(--primary); margin-top: 10px; font-weight: 600; line-height: 1.4;">
+                            💡 Hướng dẫn lấy HWID: Bấm vào nút <strong>"Kiểm tra máy tính"</strong> trong sheet TT_BANQUYEN
                         </p>
                     </div>
                 </div>
@@ -290,12 +304,12 @@
                     <tr>
                         <th>Chức năng</th>
                         <th>Phiên bản Free</th>
-                        <th class="vip-col">Phiên bản VIP</th>
+                        <th class="vip-col">Phiên bản VIP 🎃</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="background-color: #f1f5f9;">
-                        <td style="font-weight: 800; color: var(--navy); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">I. Phân hệ: Kiểm tra Thuế tại trụ sở CQT</td>
+                    <tr style="background-color: rgba(255,255,255,0.02);">
+                        <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">I. Phân hệ: Kiểm tra Thuế tại trụ sở CQT</td>
                         <td></td>
                         <td class="vip-cell"></td>
                     </tr>
@@ -316,7 +330,7 @@
                     <tr><td>15. Tạo phiếu phân tích NNT (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>16. Xuất file Word Tờ trình, thông báo (Phục vụ Kiểm tra tại trụ sở CQT)</td><td><span class="check">✔</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
 
-                    <tr style="background-color: #f1f5f9;">
+                    <tr style="background-color: rgba(255,255,255,0.02);">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">II. Phân hệ Quản lý nợ và Cưỡng chế nợ thuế</td>
                         <td><span class="cross">✕</span></td>
                         <td class="vip-cell"><span class="check">✔</span></td>
@@ -325,17 +339,17 @@
                     <tr><td>2. Tự động cập nhật Mã địa bàn HC 2 cấp (TMS 8.16)</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>3. Ban hành thông báo THXC</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
                     <tr><td>4. Giải tỏa cưỡng chế Tài khoản - Hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
-                    <tr><td>5. Cưỡng chế hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td></tr>
-                    <tr><td>6. Cưỡng chế tài khoản</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td></tr>
+                    <tr><td>5. Cưỡng chế hóa đơn</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #ffb703;">Đang phát triển</span></td></tr>
+                    <tr><td>6. Cưỡng chế tài khoản</td><td><span class="cross">✕</span></td><td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #ffb703;">Đang phát triển</span></td></tr>
                     <tr><td>7. Bảng tính tiền chậm nộp Lệ phí môn bài</td><td><span class="cross">✕</span></td><td class="vip-cell"><span class="check">✔</span></td></tr>
 
-                    <tr style="background-color: #f1f5f9;">
+                    <tr style="background-color: rgba(255,255,255,0.02);">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">III. Phân hệ Kê khai, Kế toán thuế</td>
                         <td><span class="cross">✕</span></td>
-                        <td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #d97706;">Tính năng đang phát triển</span></td>
+                        <td class="vip-cell"><span style="font-size: 13px; font-weight: 700; color: #ffb703;">Đang phát triển</span></td>
                     </tr>
 
-                    <tr style="background-color: #f1f5f9;">
+                    <tr style="background-color: rgba(255,255,255,0.02);">
                         <td style="font-weight: 800; color: var(--primary); padding-top: 16px; padding-bottom: 16px; text-transform: uppercase;">IV. Phân hệ Tiện ích khác</td>
                         <td><span class="cross">✕</span></td>
                         <td class="vip-cell"><span class="check">✔</span></td>
@@ -395,7 +409,7 @@
 
     <script>
         // MÃ HÓA BASE64 ĐỂ ẨN LINK API KHỎI SOURCE CODE BÊN NGOÀI
-        const API_URL = "https://script.google.com/macros/s/AKfycbysblnES77MqtRYCs6354_5grKLzOE_doZNLIsbjUoHdRupHKIMnXFxV_LuaVALt8Is/exec";
+        const API_URL = atob("aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J5c2JsbkVTNzdNcXRSWUNzNjM1NF81Z3JLTHpPRV9kb1pOTElzYmpVb0hkUnVwSEtJTW5YRnhWX0x1YVZBbHQ4SXMvZXhlYw==");
 
         document.querySelectorAll('.bento-card').forEach(card => {
             card.addEventListener('mousemove', e => {
@@ -484,7 +498,7 @@
             
             const resultDiv = document.getElementById('offline-result');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<p style="text-align:center; color:#64748b;">Đang truy xuất dữ liệu hệ thống...</p>';
+            resultDiv.innerHTML = '<p style="text-align:center; color:#9ca3af;">Đang truy xuất dữ liệu hệ thống...</p>';
         
             fetch(API_URL, {
                 method: "POST",
@@ -499,32 +513,32 @@
                     document.getElementById('offline-btn-submit').innerHTML = "Tạo Key Offline Gắn Theo Máy";
                     
                     resultDiv.innerHTML = `
-                        <div style="margin-top:10px; padding:15px; background:#fffbeb; color:#b45309; border-radius:4px; font-weight:bold; font-size:14px; text-align:center; line-height: 1.5;">
+                        <div style="margin-top:10px; padding:15px; background:rgba(247, 127, 0, 0.1); color:var(--primary); border:1px solid var(--primary); border-radius:8px; font-weight:bold; font-size:14px; text-align:center; line-height: 1.5;">
                             ✅ Key hoàn toàn hợp lệ!<br>
                             Hệ thống phát hiện đây là lần đầu kích hoạt. Vui lòng nhập thêm <span style="text-decoration: underline;">Mã máy (HWID)</span> bên trên để gắn kết thiết bị.
                         </div>`;
                 } else if (data.errorMsg) {
-                    resultDiv.innerHTML = `<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px; line-height: 1.5;">${data.errorMsg}</div>`;
+                    resultDiv.innerHTML = `<div style="margin-top:20px; padding:15px; background:rgba(214, 40, 40, 0.2); color:#ff6b6b; border:1px solid var(--accent); border-radius:8px; line-height: 1.5;">${data.errorMsg}</div>`;
                 } else if (data.found) {
                     resultDiv.innerHTML = `
-                        <div style="margin-top:25px; padding:20px; background:#e8f4f8; border-left: 5px solid #17a2b8; border-radius:4px; text-align:left;">
-                            <p style="margin:0 0 10px 0; color:#333;"><b>Mã Offline của bạn là:</b></p>
-                            <span style="display:block; font-size:22px; color:#d9534f; font-weight:bold; letter-spacing: 1px; user-select:all; word-break: break-all; margin-bottom: 10px;">${data.key}</span>
-                            <p style="margin:0; color:#155724; background:#d4edda; padding:8px; border-radius:4px; font-size:14px;">
-                            ⏳ Thời hạn: <b>${data.date}</b></p>
-                            <p style="font-size:13px; color:#666; margin-top:15px; line-height:1.5;">Vui lòng Copy mã màu đỏ ở trên và dán vào Phần mềm!</p>
+                        <div style="margin-top:25px; padding:20px; background:rgba(34, 34, 59, 0.8); border: 1px solid var(--border-card); border-left: 5px solid var(--primary); border-radius:8px; text-align:left;">
+                            <p style="margin:0 0 10px 0; color:#fff;"><b>Mã Offline của bạn là:</b></p>
+                            <span style="display:block; font-size:22px; color:var(--primary); font-weight:bold; letter-spacing: 1px; user-select:all; word-break: break-all; margin-bottom: 10px; text-shadow: 0 0 10px rgba(247, 127, 0, 0.3);">${data.key}</span>
+                            <p style="margin:0; color:#fff; background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; font-size:14px;">
+                            ⏳ Thời hạn: <b style="color: var(--primary);">${data.date}</b></p>
+                            <p style="font-size:13px; color:var(--text-muted); margin-top:15px; line-height:1.5;">Vui lòng Copy mã màu cam ở trên và dán vào Phần mềm!</p>
                         </div>`;
                     
                     hwidWrapper.style.display = 'none';
                     document.getElementById('offline-btn-submit').style.display = 'none';
                 } else if (data.blocked) {
-                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
+                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:rgba(214, 40, 40, 0.2); color:#ff6b6b; border:1px solid var(--accent); border-radius:8px;">Key của bạn đang bị khóa (Blocked) trên hệ thống.</div>';
                 } else {
-                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:#f8d7da; color:#721c24; border-radius:4px;">Không tìm thấy Key Bản Quyền. Vui lòng kiểm tra lại Email!</div>';
+                    resultDiv.innerHTML = '<div style="margin-top:20px; padding:15px; background:rgba(214, 40, 40, 0.2); color:#ff6b6b; border:1px solid var(--accent); border-radius:8px;">Không tìm thấy Key Bản Quyền. Vui lòng kiểm tra lại Email!</div>';
                 }
             })
             .catch(err => {
-                resultDiv.innerHTML = '<p style="color:red; text-align:center;">Lỗi kết nối máy chủ! Vui lòng thử lại.</p>';
+                resultDiv.innerHTML = '<p style="color:var(--accent); text-align:center;">Lỗi kết nối máy chủ! Vui lòng thử lại.</p>';
             });
         }
 
@@ -576,8 +590,8 @@
             .then(response => response.json())
             .then(data => {
                 btn.innerHTML = "MÃ ĐÃ ĐƯỢC TẠO";
-                btn.style.background = "#059669"; 
-                btn.style.boxShadow = "0 15px 30px rgba(5, 150, 105, 0.4)";
+                btn.style.background = "linear-gradient(135deg, var(--primary), #e85d04)"; 
+                btn.style.boxShadow = "0 15px 30px rgba(247, 127, 0, 0.4)";
                 btn.style.opacity = "1";
                 
                 let qrUrl = `https://img.vietqr.io/image/${data.bankId}-${data.accountNo}-compact2.png?amount=${selectedPackageAmount}&addInfo=${encodeURIComponent(data.phrase + ' ' + phone)}`;
