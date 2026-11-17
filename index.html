@@ -301,6 +301,13 @@
     .window { transform: none; }
   }
   @media (max-width: 680px) {
+    table { min-width: 0; font-size: 14px; line-height: 1.45; }
+    th, td { padding: 11px 8px; }
+    th:first-child, td:first-child { padding-left: 14px; }
+    th { font-size: 11.5px; letter-spacing: .02em; }
+    th:not(:first-child), td:not(:first-child) { width: 58px; }
+    tr.group td { padding-left: 14px; font-size: 13.5px; }
+    .soon { white-space: normal; display: inline-block; font-size: 11px; line-height: 1.25; padding: 3px 5px; }
     .wrap { padding: 0 16px; }
     .hero { padding: 44px 0 40px; }
     .section { padding: 64px 0; }
