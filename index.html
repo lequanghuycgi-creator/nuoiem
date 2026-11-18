@@ -291,6 +291,10 @@
   /* ---------- Reveal ---------- */
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
   .reveal.in { opacity: 1; transform: none; }
+  @media (max-width: 420px) { .brand span { display: none; } }
+  .alt-link { display: block; width: 100%; margin-top: 18px; padding: 14px; border-radius: 10px; border: 1px dashed var(--gold); background: var(--warm-soft); color: var(--ink); font-family: inherit; font-size: 14.5px; text-align: center; cursor: pointer; }
+  .alt-link b { color: var(--brand); }
+  .alt-link:hover { border-style: solid; }
   @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
 
   /* ---------- Responsive ---------- */
@@ -313,7 +317,9 @@
     .section { padding: 64px 0; }
     .features, .steps, .modules { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .nav-actions .btn-ghost { display: none; }
+    .nav-actions { gap: 6px; }
+    .nav-actions .btn-sm { padding: 8px 11px; font-size: 13.5px; }
+    .nav-actions .lg { display: none; }
     .brand span { font-size: 15px; }
     .story blockquote { font-size: 20px; }
     .plan, .card { padding: 24px; }
@@ -335,7 +341,7 @@
       <a href="#hoi-dap">Hỏi đáp</a>
     </div>
     <div class="nav-actions">
-      <button onclick="openOfflineModal()" class="btn btn-ghost btn-sm">Lấy Key Offline</button>
+      <button onclick="openOfflineModal()" class="btn btn-ghost btn-sm"><span class="lg">Lấy&nbsp;</span>Key Offline</button>
       <a href="#kich-hoat" class="btn btn-primary btn-sm">Nâng cấp VIP</a>
     </div>
   </div>
@@ -532,6 +538,8 @@
         </div>
         <button id="btn-generate" class="btn-submit" onclick="generateQR()" disabled>Tạo mã QR thanh toán</button>
 
+        <button type="button" class="alt-link" onclick="openOfflineModal()">Đã có Key VIP? <b>Chuyển sang Key Offline →</b></button>
+
         <div id="qr-container">
           <h3>Quét mã bằng app ngân hàng</h3>
           <p>Key VIP sẽ được gửi về email của anh chị trong 1–2 phút.<br>Nhớ kiểm tra cả thư mục <b>Spam</b> nếu chưa thấy.</p>
@@ -581,7 +589,7 @@
       <details class="reveal"><summary>Tôi lỡ sửa nội dung chuyển khoản thì sao?</summary>
         <p>Hệ thống sẽ không tự duyệt được. Anh chị chụp màn hình giao dịch và gửi qua Zalo 0845 053 702, tác giả sẽ kích hoạt thủ công.</p></details>
       <details class="reveal"><summary>Key Offline là gì, khi nào cần dùng?</summary>
-        <p>Key Offline cho phép phần mềm chạy không cần kết nối Internet, phù hợp với máy tính trong mạng nội bộ. Bấm “Lấy Key Offline” ở đầu trang, nhập key nhận qua email, sau đó nhập Mã máy (HWID) lấy từ sheet TT_BANQUYEN.</p></details>
+        <p>Key Offline cho phép phần mềm chạy không cần kết nối Internet, phù hợp với máy tính trong mạng nội bộ. Bấm nút bên dưới (hoặc “Key Offline” ở đầu trang), nhập key nhận qua email, sau đó nhập Mã máy (HWID) lấy từ sheet TT_BANQUYEN.<br><button type="button" class="btn btn-primary btn-sm" style="margin-top:12px" onclick="openOfflineModal()">Lấy Key Offline</button></p></details>
       <details class="reveal"><summary>Bản Free dùng được những gì?</summary>
         <p>Bản Free cho phép tải hóa đơn mua vào và bán ra nhiều năm, lấy dữ liệu TNCN nhiều nguồn, lập phiếu phân tích và xuất Tờ trình, Thông báo. Xem chi tiết ở bảng so sánh phía trên.</p></details>
     </div>
