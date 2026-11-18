@@ -120,6 +120,59 @@
   .section.dark { background: #15110f; color: #f5efe6; }
   .section.white { background: #fff; }
 
+  /* ---------- Hero product name ---------- */
+  .pill { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--warm); background: var(--warm-soft); padding: 6px 14px; border-radius: 999px; margin-bottom: 26px; }
+  .product-name {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    font-size: clamp(17px, 2.2vw, 24px); line-height: 1.3; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 26px;
+  }
+  .product-name::before, .product-name::after { content: ""; flex: 0 0 56px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .product-name::after { transform: scaleX(-1); }
+  .product-name br { display: none; }
+  .hero .display { font-size: clamp(36px, 6.4vw, 76px); }
+
+  /* ---------- Story timeline ---------- */
+  .story-intro { margin-bottom: 88px; }
+  .timeline { position: relative; max-width: 780px; margin: 0 auto; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(180deg, var(--gold), var(--brand) 70%, #3a2a24); }
+  .scene { position: relative; padding-left: 52px; margin-bottom: 88px; }
+  .scene:last-child { margin-bottom: 0; }
+  .scene::before { content: ""; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--gold); }
+  .scene:nth-child(3)::before { border-color: var(--brand); }
+  .scene:nth-child(4)::before { border-color: #3a2a24; background: #3a2a24; }
+  .scene time { display: block; font-size: 15px; font-weight: 700; color: var(--brand); letter-spacing: .02em; margin-bottom: 10px; }
+  .scene h3 { font-size: clamp(26px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -.025em; font-weight: 800; margin-bottom: 14px; }
+  .scene p { font-size: 19px; color: var(--ink-2); max-width: 640px; }
+
+  .turn { font-size: clamp(30px, 4.4vw, 52px); line-height: 1.15; letter-spacing: -.03em; font-weight: 800; color: #fff; }
+  .turn span { color: var(--gold-light); }
+  .section.dark .quote { margin-top: 36px; font-size: clamp(22px, 2.8vw, 32px); color: #fff; }
+  .section.dark .quote::before { width: 34px; height: 34px; margin-bottom: 22px; }
+  .section.dark.warm { background: radial-gradient(800px 400px at 50% 0%, #4a1414, #15110f 70%); }
+  .section.dark .title { color: #fff; }
+  .section.dark .title em { color: var(--gold-light); }
+  .btn-gold { background: var(--gold); color: #1b1206; }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ---------- Before / After ---------- */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; }
+  .ba-col { border-radius: 24px; padding: 40px; }
+  .ba-col h3 { font-size: 15px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 22px; }
+  .ba-col ul { list-style: none; display: grid; gap: 16px; }
+  .ba-col li { position: relative; padding-left: 30px; font-size: 16.5px; line-height: 1.5; }
+  .ba-col li::before { position: absolute; left: 0; top: 1px; font-weight: 700; }
+  .ba-end { margin-top: 28px; padding-top: 22px; font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
+  .before { background: var(--surface-2); color: var(--ink-2); }
+  .before h3 { color: var(--ink-3); }
+  .before li::before { content: "✕"; color: #b9b2a5; }
+  .before .ba-end { border-top: 1px solid #ddd7cb; color: var(--ink-2); }
+  .after { background: #fff; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(163,25,28,.25); border-top: 4px solid var(--brand); }
+  .after h3 { color: var(--brand); }
+  .after li { color: var(--ink); }
+  .after li::before { content: "✓"; color: var(--ok); }
+  .after .ba-end { border-top: 1px solid var(--line); color: var(--brand); }
+
   /* ---------- Numbers ---------- */
   .numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
   .num b { display: block; font-size: clamp(44px, 6vw, 72px); font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--brand);
@@ -299,6 +352,7 @@
     .modules { grid-template-columns: repeat(2, 1fr); }
     .numbers { grid-template-columns: repeat(2, 1fr); row-gap: 48px; }
     .buy { grid-template-columns: 1fr; }
+    .ba { grid-template-columns: 1fr; }
   }
   @media (max-width: 680px) {
     body { font-size: 16px; }
@@ -329,6 +383,13 @@
     tr.group td { padding-left: 16px; font-size: 14px; }
     .soon { white-space: normal; display: inline-block; font-size: 11px; line-height: 1.25; padding: 3px 5px; border-radius: 6px; }
     summary { font-size: 16.5px; padding: 20px 0; }
+    .product-name br { display: inline; }
+    .product-name { letter-spacing: .03em; gap: 10px; }
+    .product-name::before, .product-name::after { flex-basis: 22px; }
+    .story-intro { margin-bottom: 56px; }
+    .scene { padding-left: 40px; margin-bottom: 64px; }
+    .scene p { font-size: 17px; }
+    .ba-col { padding: 28px 22px; }
   }
   @media (max-width: 420px) { .brand span { display: none; } }
 </style>
@@ -355,15 +416,16 @@
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
   <div class="wrap">
-    <div class="eyebrow reveal"><span class="star"></span>Phiên bản 2026 · Cập nhật liên tục</div>
-    <h1 class="display reveal d1">Việc thủ công,<br><em>để phần mềm lo.</em></h1>
-    <p class="sub reveal d2">Tải hóa đơn, tờ khai, phân tích rủi ro và lập hồ sơ kiểm tra ngay trong Excel. Việc từng mất cả buổi chiều giờ chỉ cần vài cú click.</p>
+    <div class="pill reveal"><span class="star"></span>Phiên bản 2026 · Cập nhật liên tục</div>
+    <p class="product-name reveal"><span>Phần mềm tự động hóa <br>nghiệp vụ quản lý Thuế</span></p>
+    <h1 class="display reveal d1">Dành thời gian cho<br><em>những việc quan trọng hơn.</em></h1>
+    <p class="sub reveal d2">Tải dữ liệu, phân tích rủi ro và lập hồ sơ kiểm tra tự động ngay trong Excel. Để anh chị dành sức cho chuyên môn, cho người nộp thuế và cho chính mình.</p>
     <div class="cta reveal d3">
       <a href="https://drive.google.com/drive/u/0/folders/1warGFCimgAWNdEWPC6fru38QckS6YBzC" target="_blank" rel="noopener" class="btn btn-primary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Tải miễn phí
       </a>
-      <a href="#tinh-nang" class="btn btn-ghost">Xem tính năng</a>
+      <a href="#cau-chuyen" class="btn btn-ghost">Đọc câu chuyện</a>
     </div>
     <p class="hero-note reveal d3">Do Công chức Thuế xây dựng · Hỗ trợ trực tiếp qua Zalo</p>
   </div>
@@ -375,30 +437,98 @@
   </div>
 </header>
 
-<!-- ============ NUMBERS ============ -->
-<section class="section tight white">
-  <div class="wrap numbers">
-    <div class="num reveal"><b>5 năm</b><span>dữ liệu phân tích theo từng sắc thuế</span></div>
-    <div class="num reveal d1"><b>28</b><span>tiêu chí rủi ro BCTC và tờ khai</span></div>
-    <div class="num reveal d2"><b>360°</b><span>báo cáo NNT với 11 chỉ tiêu</span></div>
-    <div class="num reveal d3"><b>4</b><span>phân hệ nghiệp vụ trong một file</span></div>
+<!-- ============ STORY: MỘT NGÀY QUEN THUỘC ============ -->
+<section class="section white" id="cau-chuyen">
+  <div class="wrap">
+    <div class="center story-intro">
+      <h2 class="title reveal">Có lẽ anh chị đã quen<br>với một ngày như thế này.</h2>
+    </div>
+    <div class="timeline">
+      <div class="scene reveal">
+        <time>7 giờ 45 sáng</time>
+        <h3>Một hồ sơ kiểm tra mới nằm trên bàn.</h3>
+        <p>Cốc trà còn nóng. Hạn ban hành tờ trình đã được đánh dấu trên lịch. Trước mặt là cả năm năm dữ liệu của một doanh nghiệp cần được rà soát.</p>
+      </div>
+      <div class="scene reveal">
+        <time>9 giờ</time>
+        <h3>Mở TMS. Rồi Hóa đơn điện tử. Rồi Hải quan.</h3>
+        <p>Đăng nhập từng hệ thống. Tải từng tờ khai, từng gói hóa đơn. Mười mấy cửa sổ mở cùng lúc, và mạng thì chập chờn đúng lúc cần nhất.</p>
+      </div>
+      <div class="scene reveal">
+        <time>2 giờ chiều</time>
+        <h3>Những con số bắt đầu nhảy múa trước mắt.</h3>
+        <p>Chép từng chỉ tiêu tờ khai sang Excel. Dò chênh lệch giữa tờ khai và hóa đơn qua từng tháng, từng quý, từng năm. Lệch một dòng là phải dò lại từ đầu.</p>
+      </div>
+      <div class="scene reveal">
+        <time>6 giờ tối</time>
+        <h3>Văn phòng đã vắng. Tờ trình vẫn chưa xong.</h3>
+        <p>Thông báo, phiếu phân tích còn phải soạn lại từng chữ. Điện thoại sáng lên: ở nhà, mọi người đang chờ cơm.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ STORY ============ -->
+<!-- ============ STORY: BƯỚC NGOẶT ============ -->
 <section class="section dark">
   <div class="wrap narrow center">
-    <p class="quote reveal">“Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế, gia tăng sự hài lòng của Người nộp thuế.”</p>
-    <p class="story-text reveal d1">Chúng tôi cũng là Công chức Thuế. Phần mềm này ra đời từ chính những buổi ngồi tải từng hóa đơn, chép từng chỉ tiêu tờ khai. Nó không thay thế chuyên môn của anh chị mà gánh bớt phần việc máy móc.</p>
-    <p class="story-sign reveal d2">Đội ngũ phát triển kiemtrathue.vn</p>
+    <p class="turn reveal">Chúng tôi biết cảm giác đó.<br><span>Vì chúng tôi cũng từng như vậy.</span></p>
+    <p class="story-text reveal d1">Chúng tôi là Công chức Thuế. Phần mềm này ra đời từ chính những buổi tối ở lại muộn, với một mong muốn rất giản dị:</p>
+    <p class="quote reveal d2">“Giảm thiểu tối đa thời gian xử lý hồ sơ cho Công chức Thuế, gia tăng sự hài lòng của Người nộp thuế.”</p>
+    <p class="story-sign reveal d3">Đội ngũ phát triển kiemtrathue.vn</p>
   </div>
 </section>
+
+<!-- ============ STORY: CÙNG HỒ SƠ ẤY ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="center show-head">
+      <h2 class="title reveal">Vẫn hồ sơ ấy.<br><em>Nhưng một ngày khác hẳn.</em></h2>
+      <p class="sub reveal d1">Phần mềm không thay chuyên môn của anh chị. Nó chỉ gánh phần việc máy móc.</p>
+    </div>
+    <div class="ba">
+      <div class="ba-col before reveal">
+        <h3>Trước đây</h3>
+        <ul>
+          <li>Đăng nhập lần lượt TMS, Hóa đơn điện tử, DVC Hải quan, trục 3.2.3.3</li>
+          <li>Mở từng hóa đơn để xem chi tiết mặt hàng</li>
+          <li>Chép số liệu tờ khai sang Excel, dò chênh lệch bằng mắt</li>
+          <li>Tự đối chiếu rủi ro theo kinh nghiệm</li>
+          <li>Soạn lại Tờ trình, Thông báo từng chữ</li>
+        </ul>
+        <p class="ba-end">Về nhà khi trời đã tối.</p>
+      </div>
+      <div class="ba-col after reveal d1">
+        <h3>Với phần mềm</h3>
+        <ul>
+          <li>Nhập mã số thuế, phần mềm tự kéo dữ liệu từ các nguồn về một nơi</li>
+          <li>Hóa đơn nhiều năm, bóc tách sẵn đến từng mặt hàng</li>
+          <li>Bảng 5 năm dựng sẵn, chênh lệch tờ khai – hóa đơn hiện ngay</li>
+          <li>28 tiêu chí rủi ro được chấm tự động, kèm số liệu đối chiếu</li>
+          <li>Xuất file Word đúng mẫu, anh chị chỉ cần rà soát</li>
+        </ul>
+        <p class="ba-end">Về nhà kịp bữa cơm tối.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY: BUỔI CHIỀU ĐƯỢC TRẢ LẠI ============ -->
+<section class="section dark warm">
+  <div class="wrap narrow center">
+    <h2 class="title reveal">Những buổi chiều<br><em>được trả lại.</em></h2>
+    <p class="story-text reveal d1">Để phân tích sâu hơn một hồ sơ khó. Để trao đổi kỹ hơn với người nộp thuế. Hay đơn giản là để về nhà đúng giờ, ăn cơm cùng gia đình.</p>
+    <div class="cta reveal d2" style="margin-top:36px">
+      <a href="#tinh-nang" class="btn btn-gold">Xem phần mềm làm điều đó thế nào</a>
+    </div>
+  </div>
+</section>
+
 
 <!-- ============ FEATURES ============ -->
 <section class="section" id="tinh-nang">
   <div class="wrap">
     <div class="show-head center">
-      <h2 class="title reveal">Mọi thứ anh chị cần<br>cho một cuộc kiểm tra.</h2>
+      <h2 class="title reveal">Đây là cách<br>phần mềm làm điều đó.</h2>
       <p class="sub reveal d1">Ngay trong Excel quen thuộc. Không cài đặt phức tạp, không phải học công cụ mới.</p>
     </div>
 
@@ -454,6 +584,16 @@
       <div class="module reveal d2"><b>Tiện ích khác</b><span>In tờ khai XML tự động</span><br><span class="tag ok">Đang hoạt động</span></div>
       <div class="module reveal d3"><b>Kê khai, kế toán thuế</b><span>Phân hệ mới</span><br><span class="tag dev">Đang xây dựng</span></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="section tight">
+  <div class="wrap numbers">
+    <div class="num reveal"><b>5 năm</b><span>dữ liệu phân tích theo từng sắc thuế</span></div>
+    <div class="num reveal d1"><b>28</b><span>tiêu chí rủi ro BCTC và tờ khai</span></div>
+    <div class="num reveal d2"><b>360°</b><span>báo cáo NNT với 11 chỉ tiêu</span></div>
+    <div class="num reveal d3"><b>4</b><span>phân hệ nghiệp vụ trong một file</span></div>
   </div>
 </section>
 
@@ -520,14 +660,14 @@
 <!-- ============ ACTIVATION ============ -->
 <section class="section" id="kich-hoat">
   <div class="wrap center">
-    <h2 class="title reveal">Một lời cảm ơn nhỏ.<br>Để phần mềm đi tiếp.</h2>
+    <h2 class="title reveal">Một năm làm việc nhẹ nhàng hơn.<br><em>Và một lời cảm ơn nhỏ.</em></h2>
     <p class="sub reveal d1" style="max-width:620px;margin:18px auto 0">Mỗi lượt nâng cấp giúp tác giả có thêm thời gian cập nhật theo quy trình mới và phát triển các phân hệ tiếp theo.</p>
     <div class="buy">
       <div class="plan reveal">
         <div class="p-label">Gói 1 năm</div>
         <h3>Phiên bản VIP đầy đủ</h3>
         <div class="amount">899.000đ <small>/ năm</small></div>
-        <p class="note">Thanh toán một lần qua QR ngân hàng, nhận key tự động.</p>
+        <p class="note">Chưa đến 2.500đ mỗi ngày. Thanh toán một lần qua QR ngân hàng, nhận key tự động.</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mở khóa toàn bộ phân hệ Kiểm tra, Quản lý nợ, Tiện ích</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Phân tích rủi ro 28 tiêu chí, báo cáo 360 độ NNT</li>
