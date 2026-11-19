@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>kiemtrathue.vn – Phần mềm tự động hóa nghiệp vụ quản lý Thuế</title>
 <meta name="description" content="Công cụ Excel do Công chức Thuế xây dựng: tải hóa đơn, tờ khai, phân tích rủi ro 5 năm và xuất hồ sơ kiểm tra tự động.">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9BPJ2B3L2L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9BPJ2B3L2L');
+</script>
 <link rel="icon" href="logo.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -912,6 +920,7 @@ function submitOfflineSearch(e) {
   .then(res => res.json())
   .then(data => {
     btn.disabled = false;
+    track('tra_cuu_key_offline', { ket_qua: data.requireHwid ? 'can_hwid' : data.found ? 'thanh_cong' : data.blocked ? 'bi_khoa' : data.errorMsg ? 'loi' : 'khong_tim_thay' });
     if (data.requireHwid) {
       hwidWrapper.style.display = 'block';
       document.getElementById('offline-key-input').readOnly = true;
@@ -979,6 +988,7 @@ function generateQR() {
     const qrUrl = `https://img.vietqr.io/image/${data.bankId}-${data.accountNo}-compact2.png?amount=${selectedPackageAmount}&addInfo=${encodeURIComponent(data.phrase + ' ' + phone)}`;
     document.getElementById('qr-img').src = qrUrl;
     document.getElementById('qr-container').style.display = 'block';
+    track('tao_ma_qr', { value: selectedPackageAmount, currency: 'VND' });
     setTimeout(() => document.getElementById('qr-container').scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
   })
   .catch(() => {
@@ -987,6 +997,21 @@ function generateQR() {
     btn.disabled = false;
   });
 }
+
+/* ---------- Đo lường (Google Analytics) ---------- */
+// Chỉ gửi tên hành động, KHÔNG gửi email, số điện thoại hay key.
+function track(name, params) {
+  try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a, button');
+  if (!a) return;
+  const href = a.getAttribute('href') || '';
+  if (href.includes('drive.google.com')) track('tai_phan_mem', { vi_tri: a.closest('header') ? 'dau_trang' : 'than_trang' });
+  else if (href.includes('zalo.me')) track('nhan_zalo');
+  else if (href === '#kich-hoat') track('bam_nang_cap_vip');
+  else if ((a.getAttribute('onclick') || '').includes('openOfflineModal')) track('mo_key_offline');
+}, true);
 
 /* ---------- Motion ---------- */
 renderGallery();
